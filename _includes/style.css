@@ -150,7 +150,7 @@ section {
 #posts, .post, #pagination, #about, .menu, footer {
   background: #fbfbfb;
   box-shadow: 0 0 8px #aaa; 
-  padding:10px 10px 10px 10px;
+  padding: 8px;
 }
 #posts ol, #posts ul, #projects ol, #projects ul{
   margin:0;
@@ -164,9 +164,6 @@ section {
 .author{
   font-style: italic;
   font-size: 10pt;
-}
-.post-content {
-  padding:10px 0 10px 0;
 }
 .post-content h1, .post-content h2 {
   margin: 0 0 20px;
