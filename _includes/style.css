@@ -36,7 +36,7 @@ body {
   font:16px/1.5 "Inconsolata", "Lucida Sans Typewriter", "Lucida Console", Monaco, monospace;
   color:#777;
   font-weight:300;
-  background:#DFFFA5;
+  background:#558899;
 }
 h1, h2 {
   color:#444;
@@ -51,9 +51,6 @@ h2 {
 }
 .post ol, .post ul{
   margin:0 0 10px;
-}
-p, table, pre, dl {
-  margin:0 0 10px 0;
 }
 .menu {
   margin-bottom: 15px;
@@ -121,7 +118,6 @@ section {
   background: yellow;
 }
 #about p{
-  margin:0 0 5px 0;
   text-align: justify;
 }
 .post-header-info{
