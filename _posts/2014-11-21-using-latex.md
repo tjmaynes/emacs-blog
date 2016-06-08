@@ -7,15 +7,15 @@ published: true
 ---
 *This blog post serves as a gentle introduction to LaTeX, the documentation preparation system and docmentation markup language.*
 
-# Background
+## Background
 This semester I decided to write my reports from my Analysis of Algorithms class in LaTeX. This was not a difficult task to accomplish, it actually made writing these reports easier (and prettier). Before diving into installing LaTeX packages and setting up your first LaTeX document, let us begin by looking into the history of LaTeX.
 
-# History behind LaTeX
+## History behind LaTeX
 <a href="http://en.wikipedia.org/wiki/TeX">TeX</a> is a typesetting system written by <a href="http://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1978 and is still used for typesetting complex math formulas today. LaTeX is written in TeX and, like Tex, was designed "to allow anybody to produce high-quality books using a reasonably minimal amount of effort, and to provide a system that would give exactly the same results on all computers, at any point in time".
 
 LaTeX/TeX is still quite popular in academia in areas such as mathematics, sciences, and economics. You may have actually read a few books that were written in LaTeX (and you didn't even know). But, did you also know you can create beautiful resumes and CVs with LaTeX as well? Excited yet? Let's begin installing LaTeX on your machine!
 
-# Installation
+## Installation
 On Windows 7/8, download MiKTeX from <a href="http://miktex.org/download">here</a>.
 
 On Mac OS X, download MacTeX from <a href="https://tug.org/mactex/">here</a>.
@@ -116,7 +116,7 @@ Below is a table of CPU times (in milliseconds) from running an increasing array
 
 Above is the portion of code that makes up the "body" of the LaTeX document. The body is where all the contents of your document are contained. In example below, I have included a Title, Author, and Date Tag (which is created by the \maketitle tag), an Algorithm function and an example table of CPU clock cycle times in Milliseconds.
 
-# Compiling your LaTeX file
+## Compiling your LaTeX file
 To compile your LaTeX file to pdf format, run the following command.
 {% highlight bash %}
 xelatex example.tex
@@ -126,19 +126,19 @@ xelatex example.tex
 
 You can also use an online LaTeX editor such as <a href="https://www.writelatex.com/">WriteLaTeX.com</a>.
 
-# Conclusion
+## Conclusion
 Many LaTeX concepts can be learned from the example file, however you can learn way more by just diving into LaTeX (which ultimately helped me the most). Also, I feel as though LaTeX has helped me better structure and think through my reports for class. I hope this post was of some use to you!
 
 Please comment below with any questions or concerns. Thanks again!
 
 *Extra: <a href="https://github.com/TJMaynes/cv_resume/blob/master/resume.tex">Here</a> is an example of a LaTeX resume.*
 
-# Free Templates
+## Free Templates
 * <a href="http://www.latextemplates.com/cat/curricula-vitae">LaTeXTemplates</a>
 * <a href="https://www.overleaf.com/latex/templates">Overleaf</a>
 * <a href="http://www.rpi.edu/dept/arc/training/latex/resumes/">Rensselaer Career Development Center</a>
 
-# Sources
+## Sources
 * <a href="http://piotrkazmierczak.com/2010/05/13/emacs-as-the-ultimate-latex-editor/">Emacs as the Ultimate LaTeX Editor</a>
 * <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX - wiki</a>
 * <a href="http://en.wikipedia.org/wiki/TeX">TeX - wiki</a>
