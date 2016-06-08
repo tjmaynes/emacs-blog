@@ -42,17 +42,14 @@ h1, h2 {
   line-height:1.1;
 }
 h1 {
-  font-size:22px;
+  font-size:25px;
 }
 h2 {
-  font-size: 18px;
+  font-size: 22px;
   text-decoration:underline;
 }
 .post ol, .post ul{
   margin:0 0 10px;
-}
-.menu {
-  margin-bottom: 15px;
 }
 .menu ul li {
   display: inline;
@@ -93,9 +90,7 @@ pre {
   background: #fbfbfb;
   line-height:1.42857;
   overflow: auto;
-}
-img {
-  max-width:100%;
+  margin:10px 0;
 }
 strong {
   color:#444;
@@ -103,12 +98,6 @@ strong {
 }
 small {
   font-size:11px;
-}
-hr {
-  border:0;
-  background:#555;
-  height:1px;
-  margin:15px 0 15px;
 }
 section {
   margin:0 0 15px;
@@ -131,17 +120,6 @@ section {
   max-width:630px;
   margin:0 auto;
 }
-#about img{
-  margin-right:15px;
-  width: 120px;
-  height: 120px;
-  border-radius: 80px;
-  -webkitbkit-border-radius: 80px;
-  -moz-border-radius: 80px;
-  box-shadow: 0 0 8px rgba(0,img 0, 0, .8);
-  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
-  -moz-box-smallhadow: 0 0 8px rgba(0, 0, 0, .8);
-}
 #posts, .post, #pagination, #about, .menu, footer {
   padding: 8px;
 }
@@ -159,7 +137,7 @@ section {
   font-size: 10pt;
 }
 .post-content h1, .post-content h2 {
-  margin: 0 0 20px;
+  margin:20px 0 10px;
 }
 .post-content ul{
   list-style-type:circle;
@@ -197,11 +175,9 @@ section {
   background: yellow;
 }
 footer {
-  margin-top: 15px;
   text-align: center;
 }
 #pagination {
-  margin: 10pt auto;
   text-align: center;
 }
 #posts {
