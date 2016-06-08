@@ -24,7 +24,7 @@ On *Nix System, just check your distribution's package manager for "xelatex".
 
 *If you have any issues installing LaTeX, just follow this <a href="http://latex-project.org/ftp.html">link</a> for more download instructions.*
 
-# Setting up your LaTeX file.
+## Setting up your LaTeX file.
 This is an example from a report I wrote in my Analysis of Algorithms class. Remember that LaTeX can still be used for all kinds of documents (not just computer science reports).
 
 {% highlight latex %}
