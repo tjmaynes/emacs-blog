@@ -36,7 +36,6 @@ body {
   font:16px/1.5 "Inconsolata", "Lucida Sans Typewriter", "Lucida Console", Monaco, monospace;
   color:#777;
   font-weight:300;
-  background:#558899;
 }
 h1, h2 {
   color:#444;
@@ -144,8 +143,6 @@ section {
   -moz-box-smallhadow: 0 0 8px rgba(0, 0, 0, .8);
 }
 #posts, .post, #pagination, #about, .menu, footer {
-  background: #fbfbfb;
-  box-shadow: 0 0 8px #aaa; 
   padding: 8px;
 }
 #posts ol, #posts ul, #projects ol, #projects ul{
