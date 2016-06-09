@@ -25,7 +25,7 @@ I'll get to why I don't recommend going the wordpress way at the conclusion of m
 
 *Don't be afraid of what comes next. I'm going to try and explain everything as clearly as I can in this post!*
 
-# Getting started with Jekyll
+## Getting started with Jekyll
 
 ## Requirements
 
@@ -57,7 +57,7 @@ gem -v
 {% endhighlight %}
 You should now see a version number, which will prepare you for Part three.
 
-##Part Three (Installing Jekyll)
+## Part Three (Installing Jekyll)
 Install Jekyll on your machine by entering this command in terminal (within a desired directory):
 {% highlight bash %}
 gem install jekyll
@@ -79,7 +79,7 @@ You should be staring at what the above example displays. Congratulations! This 
 
 *If you have any problems setting up Jekyll, read the documentation page <a href="http://jekyllrb.com/docs/quickstart/">here</a>!*
 
-# Getting started with git
+## Getting started with git
 You're going to need git on your machine. If you already have git on your machine then you should skip to the Important Git Commands section.
 
 For OSX users, go to this <a href="http://git-scm.com/download/mac">link</a> to download git directly from the git website.
@@ -90,7 +90,7 @@ sudo apt-get install git
 {% endhighlight %}
 *First, make sure you update and upgrade your packages to get the latest version of git!*
 
-# Important Git Commands
+## Git Commands
 
 The three git commands you will primarily use for "publishing" your website/blog:
 <ul>
@@ -104,7 +104,7 @@ Again, I will not be going over how git works because that is a blog post in its
 
 Check out this <a href="http://git-scm.com/book/en/Getting-Started-About-Version-Control">link</a> for more information on using git.
 
-# Conclusion
+## Conclusion
 My biggest reason against using a wordpress as a blog platform for a software developer is that its just not modern platform anymore. Whereas with Jekyll, you learn alot about modern (important) technologies like git and github along the way (as well as a little Ruby). I highly recommend that you pursue learning more about web design and development regardless of your current title.
 
 Feel free to send me an email if I have made any mistakes in this post! Thanks for reading!

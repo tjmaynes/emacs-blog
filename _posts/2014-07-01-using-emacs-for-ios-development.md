@@ -15,14 +15,14 @@ Before we begin, I am going to assume you already have the installed following:
 <li>Emacs v24.3</li>
 </ol>
 
-# Inside Xcode
+## Inside Xcode
 First, you will need to build your project in Xcode.
 Open Xcode and create a new Xcode project. Next, choose template: iOS > Application > Empty Application.
 Finally, name the product my_app.
 
 <img src="/img/xcode-screencast.gif">
 
-# Inside Emacs
+## Inside Emacs
 Next, add the following to your .emacs file:
 {% highlight common-lisp %}
 ;;

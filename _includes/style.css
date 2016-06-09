@@ -99,9 +99,6 @@ strong {
 small {
   font-size:11px;
 }
-section {
-  margin:0 0 15px;
-}
 .projects a, #about a {
   background: yellow;
 }
@@ -155,6 +152,7 @@ section {
   line-height: 1.5;
   color: #444;
   text-align: justify;
+  padding-bottom: 10px;
 }
 .post-content img{
   box-shadow: none;
@@ -179,8 +177,5 @@ footer {
 }
 #pagination {
   text-align: center;
-}
-#posts {
-  margin-bottom: 15px;
 }
 {% include pygment_trac.css %}
