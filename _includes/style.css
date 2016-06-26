@@ -171,6 +171,7 @@ small {
   float: right;
   text-align: center;
   width: 1em;
+  font-size: 20px;
   background: yellow;
 }
 footer {
