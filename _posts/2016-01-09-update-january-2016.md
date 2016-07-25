@@ -17,4 +17,4 @@ If I had more time I'd like to learn functional programming with Haskell. I've s
 
 I feel very comfortable with Objective-C and various software design patterns such as Model View Controller, Abstraction, Singletons, Adapter, and Delegation (to name a few). However, I'd like to get better at the look and feel of building an iOS application. I'll be the first to admit, I suck at Autolayouts, but soon enough I'm going to master it. This means spending a majority of my time getting better at Autolayouts and UIKit, by spending a lot of my time in a repo called [Ray](https://github.com/tjmaynes/ray). By the end of the year, I want to be able to build views without interface builder.
 
-Thank you for reading my update! Stay tuned to read blog posts about building network controllers using NSUrlSession and test driven iOS development using XCTests and XCUITests!
+Thank you for reading my update! Stay tuned to read blog posts about building network controllers using NSURLSession and test driven iOS development using XCTests and XCUITests!
