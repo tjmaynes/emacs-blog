@@ -147,9 +147,9 @@ small {
   margin-left: 15px;
 }
 .post-content p{
+  font-family: serif;
   line-height: 1.5;
   color: #444;
-  text-align: justify;
   padding-bottom: 10px;
 }
 .post-content img{
