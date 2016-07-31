@@ -15,13 +15,13 @@ Before we begin, I am assuming you have the following already installed:
 <li>Emacs v24.3</li>
 </ol>
 
-# Installation
+## Installation
 <ul>
 <li>brew install mono</li>
 <li>brew install fsharp</li>
 </ul>
 
-# Inside Emacs
+## Inside Emacs
 Add the following lines to your .emacs file:
 {% highlight common-lisp %}
 (add-to-list 'load-path "~/.emacs.d/fsharp-mode/")
@@ -37,14 +37,14 @@ Restart emacs and use the following commmands:
 <li>C-C C-C, fsharpc filename.fs, to compile a F#(.fs) file to an executable.</li>
 </ul>
 
-# Inside eshell
+## Inside eshell
 <ul>
 <li>Type command, fsharpi, and enter for REPL interactive program.</li>
 <li>Type command, fsharpc filename.fs, and enter to compile a F#(.fs) file to an executable.</li>
 <li>Type command, mono filename.exe, and enter to execute F# program.</li>
 </ul>
 
-# Lets test our setup!
+## Lets test our setup!
 <ol>
 <li>Open Emacs and create a new fsharp file called Program.</li>
 <li>Copy this sample code:</li>

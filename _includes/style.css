@@ -104,7 +104,7 @@ small {
   margin:0 auto;
 }
 #posts, .post, #pagination, #about, .projects, .menu, footer {
-  padding: 8px;
+  padding: 8px 0px;
 }
 #posts ol, #posts ul, .projects ol, .projects ul{
   margin:0;
@@ -158,7 +158,7 @@ small {
   float: right;
   text-align: center;
   width: 1em;
-  font-size: 20px;
+  font-size: 14px;
   background: yellow;
 }
 footer {
