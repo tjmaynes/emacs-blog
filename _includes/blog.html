@@ -1,9 +1,29 @@
-<div id="posts">
-  <nav>
-    <ul>
-      {% for post in site.posts %}
-      <li><span style="padding-right:10px;">{{ post.date | date: "%Y %b" }}</span><a href="{{ post.url }}">{{ post.title }}</a></li>
-      {% endfor %}
-    </ul>
-  </nav>
-</div>
+{% for post in paginator.posts %}
+<section class="post">
+  <div class="post-header">
+    <div class="post-header-info">
+      {% include header-post.html %}
+      <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+    </div>
+    <span class="author">Written by <a href="https://www.twitter.com/tjmaynes"
+                                       target="_blank">{{ site.author }}</a></span>
+  </div>
+  <div class="post-content">
+    {{ post.content }}
+    <article id="date">[{{ post.date | date: "%d %B %Y" }}]</article>
+  </div>
+</section>
+{% endfor %}
+
+{% if paginator.previous_page or paginator.next_page %}
+<nav id="pagination">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page_path }}" class="previous">&#8826; Newer</a>
+  {% endif %}
+  {% if paginator.next_page %}
+  | <a href="{{ paginator.next_page_path }}" class="next">Older &#8827;</a>
+  {% else %}
+  <span class="next ">Next</span>
+  {% endif %}
+</nav>
+{% endif %}

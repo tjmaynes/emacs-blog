@@ -44,6 +44,19 @@ h1, h2 {
 h2 {
   text-decoration:underline;
 }
+.video-content {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .post ol, .post ul{
   margin:0 0 10px;
 }
@@ -113,7 +126,7 @@ small {
   max-width:500px;
   margin:0 auto;
 }
-#posts, .post, #pagination, #about, .projects, .menu, footer {
+#posts, .post, #pagination, #about, .menu, footer {
   padding: 8px 0px;
 }
 #posts ol, #posts ul, .projects ol, .projects ul{
