@@ -1,8 +1,0 @@
-highlighter: rouge
-markdown: kramdown
-permalink: /blog/:title/
-url: http://www.tjmaynes.com
-author: TJ Maynes
-port: 4000
-github_user: tjmaynes
-timezone: America/New York
