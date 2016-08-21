@@ -8,15 +8,9 @@
 [submodule "projects/stockjs"]
 	path = projects/stockjs
 	url = https://github.com/tjmaynes/stockjs.git
-[submodule "info/resume"]
-	path = info/resume
-	url = git@github.com:tjmaynes/resume.git
-[submodule "info/cv"]
-	path = info/cv
-	url = git@github.com:tjmaynes/cv.git
 [submodule "cv"]
 	path = cv
-	url = git@github.com:tjmaynes/cv.git
+	url = https://github.com/tjmaynes/cv.git
 [submodule "resume"]
 	path = resume
-	url = git@github.com:tjmaynes/resume.git
+	url = https://github.com/tjmaynes/resume.git
