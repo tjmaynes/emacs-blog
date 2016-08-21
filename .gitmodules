@@ -14,3 +14,9 @@
 [submodule "info/cv"]
 	path = info/cv
 	url = git@github.com:tjmaynes/cv.git
+[submodule "cv"]
+	path = cv
+	url = git@github.com:tjmaynes/cv.git
+[submodule "resume"]
+	path = resume
+	url = git@github.com:tjmaynes/resume.git
