@@ -1,0 +1,74 @@
+==================================================================
+https://keybase.io/tjmaynes
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://tjmaynes.com
+  * I am tjmaynes (https://keybase.io/tjmaynes) on keybase.
+  * I have a public key with fingerprint 8015 9948 03B1 8D8B 575C  5517 6654 621F 6E1E 487F
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "010156b8df55862bfad8595f172ec09de74710077e414c5bb1cb164f9a6dd735cf2c0a",
+            "fingerprint": "8015994803b18d8b575c55176654621f6e1e487f",
+            "host": "keybase.io",
+            "key_id": "6654621f6e1e487f",
+            "kid": "010156b8df55862bfad8595f172ec09de74710077e414c5bb1cb164f9a6dd735cf2c0a",
+            "uid": "80107f782ae6388004fad96212c99719",
+            "username": "tjmaynes"
+        },
+        "service": {
+            "hostname": "tjmaynes.com",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1468680181,
+    "expire_in": 157680000,
+    "prev": "33880998b69a6dd208f4424a28b0ed2c26b6e07afca256367ef7ec8800e90e4c",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owGtUmtMFFcYXUBAKLXSJmUpLxkpxkLozOw8V5RQUBBNqwGpPOJmHndgwN1ZZxcq
+hWVJWasoGlsIIVXINjapEFMNsRRDH0IQLYTaBhdblqLVIkIEZNXQYqK9Q9o/TX/2
+/rm53z3nfOd8+U6+GKDz95Py+DhLbLbTb3iG1717NGupGuEVsQoxViPlYOUC+0Vg
+s5vKZRExIiiGYiTFM6JEkgyF8xInMiRLShiNAwFlRUATNIaiNA0IjBBInscEHqMI
+ieUoUaQNpCDhAsohyYgkW0qAalVlix3KMlCVZQkGNfAYIzI8SZMCSWI0RZEEhWMS
+BTBAMLQEiaWKTWNAczxnAymyAmvwYVqx9x/4/9l3xYoc9IvSEs3gHKAMDIOiBBRk
+YWdcYFkaYzWgDagWzgwg2l5m5qoswIY4khFYrZQFoA1WS/IvRIqgmCHXqip2RVD2
+w59Su91qM2pMe5VVg74HeNPfIiZetohwjpBRCVSbrFgQIwaRgl3WVDGCYijolMGS
+EXDQKqvAJGsIkoZVeLQ+oBJKGrQILLuX4amVvDjKSASBExzO8CgQcQGneAqgNCcJ
+HE5SBooGEg0ELTdgUUAIiJbrgEVBjAT0yZVATZtcYuHsFSpAHKEN/tGrdH7+uqBA
+f23DdKEha/9Zu6LytbpPqs+MDuSXJGT3eX9f/9u2e30BKW2xjrfDci05rVdKP9Bn
+cH3e+XXui4+PPf0stfnChDnpzZZ9uzvmbMcHV1Un5Llupjd1dvSNb5946Uu26Ucf
+R3jT19w7u9C++lLO8+UDU2Ud6alhkRUGKexRp+f0EPdLmGOy8trX81F97rh4n2s6
+a7ZqOubO6aJnuYnSmSadZ0vGcPSO7K7w3OWWU4XIXEf6obTj+rL8wMZ4TwO6NDrd
+3e+s4dRbH019OsJedEe69HGhbvJQ7dP+3nN1HrN6Pun6GP6Wvif34RN1w1ZT7GB9
+m/GP7MF3Htx6v+DGqcaZ6ssTGyaddH1j67Jxc2wnHjOofuX7JmrLCWdrEuUc+TAo
+aicynLatYXHo7k9O87O6CD4/pTg0Z0G5fPDPqJ9LMz5Oi56v60kdveaeap733r6Q
+GU/XZhbJdmt42dh5pTiya4+YZ3V//t1c76OYttcCriTuCvOsLnh4e+8XE66rJ03P
+a5Lx1CNNNa/OHnH98PLSvD5z0/buS0uRm8bphZ6bu3b0z0WzM9S49/66o+PdTzav
+rxyJKsyraa8P97XcDSoO3P1CwsCdG0NlA2fHysMXr26tdYzJD7Je2bPv8evG1sOF
+wRvfSKSUzsZU02S9UOBjuzoXZxdCdvI0F/FrsPO6f8hG37E1zd8H3z9HJM4ejvg2
+obe9pvkv
+=YLiC
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tjmaynes
+
+==================================================================
+
