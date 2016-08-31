@@ -8,7 +8,9 @@
       <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
       <p> {{ post.content }} </p>
     </li>
+    {% if forloop.last == false %}
     <hr>
+    {% endif %}
     {% endfor %}
   </ul>
 </div>

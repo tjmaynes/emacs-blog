@@ -4,6 +4,12 @@
 .page-content {
   padding: 20px 30px 30px 0;
   margin-left: 200px;
+
+   @include media-query($on-palm) {
+     margin: 0 auto;
+     padding: 0 20px 20px 20px;
+     max-width: 720px;
+   }
 }
 
 .page-heading {
@@ -13,12 +19,21 @@
 .page-menu {
   position: fixed;
   padding: 20px 40px;
+
+  @include media-query($on-palm) {
+    position: relative;
+    padding: 10px;
+  }
 }
 
-.img-circle {
+.profile-picture {
   max-width: 120px;
   max-height: 120px;
   border-radius: 50%;
+
+  @include media-query($on-palm) {
+    display: none;
+  }
 }
 
 .post-list {
