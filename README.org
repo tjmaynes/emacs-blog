@@ -5,6 +5,8 @@
 Blogging about software design/architecture, infrastructure, and automated testing.
 #+END_QUOTE
 
+[[https://travis-ci.org/tjmaynes/blog][file:https://travis-ci.org/tjmaynes/blog.svg?branch=master]]
+
 ** Requirements
 
 - [[https://www.gnu.org/s/emacs/][Emacs]]
