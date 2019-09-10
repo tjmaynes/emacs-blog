@@ -1,4 +1,7 @@
 language: generic
+cache:
+  directories:
+    - /home/travis/.emacs.d/elpa/
 sudo: false
 env:
   global:
