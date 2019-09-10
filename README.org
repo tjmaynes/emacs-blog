@@ -1,8 +1,8 @@
-#+TITLE: tjmaynes.github.io
+#+TITLE: Blog
 #+AUTHOR: TJ Maynes <tjmaynes@gmail.com>
 
 #+BEGIN_QUOTE
-Personal Website.
+Blogging about software design/architecture, infrastructure, and automated testing.
 #+END_QUOTE
 
 ** Requirements
