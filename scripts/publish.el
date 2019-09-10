@@ -175,6 +175,7 @@
       (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir))))
 
 (defun blog/org-publish-sitemap (_title list)
+  (package-manager/ensure-packages-installed 'seq)
   (require 'seq)
   (mapconcat (lambda (li)
 	       (format "@@html:<li class=\"archive-item\">@@%s@@html:</li>@@" (car li)))
