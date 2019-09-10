@@ -52,7 +52,7 @@
 
 ;; Blog
 
-(defun blog/get-head (title)
+(defun blog/get-head (title description)
   (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
     (concat
      "<head>\n"
@@ -60,17 +60,17 @@
       "<meta charset=\"utf-8\">
 <title>" title "</title>
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
-<meta name=\"description\" content=\"" blog-description "\" />
-<meta property=\"og:title\" content=\"" blog-author-name "\" />
+<meta name=\"description\" content=\"" description "\" />
+<meta property=\"og:title\" content=\"" title "\" />
 <meta property=\"og:url\" content=\"https://tjmaynes.com/index.html\" />
-<meta property=\"og:description\" content=\"" blog-description "\"/>
+<meta property=\"og:description\" content=\"" description "\"/>
 <meta property=\"og:image\" content=\"" blog-author-avatar-url "\" />
 <meta property=\"og:type\" content=" "hello" " />
-<meta property=\"twitter:title\" content=\"" blog-author-name "\" />
+<meta property=\"twitter:title\" content=\"" title "\" />
 <meta property=\"twitter:url\" content=\"https://tjmaynes.com/index.html\" />
 <meta property=\"twitter:image\" content=\"" blog-author-avatar-url "\" />
-<meta property=\"twitter:description\" content=\"" blog-description "\" />
-<meta property=\"twitter:card\" content=\"" blog-description "\" />
+<meta property=\"twitter:description\" content=\"" description "\" />
+<meta property=\"twitter:card\" content=\"" description "\" />
 <link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">\n")
      "</head>\n")))
 
@@ -106,7 +106,7 @@
      </ul>
      <ul>
       <li>
-        <p><a href=\"https://github.com/tjmaynes/tjmaynes.github.io\">Built using Org-Mode ❤</a></p>
+        <p><a href=\"https://github.com/tjmaynes/blog\">Built using Org-Mode ❤</a></p>
       </li>
      </ul>
     </nav>")
@@ -150,21 +150,23 @@
    body
    "</html>\n"))
 
-(defun blog/base-html-template (title language content)
+(defun blog/base-html-template (title description language content)
   (blog/get-html
-   (blog/get-head blog-title)
+   (blog/get-head title description)
    (blog/get-body content)
    language))
 
 (defun blog/blog-index-template (content info)
   (let* ((language (plist-get info :language)))
-    (blog/base-html-template blog-title language content)))
+    (blog/base-html-template blog-title blog-description language content)))
 
 (defun blog/blog-post-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
 	 (date (utilities/org-get-file-keyword "DATE"))
+	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
 	 (language (plist-get info :language)))
     (blog/base-html-template title
+			     description
 			     language
 			     (blog/get-post-body title date content))))
 

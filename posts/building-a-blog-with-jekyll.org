@@ -1,5 +1,6 @@
 #+TITLE: Building a Blog with Jekyll
 #+DATE: <2015-11-24, Tue>
+#+DESCRIPTION: In this blog post, I'll be discussing how to setup and build your own blog using Jekyll.
 
 Many developers and designers have chosen to use [[https://jekyllrb.com/docs][Jekyll]], a static-page generator, for some of their web-based projects for its ease of use and simple design. In this post, we will be building a minimal blog with the help of Jekyll. This post is intended to be read by programming beginners who want to build a blog "the hacker way".
 
