@@ -121,38 +121,42 @@ blockquote {
     padding-top: 15px;
 }
 
-.content-body {
+.archive {
+    padding: 8px 0;
+}
+
+.post {
     padding: 10px 0;
 }
 
-.content-body:last-child {
+.post:last-child {
     border-bottom: none;
 }
 
-.content-body header {
+.post header {
     padding-bottom: 8px;
 }
 
-.content-body ol, .content-body ul {
+.post ol, .post ul {
     margin: 0 0 10px;
     margin-left: 20px;
 }
 
-.content-body ul {
+.post ul {
     list-style-type: circle;
     padding: 0px 10px;
 }
 
-.content-body ol {
+.post ol {
     list-style-type: decimal;
     padding: 0px;
 }
 
-.content-body li {
+.post li {
     text-align: justify;
 }
 
-.content-body img {
+.post img {
     width: 100%;
     margin: 5px 0px;
 }
@@ -164,6 +168,7 @@ blockquote {
 
 .archive-item {
     list-style-type: none;
+    text-align: left;
 }
 
 .footer-menu {

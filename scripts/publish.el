@@ -118,10 +118,7 @@
    (concat
     "<div class=\"content-wrapper\">\n"
     (blog/get-header)
-    (concat
-     "<div class=\"content-body\">\n"
-     content
-     "</div>\n")
+    content
     (blog/get-footer)
     "</div>\n")
    "</body>\n"))
@@ -138,9 +135,17 @@
 
 (defun blog/get-post-body (title date content)
   (concat
+   "<div class=\"post\">\n"
    (blog/get-post-header title date)
    content
-   "<p>" blog-author-footnote-message "</p>\n"))
+   "<p>" blog-author-footnote-message "</p>\n"
+   "</div>\n"))
+
+(defun blog/get-index-body (content)
+  (concat
+   "<div class=\"archive\">\n"
+   content
+   "</div>\n"))
 
 (defun blog/get-html (head body language)
   (concat
@@ -158,7 +163,10 @@
 
 (defun blog/blog-index-template (content info)
   (let* ((language (plist-get info :language)))
-    (blog/base-html-template blog-title blog-description language content)))
+    (blog/base-html-template blog-title
+			     blog-description
+			     language
+			     (blog/get-index-body content))))
 
 (defun blog/blog-post-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
