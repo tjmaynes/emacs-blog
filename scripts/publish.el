@@ -99,10 +99,10 @@
     </article>
     <nav class=\"footer-menu\">
      <ul>
-      <li><p><a href=\"https://github.com/tjmaynes\" target=\"_blank\">GitHub</a></p></li>
-      <li><p><a href=\"https://linkedin.com/in/tjmaynes\" target=\"_blank\">LinkedIn</a></p></li>
-      <li><p><a href=\"https://twitter.com/tjmaynes\" target=\"_blank\">Twitter</a></p></li>
-      <li><p><a href=\"" blog-author-email "\">Contact</a></p></li>
+      <li><p><a href=\"https://github.com/" blog-author-github "\" target=\"_blank\">GitHub</a></p></li>
+      <li><p><a href=\"https://linkedin.com/in/" blog-author-linkedin "\" target=\"_blank\">LinkedIn</a></p></li>
+      <li><p><a href=\"https://twitter.com/" blog-author-twitter "\" target=\"_blank\">Twitter</a></p></li>
+      <li><p><a href=\"mailto:" blog-author-email "\">Contact</a></p></li>
      </ul>
      <ul>
       <li>
@@ -247,6 +247,9 @@
 	  blog-cname (gethash "cname" settings-config)
 	  blog-author-name  (gethash "name" author-config)
 	  blog-author-email (gethash "email" author-config)
+	  blog-author-github (gethash "github" author-config)
+	  blog-author-linkedin (gethash "linkedin" author-config)
+	  blog-author-twitter (gethash "twitter" author-config)	  
 	  blog-author-description (gethash "description" author-config)
 	  blog-author-avatar (gethash "avatar" author-config)
 	  blog-author-footnote-message (gethash "footnote-message" author-config)
