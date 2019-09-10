@@ -1,0 +1,18 @@
+{
+    "settings": {
+	"title": "TJ Maynes",
+	"description": "Blogging about software design/architecture, infrastructure, and automated testing.",
+	"url": "https://tjmaynes.com",
+	"favicon": "./favicon.ico",
+	"cname": "CNAME",
+	"icon": "/public/images/icon.png",
+	"css": "/public/stylesheets/main.css"
+    },
+    "author": {
+	"name": "TJ Maynes",
+	"description": "TJ Maynes is a passionate Software Engineer living in NYC. TJ has built scalable software solutions across many technology stacks (frontend to database to infrastructure) and utilizes test-driven development and pair programming to grow complex software and teams. Currently, spending a bit of time learning distributed systems design patterns and functional programming concepts. Also, enjoys ☕.",
+	"email": "tjmaynes@gmail.com",
+	"avatar": "/public/images/me/profile.jpg",
+	"footnote-message": "If you happened to catch any missing or incorrect details in the post, please drop me an <a href='mailto:tjmaynes@gmail.com'>email</a>. And as always, thank you for reading and I hope you catch my next blog post soon!"	
+    }
+}

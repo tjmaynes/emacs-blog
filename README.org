@@ -1,0 +1,36 @@
+#+TITLE: tjmaynes.github.io
+#+AUTHOR: TJ Maynes <tjmaynes@gmail.com>
+
+#+BEGIN_QUOTE
+Personal Website.
+#+END_QUOTE
+
+** Requirements
+
+- [[https://www.gnu.org/s/emacs/][Emacs]]
+- (Optional: [[https://hub.docker.com/][Docker]])
+
+** Usage
+To build the blog, run the following command:
+#+begin_src bash
+BLOG_CONFIG=<some-blog-config> \
+BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
+make build-blog
+#+end_src
+
+To publish the blog, run the following command:
+#+begin_src bash
+BLOG_CONFIG=<some-blog-config> \
+BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
+make publish-blog
+#+end_src
+
+To edit the blog using =nginx= in a =docker= container, run the following command:
+#+begin_src bash
+BLOG_CONFIG=<some-blog-config> \
+BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
+make edit-blog
+#+end_src

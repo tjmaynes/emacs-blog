@@ -1,0 +1,11 @@
+# MacOS Stuff
+.DS_Store
+
+# Org-Publish
+.timestamps/
+_site/
+
+# Auto-Generated
+build/
+posts/index.*
+posts/rss.*

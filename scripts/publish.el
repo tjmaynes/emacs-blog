@@ -1,0 +1,298 @@
+;; --- publish.el ---
+;; Author: TJ Maynes <tjmaynes at gmail dot com>
+;; Website: https://tjmaynes.com/
+
+;; Utilities
+
+(defun utilities/get-environment-variable (env-name)
+  (let ((value (getenv env-name)))
+    (if (not value) (error (format "Missing environment variable: %s." env-name)))
+    value))
+
+(defun utilities/read-json-file (json-file)
+  (require 'json)
+  (let* ((json-object-type 'hash-table)
+	 (json-array-type 'list)
+	 (json-key-type 'string)
+	 (data (json-read-file json-file)))
+    data))
+
+(defun utilities/org-get-keywords ()
+  (org-element-map (org-element-parse-buffer 'element) 'keyword
+    (lambda (keyword) (cons (org-element-property :key keyword)
+		       (org-element-property :value keyword)))))
+
+(defun utilities/org-get-file-keyword (keyword)
+  (cdr (assoc keyword (utilities/org-get-keywords))))
+
+(defun utilities/org-parse-and-format-date (str format)
+  (let ((time-string (org-time-string-to-time str)))
+    (format-time-string format time-string)))
+
+;; Package Manager
+
+(defvar package-manager/package-manager-refreshed nil)
+
+(defun package-manager/package-manager-refresh-once ()
+  (when (not package-manager/package-manager-refreshed)
+    (setq package-manager/package-manager-refreshed t)
+    (package-refresh-contents)))
+
+(defun package-manager/ensure-packages-installed (&rest packages)
+  (dolist (package packages)
+    (when (not (package-installed-p package))
+      (package-manager/package-manager-refresh-once)
+      (package-install package))))
+
+(defun package-manager/setup ()
+  (setq	package-enable-at-startup nil)
+  (package-initialize)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)  
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
+;; Blog
+
+(defun blog/get-head (title)
+  (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
+    (concat
+     "<head>\n"
+     (concat
+      "<meta charset=\"utf-8\">
+<title>" title "</title>
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
+<meta name=\"description\" content=\"" blog-description "\" />
+<meta property=\"og:title\" content=\"" blog-author-name "\" />
+<meta property=\"og:url\" content=\"https://tjmaynes.com/index.html\" />
+<meta property=\"og:description\" content=\"" blog-description "\"/>
+<meta property=\"og:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"og:type\" content=" "hello" " />
+<meta property=\"twitter:title\" content=\"" blog-author-name "\" />
+<meta property=\"twitter:url\" content=\"https://tjmaynes.com/index.html\" />
+<meta property=\"twitter:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"twitter:description\" content=\"" blog-description "\" />
+<meta property=\"twitter:card\" content=\"" blog-description "\" />
+<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">\n")
+     "</head>\n")))
+
+(defun blog/get-header ()
+  (concat
+   "<section class=\"content-header\">\n"
+   (concat
+    "<nav>
+     <ul>
+       <li><a href=\"/\"><img src=" blog-icon " alt=\"icon\" /></a></li>
+     </ul>
+     <ul>
+       <li><a href=\"/\">Home</a></li>
+       <li><a href=\"/rss.xml\">Feed</a></li>
+     </ul>
+   </nav>\n")
+   "</section>\n"))
+
+(defun blog/get-footer ()
+  (concat
+   "<section class=\"content-footer\">\n"
+   (concat
+    "<article class=\"about\">
+     <img src=" blog-author-avatar ">
+     <p>" blog-author-description "</p>
+    </article>
+    <nav class=\"footer-menu\">
+     <ul>
+      <li><p><a href=\"https://github.com/tjmaynes\" target=\"_blank\">GitHub</a></p></li>
+      <li><p><a href=\"https://linkedin.com/in/tjmaynes\" target=\"_blank\">LinkedIn</a></p></li>
+      <li><p><a href=\"https://twitter.com/tjmaynes\" target=\"_blank\">Twitter</a></p></li>
+      <li><p><a href=\"" blog-author-email "\">Contact</a></p></li>
+     </ul>
+     <ul>
+      <li>
+        <p><a href=\"https://github.com/tjmaynes/tjmaynes.github.io\">Built using Org-Mode ❤</a></p>
+      </li>
+     </ul>
+    </nav>")
+   "</section>\n"))
+
+(defun blog/get-body (content)
+  (concat
+   "<body>\n"
+   (concat
+    "<div class=\"content-wrapper\">\n"
+    (blog/get-header)
+    (concat
+     "<div class=\"content-body\">\n"
+     content
+     "</div>\n")
+    (blog/get-footer)
+    "</div>\n")
+   "</body>\n"))
+
+(defun blog/get-post-header (post-title post-date)
+  (let* ((xml-date-time (utilities/org-parse-and-format-date post-date "%F"))
+	 (display-date-time (utilities/org-parse-and-format-date post-date "%Y-%m-%d")))
+    (concat
+     "<header>\n"
+     (concat
+      "<h1 itemprop=\"name headline\">" post-title "</h1>\n"
+      "<p>Posted on <time datetime=\"" xml-date-time "\" itemprop=\"datePublished\">" display-date-time "</time> • " blog-author-name "</p>\n")
+   "</header>\n")))
+
+(defun blog/get-post-body (title date content)
+  (concat
+   (blog/get-post-header title date)
+   content
+   "<p>" blog-author-footnote-message "</p>\n"))
+
+(defun blog/get-html (head body language)
+  (concat
+   "<!DOCTYPE html>\n"
+   (format "<html lang=\"%s\">\n" language)
+   head
+   body
+   "</html>\n"))
+
+(defun blog/base-html-template (title language content)
+  (blog/get-html
+   (blog/get-head blog-title)
+   (blog/get-body content)
+   language))
+
+(defun blog/blog-index-template (content info)
+  (let* ((language (plist-get info :language)))
+    (blog/base-html-template blog-title language content)))
+
+(defun blog/blog-post-template (content info)
+  (let* ((title (utilities/org-get-file-keyword "TITLE"))
+	 (date (utilities/org-get-file-keyword "DATE"))
+	 (language (plist-get info :language)))
+    (blog/base-html-template title
+			     language
+			     (blog/get-post-body title date content))))
+
+(defun blog/org-publish-to-html (plist filename pub-dir)
+  (let ((posts-dir (expand-file-name "posts" pub-dir)))
+    (if (equal (file-name-base filename) "index")
+	(org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir)
+      (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir))))
+
+(defun blog/org-publish-sitemap (_title list)
+  (mapconcat (lambda (li)
+	       (format "@@html:<li class=\"archive-item\">@@%s@@html:</li>@@" (car li)))
+	     (seq-filter #'car (cdr list))
+	     "\n"))
+
+(defun blog/org-publish-sitemap-format (entry style project)
+  (let ((datetime (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
+	(title (org-publish-find-title entry project))
+	(post-entry (format "posts/%s" entry)))
+    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@"
+	    datetime post-entry title)))
+
+(defun blog/org-rss-publish-to-rss (plist filename pub-dir)
+  (if (equal "rss.org" (file-name-nondirectory filename))
+      (org-rss-publish-to-rss plist filename pub-dir)))
+
+(defun blog/get-publish-project-alist ()
+  `(("blog-home"
+     :base-directory ,(expand-file-name "posts" blog-directory)
+     :base-extension "org"
+     :exclude ,(regexp-opt '("rss.org" "index.org"))
+     :exclude-tags ("onlyrss" "noexport")
+     :publishing-function blog/org-publish-to-html
+     :publishing-directory ,blog-publishing-directory
+     :html-home/up-format nil
+     :auto-sitemap t
+     :sitemap-filename "index.org"
+     :sitemap-title ,blog-title
+     :sitemap-style list
+     :sitemap-sort-files anti-chronologically
+     :sitemap-function blog/org-publish-sitemap
+     :sitemap-format-entry blog/org-publish-sitemap-format)
+    ("blog-post-images"
+     :base-directory ,(expand-file-name "posts/images" blog-directory)
+     :exclude nil
+     :base-extension ,(regexp-opt '("jpg" "png"))
+     :publishing-directory ,(expand-file-name (format "%s/posts/images" build-directory) blog-directory)
+     :publishing-function org-publish-attachment
+     :recursive nil)
+    ("blog-rss"
+     :base-directory ,(expand-file-name "posts" blog-directory)
+     :base-extension "org"
+     :recursive nil
+     :exclude ,(regexp-opt '("index.org"))
+     :publishing-function blog/org-rss-publish-to-rss
+     :publishing-directory ,blog-publishing-directory
+     :rss-extension "xml"
+     :table-of-contents nil)
+    ("blog-public"
+     :base-directory ,(expand-file-name "public" blog-directory)
+     :exclude ,(regexp-opt '("public"))
+     :base-extension ,(regexp-opt '("jpg" "png" "css" "pdf" "eot" "woff" "woff2" "ttf"))
+     :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
+     :publishing-function org-publish-attachment
+     :recursive t)
+    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public"))))
+
+(defun blog/publish-setup (blog-directory build-directory config)
+  (let* ((settings-config (gethash "settings" config))
+	 (author-config (gethash "author" config)))
+    (setq blog-title (gethash "title" settings-config)
+	  blog-description (gethash "description" settings-config)
+	  blog-url (gethash "url" settings-config)
+	  blog-favicon (gethash "favicon" settings-config)
+	  blog-icon (gethash "icon" settings-config)
+	  blog-cname (gethash "cname" settings-config)
+	  blog-author-name  (gethash "name" author-config)
+	  blog-author-email (gethash "email" author-config)
+	  blog-author-description (gethash "description" author-config)
+	  blog-author-avatar (gethash "avatar" author-config)
+	  blog-author-footnote-message (gethash "footnote-message" author-config)
+	  blog-directory blog-directory
+	  blog-publishing-directory (expand-file-name build-directory blog-directory)
+	  blog-css-url (gethash "css" settings-config))))
+
+(defun blog/setup-custom-templates ()
+  (require 'ox)
+  (org-export-define-derived-backend 'custom-blog-index-backend 'html
+				     :translate-alist '((template . blog/blog-index-template)))
+  (org-export-define-derived-backend 'custom-blog-post-backend 'html
+				     :translate-alist '((template . blog/blog-post-template))))
+
+(defun blog/publish-all ()
+  (require 'org)
+  (require 'htmlize)
+  (let* ((org-publish-project-alist          (blog/get-publish-project-alist))
+	 (org-publish-timestamp-directory    "./.timestamps/")
+	 (org-export-with-section-numbers    nil)
+	 (org-export-with-smart-quotes       t)
+	 (org-export-with-toc                nil)
+	 (org-export-with-sub-superscripts   '{})
+	 (org-html-container-element         "section")
+	 (org-html-metadata-timestamp-format "%Y-%m-%d")
+	 (org-html-checkbox-type             'html)
+	 (org-html-html5-fancy               t)
+	 (org-html-validation-link           nil)
+	 (org-html-doctype                   "html5")
+	 (org-html-htmlize-output-type       'css)
+	 (make-backup-files nil))
+    (blog/setup-custom-templates)
+    (org-publish-project "blog" t)))
+
+(defun blog/add-file-to-publishing-directory (file)
+  (let ((destination-file (expand-file-name file blog-publishing-directory)))
+    (message (format "Publishing file %s to %s" file blog-publishing-directory))
+    (copy-file file destination-file t t)))
+
+(defun blog/publish (config-location blog-directory build-directory)
+  (let* ((config (utilities/read-json-file config-location))
+	 (publish-config (gethash "publish" config)))
+    (package-manager/setup)
+    (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)    
+    (blog/publish-setup blog-directory build-directory config)
+    (blog/publish-all)
+    (blog/add-file-to-publishing-directory blog-cname)
+    (blog/add-file-to-publishing-directory blog-favicon)))
+
+(blog/publish
+ (utilities/get-environment-variable "BLOG_CONFIG")
+ (utilities/get-environment-variable "BLOG_DIRECTORY")
+ (utilities/get-environment-variable "BLOG_BUILD_DIRECTORY"))
