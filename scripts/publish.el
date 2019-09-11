@@ -250,9 +250,8 @@
     (setq blog-title (gethash "title" settings-config)
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
-	  blog-favicon (gethash "favicon" settings-config)
+	  blog-extra-files (gethash "extra-files" settings-config)
 	  blog-icon (gethash "icon" settings-config)
-	  blog-cname (gethash "cname" settings-config)
 	  blog-author-name  (gethash "name" author-config)
 	  blog-author-email (gethash "email" author-config)
 	  blog-author-github (gethash "github" author-config)
@@ -297,6 +296,10 @@
     (message (format "Publishing file %s to %s" file blog-publishing-directory))
     (copy-file file destination-file t t)))
 
+(defun blog/add-files-to-publishing-directory (files)
+  (require 'seq)
+  (seq-map 'blog/add-file-to-publishing-directory files))
+
 (defun blog/publish (config-location blog-directory build-directory)
   (let* ((config (utilities/read-json-file config-location))
 	 (publish-config (gethash "publish" config)))
@@ -304,8 +307,7 @@
     (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)    
     (blog/publish-setup blog-directory build-directory config)
     (blog/publish-all)
-    (blog/add-file-to-publishing-directory blog-cname)
-    (blog/add-file-to-publishing-directory blog-favicon)))
+    (blog/add-files-to-publishing-directory blog-extra-files)))
 
 (blog/publish
  (utilities/get-environment-variable "BLOG_CONFIG")

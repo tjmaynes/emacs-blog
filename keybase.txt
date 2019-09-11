@@ -1,0 +1,69 @@
+==================================================================
+https://keybase.io/tjmaynes
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://tjmaynes.com
+  * I am tjmaynes (https://keybase.io/tjmaynes) on keybase.
+  * I have a public key with fingerprint BBB1 14D4 8CCF 0B70 9FD6  D09D 7B8E 2A08 56F1 4255
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101bbd593d4d6db504c6f08c1d0cb486b49f806ab57e3e46ac18fa3f53aa801a2220a",
+      "fingerprint": "bbb114d48ccf0b709fd6d09d7b8e2a0856f14255",
+      "host": "keybase.io",
+      "key_id": "7b8e2a0856f14255",
+      "kid": "010141df779990ef6579435e76d9cf17abff935640bf8396de26b9452c6117a619f30a",
+      "uid": "80107f782ae6388004fad96212c99719",
+      "username": "tjmaynes"
+    },
+    "service": {
+      "hostname": "tjmaynes.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1568218272,
+  "expire_in": 157680000,
+  "prev": "6f22ae4d968dfbdb0b01673ab272f4b4935db329f75e1856871f49ab62b9642f",
+  "seqno": 35,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.3
+Comment: https://keybase.io/crypto
+
+yMJZAnicbVJdaBVHGL3RNJoLUiviXwrBJZKmjWFmdmZ25qYVbBtKHpRAMagYLzM7
+M8ma5O7N3U30chuV4kMsxQcbQWgtCipURSS0WlP8CypRS9snDWLyqAQ0JsG/F8XZ
+0FIofRrm+845c8433/VF81PpstKBDxe2zny6qezOtcO9qbbi+0dLjgxV0cmUnE49
+d+gupaM42xkoJ+MACKCUinBXYUWVJAD71ADmQwV8iRmVmBsGqJDE067GVPiQGeEa
+4grBABQIISCcescEuXZdyBeCXGxlpZQQYoWZ7xsgPcCNFQdceZJpJAAj1ECMCLHE
+jjBKGNacFJFuCEJbs5fsnL3/wf/rG0NlPI9zDrShxOPYJdqjivsGekIaw11CMZCG
+uZwqjajkmCCfQtulkBt3znfvnJxNAjzjMSQ0dRkDABuhOEUQ+Zx7kCfASBdyoltb
+dLyjWxRzOnL66x1b7Qt8nQw2SfIfRIMfdltuvhDGoR922U5HHOejTMKMi/kEulPL
+7N8iWRnklJ2jZfTpQhSEOScDLdKPg0QVEsoQZMhD9Y7elQ8KOhskCOJR6xiA5B3d
+ZyWpQTYItgGYMlJJIAGkniukpRpsf9QlSrqIG49oaGfLPGgwF5IiySlGxkli9eRC
+J+MS61O0W80oaM+JuLegnf6Rq9vKU2XpVMU785IFS6UrF/+zdpPZBW9q23bMHuk4
+9e7uzqrmsfsnKqdGnvWoePrglpk95XuWNFZ/9vnTntE/LpQvnNxeEZ1sbfvqeePW
+1uqaVU1j9zae0OnRfU2nltYcbf7h5b6BqgbKJm7dGH4ztu37D6Y3L19ZeryoFqz+
+LqWuDcw+3zm8dqZ0IT15Fu+deLViqHqwily5tP+n44c2/P5i5tj4r0NLv/16oHJ9
+2xF3RfPd6tlNrxpHDlSWDRXPND29PbrqXN3edRlwZep1059sqCKo2z343o+7us4t
+7v251LKss6Xqr9rp/PhgxZq6kfotpx8OP1j94qPLd3/bcL7lG7Lk0en81JdfPNn4
+SXf7Lx2DB/trbt1cN/HxvOPjxy72n3kLzwE9FQ==
+=zWY4
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tjmaynes
+
+==================================================================
