@@ -9,3 +9,6 @@ _site/
 build/
 posts/index.*
 posts/rss.*
+
+# CI stuff
+emacs-*
