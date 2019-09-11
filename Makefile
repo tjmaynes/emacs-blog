@@ -1,7 +1,7 @@
-EMACS_INSTALL_DIRECTORY = $(PWD)
+BLOG_DIRECTORY          = $(PWD)
+EMACS_INSTALL_DIRECTORY = $(BLOG_DIRECTORY)
 EMACS_VERSION           = 26.2
 EMACS                   = emacs
-BLOG_DIRECTORY          = $(PWD)
 BLOG_CONFIG             = $(BLOG_DIRECTORY)/config.json
 BLOG_PUBLISH_SCRIPT     = $(BLOG_DIRECTORY)/scripts/publish.el
 BLOG_BUILD_DIRECTORY    = build
@@ -11,8 +11,12 @@ install_dependencies:
 	chmod +x ./scripts/install_dependencies.sh
 	./scripts/install_dependencies.sh $(EMACS_VERSION) $(EMACS_INSTALL_DIRECTORY)
 
+check-emacs-version:
+	$(EMACS) \
+	--no-init-file \
+	--version
+
 build-blog:
-	which $(EMACS) && \
 	BLOG_CONFIG=$(BLOG_CONFIG) \
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
 	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY) \
@@ -29,7 +33,7 @@ edit-blog: clean build-blog
 	--volume $(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY):/usr/share/nginx/html \
 	nginx:1.15.7
 
-publish-blog: build-blog
+publish-blog: check-emacs-version build-blog
 
 clean:
 	rm -rf $(BLOG_BUILD_DIRECTORY) .timestamps
