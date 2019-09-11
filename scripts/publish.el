@@ -1,3 +1,4 @@
+
 ;; --- publish.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
@@ -28,6 +29,11 @@
 (defun utilities/org-parse-and-format-date (str format)
   (let ((time-string (org-time-string-to-time str)))
     (format-time-string format time-string)))
+
+(defun utilities/get-relative-parent-directory (file)
+  (let* ((directory (file-name-directory (directory-file-name file)))
+	 (directory (substring directory 0 (1- (length directory)))))
+    (file-name-nondirectory directory)))
 
 ;; Package Manager
 
@@ -84,6 +90,7 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
+       <li><a href=\"/cv.html\">CV</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
@@ -141,12 +148,6 @@
    "<p>" blog-author-footnote-message "</p>\n"
    "</div>\n"))
 
-(defun blog/get-index-body (content)
-  (concat
-   "<div class=\"archive\">\n"
-   content
-   "</div>\n"))
-
 (defun blog/get-html (head body language)
   (concat
    "<!DOCTYPE html>\n"
@@ -166,7 +167,10 @@
     (blog/base-html-template blog-title
 			     blog-description
 			     language
-			     (blog/get-index-body content))))
+			     (concat
+			      "<div class=\"archive\">\n"
+			      content
+			      "</div>\n"))))
 
 (defun blog/blog-post-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
@@ -178,11 +182,30 @@
 			     language
 			     (blog/get-post-body title date content))))
 
+(defun blog/get-page-body (title date content)
+  (concat
+   "<div class=\"post\">\n"
+   content
+   "</div>\n"))
+
+(defun blog/blog-page-template (content info)
+  (let* ((title (utilities/org-get-file-keyword "TITLE"))
+	 (date (utilities/org-get-file-keyword "DATE"))
+	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
+	 (language (plist-get info :language)))
+    (blog/base-html-template title
+			     description
+			     language
+			     (blog/get-page-body title date content))))
+
 (defun blog/org-publish-to-html (plist filename pub-dir)
-  (let ((posts-dir (expand-file-name "posts" pub-dir)))
-    (if (equal (file-name-base filename) "index")
-	(org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir)
-      (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir))))
+  (let ((parent-directory (utilities/get-relative-parent-directory filename))
+	(posts-dir (expand-file-name "posts" pub-dir)))
+    (cond ((equal (file-name-base filename) "index")
+	   (org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir))
+	  ((equal parent-directory "posts")
+	   (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir))
+	  ((org-publish-org-to 'custom-blog-page-backend filename ".html" plist pub-dir)))))
 
 (defun blog/org-publish-sitemap (_title list)
   (package-manager/ensure-packages-installed 'seq)
@@ -208,7 +231,6 @@
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
      :exclude ,(regexp-opt '("rss.org" "index.org"))
-     :exclude-tags ("onlyrss" "noexport")
      :publishing-function blog/org-publish-to-html
      :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil
@@ -226,6 +248,12 @@
      :publishing-directory ,(expand-file-name (format "%s/posts/images" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive nil)
+    ("blog-pages"
+     :base-directory ,(expand-file-name "pages" blog-directory)
+     :base-extension "org"
+     :publishing-function blog/org-publish-to-html
+     :publishing-directory ,blog-publishing-directory
+     :html-home/up-format nil)    
     ("blog-rss"
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
@@ -242,7 +270,7 @@
      :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive t)
-    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public"))))
+    ("blog" :components ("blog-home" "blog-post-images" "blog-pages" "blog-rss" "blog-public"))))
 
 (defun blog/publish-setup (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
@@ -269,7 +297,9 @@
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
 				     :translate-alist '((template . blog/blog-index-template)))
   (org-export-define-derived-backend 'custom-blog-post-backend 'html
-				     :translate-alist '((template . blog/blog-post-template))))
+				     :translate-alist '((template . blog/blog-post-template)))
+  (org-export-define-derived-backend 'custom-blog-page-backend 'html
+				     :translate-alist '((template . blog/blog-page-template))))
 
 (defun blog/publish-all ()
   (require 'org)
