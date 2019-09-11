@@ -1,5 +1,6 @@
 EMACS_INSTALL_DIRECTORY = $(PWD)
 EMACS_VERSION           = 26.2
+EMACS                   = emacs
 BLOG_DIRECTORY          = $(PWD)
 BLOG_CONFIG             = $(BLOG_DIRECTORY)/config.json
 BLOG_PUBLISH_SCRIPT     = $(BLOG_DIRECTORY)/scripts/publish.el
@@ -11,10 +12,11 @@ install_dependencies:
 	./scripts/install_dependencies.sh $(EMACS_VERSION) $(EMACS_INSTALL_DIRECTORY)
 
 build-blog:
+	which $(EMACS) && \
 	BLOG_CONFIG=$(BLOG_CONFIG) \
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
 	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY) \
-	emacs \
+	$(EMACS) \
 	--batch \
 	--no-init-file \
 	--no-site-file \

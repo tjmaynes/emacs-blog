@@ -12,3 +12,4 @@ posts/rss.*
 
 # CI stuff
 emacs-*
+tmp/

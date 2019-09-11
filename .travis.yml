@@ -2,12 +2,7 @@ language: generic
 cache:
   directories:
     - /home/travis/.emacs.d/elpa/
-    - /tmp/emacs
 sudo: false
-env:
-  global:
-    - EMACS_VERSION=26.2
-    - EMACS_INSTALL_DIRECTORY=/emacs/$EMACS_VERSION
 install: make install_dependencies
 script: make publish-blog
 deploy:
