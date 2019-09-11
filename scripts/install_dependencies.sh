@@ -25,7 +25,7 @@ export PATH=${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin:${PATH}
 if [ -d "${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin" ]; then
     echo "Emacs already installed!"
 else
-    echo "Installing Emacs v$EMACS_VERSION"
+    echo "Installing Emacs v$EMACS_VERSION into $EMACS_INSTALL_DIRECTORY"
     download_emacs
 fi
 
