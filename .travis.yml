@@ -6,7 +6,8 @@ cache:
 sudo: false
 env:
   global:
-    - EMACS_INSTALL_DIRECTORY=/
+    - EMACS_VERSION=26.2
+    - EMACS_INSTALL_DIRECTORY=/emacs/$EMACS_VERSION
 install: make install_dependencies
 script: make publish-blog
 deploy:
