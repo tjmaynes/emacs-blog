@@ -3,12 +3,21 @@ cache:
   directories:
     - /home/travis/.emacs.d/elpa/
 sudo: false
-install: make install_dependencies
+env:
+  matrix:
+    - EMACS_VERSION=26.2
+install:
+  - curl -LO https://github.com/npostavs/emacs-travis/releases/download/bins/emacs-bin-${EMACS_VERSION}.tar.gz
+  - tar -xaf emacs-bin-${EMACS_VERSION}.tar.gz -C /
+  - export PATH=/tmp/emacs/bin:${PATH}
 script:
   - export PATH="${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin:$PATH"
-  - make publish-blog
+  - make publish_blog
 deploy:
-  provider: script
-  script: make deploy-blog
+  provider: pages
+  local_dir: build/
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
   on:
     branch: master
