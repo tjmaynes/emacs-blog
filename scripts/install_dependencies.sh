@@ -18,7 +18,6 @@ function download_emacs
     EMACS_URL_DOWNLOAD="https://github.com/npostavs/emacs-travis/releases/download/bins/emacs-bin-${EMACS_VERSION}.tar.gz"
     curl -fsSkL --retry 9 --retry-delay 9 -O ${EMACS_URL_DOWNLOAD}
     tar -xvf emacs-bin-${EMACS_VERSION}.tar.gz -C ${EMACS_INSTALL_DIRECTORY}
-    chmod +x ${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin/emacs-${EMACS_VERSION}
 }
 
 export PATH=${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin:${PATH}

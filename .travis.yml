@@ -1,15 +1,14 @@
-language: generic
+language: minimal
 cache:
   directories:
     - /home/travis/.emacs.d/elpa/
 sudo: false
 install: make install_dependencies
-script: make publish-blog
+script:
+  - export PATH="${EMACS_INSTALL_DIRECTORY}/tmp/emacs/bin:$PATH"
+  - make publish-blog
 deploy:
-  provider: pages
-  local_dir: build/
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
+  provider: script
+  script: make deploy-blog
   on:
     branch: master
