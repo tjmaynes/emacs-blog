@@ -2,6 +2,8 @@
 #+DATE: <2019-09-10 Mon>
 #+DESCRIPTION: TJ Maynes CV.
 
+[[./cv.pdf][View PDF]]
+
 * TJ Maynes
 
 - New York, NY

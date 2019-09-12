@@ -1,0 +1,49 @@
+version: 2
+jobs:
+  build_blog:
+    docker:
+      - image: silex/emacs:26.2
+    working_directory: ~/blog
+    steps:
+      - checkout
+      - run:
+          name: Build Blog
+          command: make build_blog
+      - store_artifacts:
+          path: build/
+  build_cv:
+    docker:
+      - image: moss/xelatex
+    working_directory: ~/blog
+    steps:
+      - checkout
+      - run:
+          name: Build CV
+          command: make build_cv
+      - store_artifacts:
+          path: build/
+  gh_pages_deploy:
+    docker:
+      - image: node:8.10.0
+    working_directory: ~/blog
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build/
+      - run:
+          name: Install and Configure Dependencies
+          command: |
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "tjmaynes@gmail.com"
+            git config user.name "tjmaynes-bot"
+      - run:
+          name: Deploy site to gh-pages branch
+          command: gh-pages --dist build/
+
+workflows:
+  version: 2
+  publish_blog:
+    jobs:
+      - build_blog
+      - build_cv
+      - gh_pages_deploy

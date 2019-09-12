@@ -1,4 +1,3 @@
-
 ;; --- publish.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
@@ -90,7 +89,7 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
-       <li><a href=\"/cv.html\">CV</a></li>
+       <li><a href=\"/cv/index.html\">CV</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
@@ -201,10 +200,10 @@
 (defun blog/org-publish-to-html (plist filename pub-dir)
   (let ((parent-directory (utilities/get-relative-parent-directory filename))
 	(posts-dir (expand-file-name "posts" pub-dir)))
-    (cond ((equal (file-name-base filename) "index")
-	   (org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir))
-	  ((equal parent-directory "posts")
-	   (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir))
+    (cond ((equal parent-directory "posts")
+	   (if (equal (file-name-base filename) "index")
+	       (org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir)
+	     (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-dir)))
 	  ((org-publish-org-to 'custom-blog-page-backend filename ".html" plist pub-dir)))))
 
 (defun blog/org-publish-sitemap (_title list)
@@ -251,6 +250,7 @@
     ("blog-pages"
      :base-directory ,(expand-file-name "pages" blog-directory)
      :base-extension "org"
+     :recursive t
      :publishing-function blog/org-publish-to-html
      :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil)    
