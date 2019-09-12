@@ -42,7 +42,10 @@ workflows:
   version: 2
   publish_blog:
     jobs:
-      - publish_blog
+      - publish_blog:
+          filters:
+            branches:
+              only: master
       - gh_pages_deploy:
           requires:
             - publish_blog
