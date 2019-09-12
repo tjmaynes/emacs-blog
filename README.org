@@ -5,7 +5,7 @@
 Blogging about software design/architecture, infrastructure, and automated testing.
 #+END_QUOTE
 
-[[https://travis-ci.org/tjmaynes/blog][file:https://travis-ci.org/tjmaynes/blog.svg?branch=master]]
+[[https://circleci.com/gh/tjmaynes/blog/tree/master][file:https://circleci.com/gh/tjmaynes/blog/tree/master.svg?style=svg]]
 
 ** Requirements
 
@@ -36,4 +36,21 @@ BLOG_CONFIG=<some-blog-config> \
 BLOG_DIRECTORY=<some-blog-directory> \
 BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make edit_blog
+#+end_src
+
+To build the =docker= image, run the following command:
+#+begin_src bash
+make build_image
+#+end_src
+
+To test the =docker= image, run the following command:
+#+begin_src bash
+make test_image
+#+end_src
+
+To push the =docker= image to dockerhub, run the following command:
+#+begin_src bash
+REGISTRY_PASSWORD=<some-registry-password> \
+TAG=<some-build-tag> \
+make push_image
 #+end_src

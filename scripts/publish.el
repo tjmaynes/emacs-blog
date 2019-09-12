@@ -290,7 +290,8 @@
 	  blog-author-footnote-message (gethash "footnote-message" author-config)
 	  blog-directory blog-directory
 	  blog-publishing-directory (expand-file-name build-directory blog-directory)
-	  blog-css-url (gethash "css" settings-config))))
+	  blog-css-url (gethash "css" settings-config)
+	  blog-timestamps-directory (concat blog-directory "timestamps"))))
 
 (defun blog/setup-custom-templates ()
   (require 'ox)
@@ -305,7 +306,6 @@
   (require 'org)
   (require 'htmlize)
   (let* ((org-publish-project-alist          (blog/get-publish-project-alist))
-	 (org-publish-timestamp-directory    "./.timestamps/")
 	 (org-export-with-section-numbers    nil)
 	 (org-export-with-smart-quotes       t)
 	 (org-export-with-toc                nil)

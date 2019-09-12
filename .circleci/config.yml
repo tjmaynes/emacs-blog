@@ -1,27 +1,26 @@
 version: 2
 jobs:
-  build_blog:
+  publish_blog:
     docker:
-      - image: silex/emacs:26.2
+      - image: tjmaynes/blog-builder:latest
     working_directory: ~/blog
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-blog-cache
       - run:
-          name: Build Blog
-          command: make build_blog
-      - store_artifacts:
-          path: build/
-  build_cv:
-    docker:
-      - image: moss/xelatex
-    working_directory: ~/blog
-    steps:
-      - checkout
-      - run:
-          name: Build CV
-          command: make build_cv
-      - store_artifacts:
-          path: build/
+          name: Publish Blog
+          command: make publish_blog
+      - save_cache:
+          key: v1-blog-cache
+          paths:
+            - ~/.emacs.d/elpa
+      - persist_to_workspace:
+          root: ~/blog
+          paths:
+            - build/*
+            - .git/*
   gh_pages_deploy:
     docker:
       - image: node:8.10.0
@@ -29,21 +28,24 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: build/
+          at: ~/blog
       - run:
           name: Install and Configure Dependencies
           command: |
             npm install -g --silent gh-pages@2.0.1
-            git config user.email "tjmaynes@gmail.com"
-            git config user.name "tjmaynes-bot"
+            git config user.email tjmaynes@gmail.com
+            git config user.name tjmaynes
       - run:
-          name: Deploy site to gh-pages branch
+          name: Deploy Blog to gh-pages branch
           command: gh-pages --dist build/
-
 workflows:
   version: 2
   publish_blog:
     jobs:
-      - build_blog
-      - build_cv
-      - gh_pages_deploy
+      - publish_blog
+      - gh_pages_deploy:
+          requires:
+            - publish_blog
+          filters:
+            branches:
+              only: master
