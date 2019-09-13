@@ -89,7 +89,7 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
-       <li><a href=\"/cv.html\">CV</a></li>
+       <li><a href=\"/public/documents/cv.pdf\">CV</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
@@ -246,14 +246,7 @@
      :base-extension ,(regexp-opt '("jpg" "png"))
      :publishing-directory ,(expand-file-name (format "%s/posts/images" build-directory) blog-directory)
      :publishing-function org-publish-attachment
-     :recursive nil)
-    ("blog-pages"
-     :base-directory ,(expand-file-name "pages" blog-directory)
-     :base-extension "org"
-     :recursive t
-     :publishing-function blog/org-publish-to-html
-     :publishing-directory ,blog-publishing-directory
-     :html-home/up-format nil)    
+     :recursive nil)    
     ("blog-rss"
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
@@ -270,7 +263,7 @@
      :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive t)
-    ("blog" :components ("blog-home" "blog-post-images" "blog-pages" "blog-rss" "blog-public"))))
+    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public"))))
 
 (defun blog/publish-setup (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
