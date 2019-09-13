@@ -28,7 +28,7 @@ check_latex_version:
 
 compile_latex_file:
 	(mkdir -p $(LATEX_BUILD_DESTINATION) || true) && \
-	cd tex && xelatex \
+	cd $(LATEX_FILE_DIRECTORY) && xelatex \
 	-output-directory=../$(LATEX_BUILD_DESTINATION) \
 	$(LATEX_FILE).tex && \
 	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).log && \
@@ -37,11 +37,13 @@ compile_latex_file:
 
 compile_cv:
 	make compile_latex_file \
-	LATEX_FILE=cv
+	LATEX_FILE=cv \
+	LATEX_FILE_DIRECTORY=career
 
 compile_resume:
 	make compile_latex_file \
-	LATEX_FILE=resume
+	LATEX_FILE=resume \
+	LATEX_FILE_DIRECTORY=career
 
 compile_latex_files: compile_cv compile_resume
 
