@@ -1,12 +1,14 @@
-BLOG_DIRECTORY          = $(PWD)
-BLOG_CONFIG             = $(BLOG_DIRECTORY)/config.json
-BLOG_PUBLISH_SCRIPT     = $(BLOG_DIRECTORY)/scripts/publish.el
-BLOG_BUILD_DIRECTORY    = build
-PORT                    = 4000
-IMAGE_NAME              = blog-builder
-REGISTRY_USERNAME       = tjmaynes
-REGISTRY_PASSWORD       ?= ""
-TAG                     = latest
+BLOG_DIRECTORY              = $(PWD)
+BLOG_CONFIG                 = $(BLOG_DIRECTORY)/config.json
+BLOG_PUBLISH_SCRIPT         = $(BLOG_DIRECTORY)/scripts/publish.el
+BLOG_BUILD_DIRECTORY        = build
+BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
+LATEX_BUILD_DESTINATION     = $(BLOG_BUILD_PUBLIC_DIRECTORY)/documents
+PORT                        = 4000
+IMAGE_NAME                  = blog-builder
+REGISTRY_USERNAME           = tjmaynes
+REGISTRY_PASSWORD           ?= ""
+TAG                         = latest
 
 check_emacs_version:
 	emacs \
@@ -26,19 +28,30 @@ build_blog:
 check_latex_version:
 	xelatex --version
 
-build_cv:
+compile_latex_file:
+	(mkdir -p $(LATEX_BUILD_DESTINATION) || true) && \
 	xelatex \
-	-output-directory=$(BLOG_BUILD_DIRECTORY)/cv \
-	pages/cv/cv.tex && \
-	rm -f $(BLOG_BUILD_DIRECTORY)/cv/cv.log && \
-	rm -f $(BLOG_BUILD_DIRECTORY)/cv/cv.aux && \
-	rm -f $(BLOG_BUILD_DIRECTORY)/cv/cv.out
+	-output-directory=$(LATEX_BUILD_DESTINATION) \
+	$(LATEX_FILE_LOCATION) && \
+	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).log && \
+	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).aux && \
+	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).out
+
+compile_cv:
+	make compile_latex_file \
+	LATEX_FILE=cv \
+	LATEX_FILE_LOCATION=pages/cv/cv.tex
+
+compile_resume:
+	make compile_latex_file \
+	LATEX_FILE=resume \
+	LATEX_FILE_LOCATION=pages/resume/resume.tex
 
 check_versions: check_emacs_version check_latex_version
 
-publish_blog: check_versions build_blog build_cv
+publish_blog: check_versions build_blog compile_cv compile_resume
 
-edit_blog: clean build_blog build_cv
+edit_blog: clean publish_blog
 	(docker rm -f nginx-blog || true) && docker run --name nginx-blog \
 	--publish $(PORT):80 \
 	--publish 443:443 \
