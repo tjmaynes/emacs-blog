@@ -2,7 +2,7 @@
 #+DATE: <2019-09-10 Mon>
 #+DESCRIPTION: TJ Maynes CV.
 
-[[../public/documents/cv.pdf][View PDF]]
+[[./public/documents/cv.pdf][View PDF]]
 
 * TJ Maynes
 

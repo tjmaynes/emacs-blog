@@ -40,12 +40,12 @@ compile_latex_file:
 compile_cv:
 	make compile_latex_file \
 	LATEX_FILE=cv \
-	LATEX_FILE_LOCATION=pages/cv/cv.tex
+	LATEX_FILE_LOCATION=pages/cv.tex
 
 compile_resume:
 	make compile_latex_file \
 	LATEX_FILE=resume \
-	LATEX_FILE_LOCATION=pages/resume/resume.tex
+	LATEX_FILE_LOCATION=pages/resume.tex
 
 check_versions: check_emacs_version check_latex_version
 

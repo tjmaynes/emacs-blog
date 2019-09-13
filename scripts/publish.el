@@ -89,7 +89,7 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
-       <li><a href=\"/cv/index.html\">CV</a></li>
+       <li><a href=\"/cv.html\">CV</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
