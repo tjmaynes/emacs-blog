@@ -1,4 +1,4 @@
-;; --- publish.el ---
+;; --- build_blog.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
 
