@@ -25,6 +25,8 @@ jobs:
     docker:
       - image: node:8.10.0
     working_directory: ~/blog
+    environment:
+      - GIT_COMMIT_MSG: git log --format=oneline -n 1 $CIRCLE_SHA1
     steps:
       - checkout
       - attach_workspace:
@@ -37,7 +39,7 @@ jobs:
             git config user.name tjmaynes
       - run:
           name: Deploy Blog to gh-pages branch
-          command: ./node_modules/.bin/gh-pages --message "Auto-generated commit - Updated Blog [ci skip]" --dist build/
+          command: ./node_modules/.bin/gh-pages --message "Auto-generated - $GIT_COMMIT_MESSAGE [ci skip]" --dist build/
 workflows:
   version: 2
   publish_blog:
