@@ -1,0 +1,24 @@
+\documentclass[10pt]{article}
+
+\RequirePackage{import}
+\usepackage{import}
+
+\subimport{components/}{preamble}
+\subimport{components/}{style}
+
+\begin{document}
+
+\moveleft.5\hoffset\centerline{\huge TJ Maynes}
+\subimport{components/}{info}
+
+\begin{section}{Professional Experience}
+  \subimport{components/}{experience-nbcuniversal}
+  \subimport{components/}{experience-rejuvenan}
+  \subimport{components/}{experience-spatial-networks}
+\end{section}
+
+\subimport{components/}{skills}
+\subimport{components/}{education}
+\subimport{components/}{production-experience}
+
+\end{document}

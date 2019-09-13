@@ -1,6 +1,4 @@
 BLOG_DIRECTORY              = $(PWD)
-BLOG_CONFIG                 = $(BLOG_DIRECTORY)/config.json
-BLOG_PUBLISH_SCRIPT         = $(BLOG_DIRECTORY)/scripts/publish.el
 BLOG_BUILD_DIRECTORY        = build
 BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
 LATEX_BUILD_DESTINATION     = $(BLOG_BUILD_PUBLIC_DIRECTORY)/documents
@@ -16,36 +14,34 @@ check_emacs_version:
 	--version
 
 build_blog:
-	BLOG_CONFIG=$(BLOG_CONFIG) \
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
+	BLOG_CONFIG=$(BLOG_DIRECTORY)/config.json \
 	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY) \
 	emacs \
 	--batch \
 	--no-init-file \
 	--no-site-file \
-	--load $(BLOG_PUBLISH_SCRIPT)
+	--load $(BLOG_DIRECTORY)/scripts/build_blog.el
 
 check_latex_version:
 	xelatex --version
 
 compile_latex_file:
 	(mkdir -p $(LATEX_BUILD_DESTINATION) || true) && \
-	xelatex \
-	-output-directory=$(LATEX_BUILD_DESTINATION) \
-	$(LATEX_FILE_LOCATION) && \
-	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).log && \
-	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).aux && \
-	rm -f $(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).out
+	cd tex && xelatex \
+	-output-directory=../$(LATEX_BUILD_DESTINATION) \
+	$(LATEX_FILE).tex && \
+	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).log && \
+	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).aux && \
+	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).out
 
 compile_cv:
 	make compile_latex_file \
-	LATEX_FILE=cv \
-	LATEX_FILE_LOCATION=pages/cv.tex
+	LATEX_FILE=cv
 
 compile_resume:
 	make compile_latex_file \
-	LATEX_FILE=resume \
-	LATEX_FILE_LOCATION=pages/resume.tex
+	LATEX_FILE=resume
 
 compile_latex_files: compile_cv compile_resume
 

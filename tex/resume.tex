@@ -1,0 +1,28 @@
+\documentclass[10pt]{article}
+
+\RequirePackage{import}
+\usepackage{import}
+
+\subimport{components/}{preamble}
+\subimport{components/}{style}
+
+\begin{document}
+
+\moveleft.5\hoffset\centerline{\huge TJ Maynes}
+\subimport{components/}{info}
+
+\subimport{components/}{objective}
+
+\begin{section}{Professional Experience}
+  \subimport{components/}{experience-nbcuniversal}
+  \subimport{components/}{experience-rejuvenan}
+\end{section}
+
+\subimport{components/}{skills}
+
+\begin{section}{Education}
+  {\sl \textbf{Bachelor of Science, Computer Science}} \hfill May 2015  \\
+  University of South Florida \hfill Tampa, FL \\
+\end{section}
+
+\end{document}
