@@ -56,7 +56,7 @@ hr { margin: 10px 0; }
 
 p {
     line-height: 1.5;
-    text-align: justify;
+    text-align: left;
     padding-bottom: 8px;
     font-size: 0.9em;
 }
@@ -144,16 +144,11 @@ blockquote {
 
 .post ul {
     list-style-type: circle;
-    padding: 0px 10px;
 }
 
 .post ol {
     list-style-type: decimal;
     padding: 0px;
-}
-
-.post li {
-    text-align: justify;
 }
 
 .post img {
@@ -254,4 +249,3 @@ pre {
     line-height: 1.42857;
     overflow: auto;
 }
-
