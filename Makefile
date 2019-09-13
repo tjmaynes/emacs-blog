@@ -47,9 +47,11 @@ compile_resume:
 	LATEX_FILE=resume \
 	LATEX_FILE_LOCATION=pages/resume.tex
 
+compile_latex_files: compile_cv compile_resume
+
 check_versions: check_emacs_version check_latex_version
 
-publish_blog: check_versions build_blog compile_cv compile_resume
+publish_blog: check_versions build_blog compile_latex_files
 
 edit_blog: clean publish_blog
 	(docker rm -f nginx-blog || true) && docker run --name nginx-blog \

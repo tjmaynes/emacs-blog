@@ -39,7 +39,7 @@
 - Patterns
   - Clean architecture, dependency injection, strangler, functional programming, composition over inheritence, SOLID, and railway-oriented programming with Either and Maybe monads.
 - Technologies
-  - Kubernetes, NodeJS, React, SQL/MongoDB, StatsD, Docker, Make, Shell scripts, Jest/Mocha/Chai, OAuth2, Gatling tests, Cookiecutter templates, Elasticsearch/Kibana, Prometheus/Grafana, AWS Cloudformation/ECS/RDS/S3/API Gateway, Azure App Services/DevOps Pipelines/CosmosDB.
+  - Kubernetes, NodeJS, React, SQL/MongoDB, StatsD, Docker, Make, Shell scripts, Jest/Mocha/Chai, OAuth2, Gatling tests, Cookiecutter templates, Elasticsearch/Kibana, Prometheus/Grafana, AWS Cloudformation/ECS/RDS/S3/API Gateway.
 
 ** Education
 - Bachelor of Science in Computer Science degree (B.S.CS)
