@@ -8,12 +8,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-blog-cache
+            - v1-blog-elpa-cache
       - run:
           name: Publish Blog
           command: make publish_blog
       - save_cache:
-          key: v1-blog-cache
+          key: v1-blog-elpa-cache
           paths:
             - ~/.emacs.d/elpa
       - persist_to_workspace:
@@ -32,12 +32,12 @@ jobs:
       - run:
           name: Install and Configure Dependencies
           command: |
-            npm install -g --silent gh-pages@2.0.1
+            npm install --silent gh-pages@2.0.1
             git config user.email tjmaynes@gmail.com
             git config user.name tjmaynes
       - run:
           name: Deploy Blog to gh-pages branch
-          command: gh-pages --dist build/
+          command: ./node_modules/.bin/gh-pages --message "Auto-generated commit - Updated Blog [ci skip]" --dist build/
 workflows:
   version: 2
   publish_blog:

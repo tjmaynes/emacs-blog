@@ -13,3 +13,5 @@ posts/rss.*
 # CI stuff
 emacs-*
 tmp/
+node_modules/
+package-*
