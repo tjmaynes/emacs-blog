@@ -226,6 +226,31 @@
     (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@"
 	    datetime post-entry title)))
 
+(defun blog/org-publish-format-rss-feed (title list)
+  (concat "#+TITLE: " title "\n"
+	  "#+DESCRIPTION: " blog-description "\n\n"
+          (org-list-to-subtree list '(:icount "" :istart ""))))
+
+(defun blog/org-publish-format-rss-feed-entry (entry style project)
+  (print entry)
+  (cond ((not (directory-name-p entry))
+         (let* ((file (org-publish--expand-file-name entry project))
+                (title (org-publish-find-title entry project))
+                (date (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
+                (link (concat (file-name-sans-extension entry) ".html")))
+           (with-temp-buffer
+             (insert (format "* [[file:%s][%s]]\n" file title))
+             (org-set-property "RSS_PERMALINK" link)
+             (org-set-property "PUBDATE" date)
+             ;; to avoid second update to rss.org by org-icalendar-create-uid
+             (org-id-get-create)
+             (insert-file-contents file)
+             (buffer-string))))
+        ((eq style 'tree)
+         ;; Return only last subdir.
+         (file-name-nondirectory (directory-file-name entry)))
+        (t entry)))
+
 (defun blog/org-rss-publish-to-rss (plist filename pub-dir)
   (if (equal "rss.org" (file-name-nondirectory filename))
       (org-rss-publish-to-rss plist filename pub-dir)))
@@ -234,7 +259,7 @@
   `(("blog-home"
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
-     :exclude ,(regexp-opt '("rss.org" "index.org"))
+     :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function blog/org-publish-to-html
      :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil
@@ -256,10 +281,17 @@
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
      :recursive nil
-     :exclude ,(regexp-opt '("index.org"))
+     :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function blog/org-rss-publish-to-rss
      :publishing-directory ,blog-publishing-directory
      :rss-extension "xml"
+     :auto-sitemap t
+     :sitemap-filename "rss.org"
+     :sitemap-title ,blog-title
+     :sitemap-style list
+     :sitemap-sort-files anti-chronologically
+     :sitemap-function blog/org-publish-format-rss-feed
+     :sitemap-format-entry blog/org-publish-format-rss-feed-entry
      :table-of-contents nil)
     ("blog-public"
      :base-directory ,(expand-file-name "static" blog-directory)
