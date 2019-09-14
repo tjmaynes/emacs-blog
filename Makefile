@@ -27,23 +27,18 @@ check_latex_version:
 	xelatex --version
 
 compile_latex_file:
-	(mkdir -p $(LATEX_BUILD_DESTINATION) || true) && \
-	cd $(LATEX_FILE_DIRECTORY) && xelatex \
-	-output-directory=../$(LATEX_BUILD_DESTINATION) \
-	$(LATEX_FILE).tex && \
-	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).log && \
-	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).aux && \
-	rm -f ../$(LATEX_BUILD_DESTINATION)/$(LATEX_FILE).out
+	chmod +x ./scripts/compile_latex_file.sh
+	./scripts/compile_latex_file.sh \
+	$(LATEX_FILE_LOCATION) \
+	$(LATEX_BUILD_DESTINATION)
 
 compile_cv:
 	make compile_latex_file \
-	LATEX_FILE=cv \
-	LATEX_FILE_DIRECTORY=career
+	LATEX_FILE_LOCATION=career/cv
 
 compile_resume:
 	make compile_latex_file \
-	LATEX_FILE=resume \
-	LATEX_FILE_DIRECTORY=career
+	LATEX_FILE_LOCATION=career/resume
 
 compile_latex_files: compile_cv compile_resume
 
