@@ -3,17 +3,19 @@
 	"title": "TJ Maynes",
 	"description": "Blogging about software design/architecture, infrastructure, and automated testing.",
 	"url": "https://tjmaynes.com",
-	"needed-files": [
+	"icon": "/public/images/icon.png",
+	"css": "/public/stylesheets/main.css"
+    },
+    "files": {
+	"copy": [
 	    "static/favicon.ico",
 	    "static/keybase.txt",
 	    "static/CNAME"
 	],
-	"latex-files": [
+	"latex": [
 	    "career/cv.tex",
 	    "career/resume.tex"
-	],
-	"icon": "/public/images/icon.png",
-	"css": "/public/stylesheets/main.css"
+	]
     },
     "author": {
 	"name": "TJ Maynes",

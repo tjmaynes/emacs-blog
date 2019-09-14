@@ -299,15 +299,15 @@
     (blog/setup-custom-templates)
     (org-publish-project "blog" t)))
 
-(defun blog/add-file-to-publishing-directory (file-location)
+(defun blog/copy-file-to-publishing-directory (file-location)
   (let* ((file (file-name-nondirectory file-location))
 	 (destination-file (expand-file-name file blog-publishing-directory)))
     (message (format "Publishing file %s to %s" file blog-publishing-directory))
     (copy-file file-location destination-file t t)))
 
-(defun blog/add-files-to-publishing-directory (files)
+(defun blog/copy-files-to-publishing-directory (files)
   (require 'seq)
-  (seq-map 'blog/add-file-to-publishing-directory files))
+  (seq-map 'blog/copy-file-to-publishing-directory files))
 
 (defun blog/compile-latex-file (file-location)
   (let* ((file (file-name-nondirectory file-location))
@@ -332,13 +332,12 @@
 
 (defun setup-global-variables (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
-	 (author-config (gethash "author" config)))
+	 (author-config (gethash "author" config))
+	 (files-config (gethash "files" config)))
     (setq blog-title (gethash "title" settings-config)
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
 	  blog-icon (gethash "icon" settings-config)
-	  blog-needed-files (gethash "needed-files" settings-config)
-	  blog-latex-files (gethash "latex-files" settings-config)
 	  blog-author-name  (gethash "name" author-config)
 	  blog-author-email (gethash "email" author-config)
 	  blog-author-github (gethash "github" author-config)
@@ -350,6 +349,8 @@
 	  blog-author-footnote-message (gethash "footnote-message" author-config)
 	  blog-directory blog-directory
 	  blog-publishing-directory (expand-file-name build-directory blog-directory)
+	  blog-copy-files (gethash "copy" files-config)
+	  blog-latex-files (gethash "latex" files-config)
 	  blog-css-url (gethash "css" settings-config)
 	  blog-timestamps-directory (concat blog-directory "timestamps"))))
 
@@ -360,7 +361,7 @@
     (package-manager/setup)
     (blog/publish-all)
     (blog/compile-latex-files blog-latex-files)
-    (blog/add-files-to-publishing-directory blog-needed-files)))
+    (blog/copy-files-to-publishing-directory blog-copy-files)))
 
 (initialize
  (utilities/get-environment-variable "BLOG_CONFIG")
