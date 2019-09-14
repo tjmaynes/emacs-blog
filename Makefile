@@ -1,7 +1,7 @@
 BLOG_DIRECTORY              = $(PWD)
-BLOG_BUILD_DIRECTORY        = build
+BLOG_BUILD_DIRECTORY_NAME   = build
+BLOG_BUILD_DIRECTORY        = $(PWD)/$(BLOG_BUILD_DIRECTORY_NAME)
 BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
-LATEX_BUILD_DESTINATION     = $(BLOG_BUILD_PUBLIC_DIRECTORY)/documents
 IMAGE_NAME                  = blog-builder
 PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes
@@ -16,7 +16,7 @@ check_emacs_version:
 build_blog:
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
 	BLOG_CONFIG=$(BLOG_DIRECTORY)/config.json \
-	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY) \
+	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY_NAME) \
 	emacs \
 	--batch \
 	--no-init-file \
@@ -35,13 +35,14 @@ deploy_blog:
 	./scripts/deploy_blog.sh \
 	$(GIT_USERNAME) \
 	$(GIT_EMAIL) \
-	$(GIT_COMMIT_SHA)
+	$(GIT_COMMIT_SHA) \
+	$(BLOG_BUILD_DIRECTORY_NAME)
 
 edit_blog: clean publish_blog
 	chmod +x ./scripts/edit_blog.sh
 	./scripts/edit_blog.sh \
 	$(PORT) \
-	$(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY)
+	$(BLOG_BUILD_DIRECTORY)
 
 build_image:
 	chmod +x ./scripts/build_image.sh
