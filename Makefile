@@ -54,11 +54,10 @@ deploy_blog:
 	$(GIT_COMMIT_SHA)
 
 edit_blog: clean publish_blog
-	(docker rm -f nginx-blog || true) && docker run --name nginx-blog \
-	--publish $(PORT):80 \
-	--publish 443:443 \
-	--volume $(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY):/usr/share/nginx/html \
-	nginx:1.15.7
+	chmod +x ./scripts/edit_blog.sh
+	./scripts/edit_blog.sh \
+	$(PORT) \
+	$(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY)
 
 build_image:
 	chmod +x ./scripts/build_image.sh
