@@ -26,20 +26,16 @@ jobs:
       - image: node:8.10.0
     working_directory: ~/blog
     environment:
-      - GIT_COMMIT_MSG: git log --format=oneline -n 1 $CIRCLE_SHA1
+      - GIT_USERNAME: tjmaynes
+      - GIT_EMAIL: tjmaynes@gmail.com
+      - GIT_COMMIT_SHA: ${CIRCLE_SHA1}
     steps:
       - checkout
       - attach_workspace:
           at: ~/blog
       - run:
-          name: Install and Configure Dependencies
-          command: |
-            npm install --silent gh-pages@2.0.1
-            git config user.email tjmaynes@gmail.com
-            git config user.name tjmaynes
-      - run:
           name: Deploy Blog to gh-pages branch
-          command: ./node_modules/.bin/gh-pages --message "Auto-generated - $GIT_COMMIT_MESSAGE [ci skip]" --dist build/
+          command: make deploy_blog
 workflows:
   version: 2
   publish_blog:

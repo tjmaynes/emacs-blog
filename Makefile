@@ -2,8 +2,8 @@ BLOG_DIRECTORY              = $(PWD)
 BLOG_BUILD_DIRECTORY        = build
 BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
 LATEX_BUILD_DESTINATION     = $(BLOG_BUILD_PUBLIC_DIRECTORY)/documents
-PORT                        = 4000
 IMAGE_NAME                  = blog-builder
+PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes
 REGISTRY_PASSWORD           ?= ""
 TAG                         = latest
@@ -50,6 +50,13 @@ compile_latex_files: compile_cv compile_resume
 check_versions: check_emacs_version check_latex_version
 
 publish_blog: check_versions build_blog compile_latex_files
+
+deploy_blog:
+	chmod +x ./scripts/deploy_blog.sh
+	./scripts/deploy_blog.sh \
+	$(GIT_USERNAME) \
+	$(GIT_EMAIL) \
+	$(GIT_COMMIT_SHA)
 
 edit_blog: clean publish_blog
 	(docker rm -f nginx-blog || true) && docker run --name nginx-blog \
