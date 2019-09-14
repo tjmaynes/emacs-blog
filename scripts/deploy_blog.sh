@@ -23,8 +23,8 @@ else
     npm install --silent gh-pages@2.0.1
 fi
 
-git config user.email ${GIT_USERNAME}
-git config user.name ${GIT_EMAIL}
+git config user.email ${GIT_EMAIL}
+git config user.name ${GIT_USERNAME}
 
 GIT_COMMIT_MESSAGE=$(git log --format=oneline -n 1 $GIT_COMMIT_SHA)
 

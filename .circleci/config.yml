@@ -26,8 +26,8 @@ jobs:
       - image: node:8.10.0
     working_directory: ~/blog
     environment:
-      - GIT_USERNAME: tjmaynes
-      - GIT_EMAIL: tjmaynes@gmail.com
+      - GIT_USERNAME: tjmaynes-bot
+      - GIT_EMAIL: tjmaynes+bot@gmail.com
       - GIT_COMMIT_SHA: ${CIRCLE_SHA1}
     steps:
       - checkout
