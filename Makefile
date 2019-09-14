@@ -64,12 +64,13 @@ build_image:
 	chmod +x ./scripts/build_image.sh
 	./scripts/build_image.sh $(REGISTRY_USERNAME) $(IMAGE_NAME) $(TAG)
 
-test_image: clean
-	docker run --rm -it \
-	--workdir /src \
-	--volume $(BLOG_DIRECTORY):/src \
-	$(REGISTRY_USERNAME)/$(IMAGE_NAME):$(TAG) \
-	publish_blog BLOG_DIRECTORY=/src/
+debug_image: clean
+	chmod +x ./scripts/debug_image.sh
+	./scripts/debug_image.sh \
+	$(REGISTRY_USERNAME) \
+	$(IMAGE_NAME) \
+	$(TAG) \
+	$(BLOG_DIRECTORY)
 
 push_image:
 	chmod +x ./scripts/push_image.sh

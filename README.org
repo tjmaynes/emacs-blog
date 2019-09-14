@@ -43,7 +43,7 @@ To build the =docker= image, run the following command:
 make build_image
 #+end_src
 
-To test the =docker= image, run the following command:
+To debug the =docker= image, run the following command:
 #+begin_src bash
 make test_image
 #+end_src
