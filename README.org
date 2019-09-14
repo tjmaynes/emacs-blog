@@ -45,7 +45,7 @@ make build_image
 
 To debug the =docker= image, run the following command:
 #+begin_src bash
-make test_image
+make debug_image
 #+end_src
 
 To push the =docker= image to dockerhub, run the following command:
