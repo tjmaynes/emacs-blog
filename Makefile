@@ -26,25 +26,9 @@ build_blog:
 check_latex_version:
 	xelatex --version
 
-compile_latex_file:
-	chmod +x ./scripts/compile_latex_file.sh
-	./scripts/compile_latex_file.sh \
-	$(LATEX_FILE_LOCATION) \
-	$(LATEX_BUILD_DESTINATION)
-
-compile_cv:
-	make compile_latex_file \
-	LATEX_FILE_LOCATION=career/cv
-
-compile_resume:
-	make compile_latex_file \
-	LATEX_FILE_LOCATION=career/resume
-
-compile_latex_files: compile_cv compile_resume
-
 check_versions: check_emacs_version check_latex_version
 
-publish_blog: check_versions build_blog compile_latex_files
+publish_blog: check_versions build_blog
 
 deploy_blog:
 	chmod +x ./scripts/deploy_blog.sh

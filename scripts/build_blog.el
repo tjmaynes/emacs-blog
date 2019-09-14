@@ -9,6 +9,11 @@
     (if (not value) (error (format "Missing environment variable: %s." env-name)))
     value))
 
+(defun utilities/ensure-directory-exists (directory)
+  (unless (file-directory-p directory)
+    (make-directory directory :parents))
+  directory)
+
 (defun utilities/read-json-file (json-file)
   (require 'json)
   (let* ((json-object-type 'hash-table)
@@ -89,7 +94,7 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
-       <li><a href=\"/public/documents/cv.pdf\">CV</a></li>
+       <li><a href=\"" blog-author-cv "\">CV</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
@@ -265,27 +270,6 @@
      :recursive t)
     ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public"))))
 
-(defun blog/publish-setup (blog-directory build-directory config)
-  (let* ((settings-config (gethash "settings" config))
-	 (author-config (gethash "author" config)))
-    (setq blog-title (gethash "title" settings-config)
-	  blog-description (gethash "description" settings-config)
-	  blog-url (gethash "url" settings-config)
-	  blog-icon (gethash "icon" settings-config)
-	  blog-needed-files (gethash "needed-files" settings-config)
-	  blog-author-name  (gethash "name" author-config)
-	  blog-author-email (gethash "email" author-config)
-	  blog-author-github (gethash "github" author-config)
-	  blog-author-linkedin (gethash "linkedin" author-config)
-	  blog-author-twitter (gethash "twitter" author-config)	  
-	  blog-author-description (gethash "description" author-config)
-	  blog-author-avatar (gethash "avatar" author-config)
-	  blog-author-footnote-message (gethash "footnote-message" author-config)
-	  blog-directory blog-directory
-	  blog-publishing-directory (expand-file-name build-directory blog-directory)
-	  blog-css-url (gethash "css" settings-config)
-	  blog-timestamps-directory (concat blog-directory "timestamps"))))
-
 (defun blog/setup-custom-templates ()
   (require 'ox)
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
@@ -296,6 +280,7 @@
 				     :translate-alist '((template . blog/blog-page-template))))
 
 (defun blog/publish-all ()
+  (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)
   (require 'org)
   (require 'htmlize)
   (let* ((org-publish-project-alist          (blog/get-publish-project-alist))
@@ -324,16 +309,60 @@
   (require 'seq)
   (seq-map 'blog/add-file-to-publishing-directory files))
 
-(defun blog/publish (config-location blog-directory build-directory)
+(defun blog/compile-latex-file (file-location)
+  (let* ((file (file-name-nondirectory file-location))
+	 (filename (file-name-base file))
+	 (file-directory (utilities/get-relative-parent-directory file-location))
+	 (output-directory (expand-file-name file-directory blog-publishing-directory))
+	 (output-directory (utilities/ensure-directory-exists output-directory))
+	 (change-directory-command (concat "cd " file-directory))
+	 (latex-program (executable-find "xelatex"))
+	 (compile-latex-command (concat latex-program " -output-directory=" output-directory " " file))
+	 (cleanup-command (concat "rm -rf " (expand-file-name (format "%s.log" filename) output-directory)))
+	 (compile-command (concat
+			   change-directory-command " && "
+			   compile-latex-command " && "
+			   cleanup-command)))
+    (message (format "Compiling LaTeX file %s to %s" file-location output-directory))
+    (shell-command compile-command)))
+
+(defun blog/compile-latex-files (files)
+  (require 'seq)
+  (seq-map 'blog/compile-latex-file files))
+
+(defun setup-global-variables (blog-directory build-directory config)
+  (let* ((settings-config (gethash "settings" config))
+	 (author-config (gethash "author" config)))
+    (setq blog-title (gethash "title" settings-config)
+	  blog-description (gethash "description" settings-config)
+	  blog-url (gethash "url" settings-config)
+	  blog-icon (gethash "icon" settings-config)
+	  blog-needed-files (gethash "needed-files" settings-config)
+	  blog-latex-files (gethash "latex-files" settings-config)
+	  blog-author-name  (gethash "name" author-config)
+	  blog-author-email (gethash "email" author-config)
+	  blog-author-github (gethash "github" author-config)
+	  blog-author-linkedin (gethash "linkedin" author-config)
+	  blog-author-twitter (gethash "twitter" author-config)	  
+	  blog-author-description (gethash "description" author-config)
+	  blog-author-cv (gethash "cv" author-config)	  
+	  blog-author-avatar (gethash "avatar" author-config)
+	  blog-author-footnote-message (gethash "footnote-message" author-config)
+	  blog-directory blog-directory
+	  blog-publishing-directory (expand-file-name build-directory blog-directory)
+	  blog-css-url (gethash "css" settings-config)
+	  blog-timestamps-directory (concat blog-directory "timestamps"))))
+
+(defun initialize (config-location blog-directory build-directory)
   (let* ((config (utilities/read-json-file config-location))
 	 (publish-config (gethash "publish" config)))
+    (setup-global-variables blog-directory build-directory config)
     (package-manager/setup)
-    (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)    
-    (blog/publish-setup blog-directory build-directory config)
     (blog/publish-all)
+    (blog/compile-latex-files blog-latex-files)
     (blog/add-files-to-publishing-directory blog-needed-files)))
 
-(blog/publish
+(initialize
  (utilities/get-environment-variable "BLOG_CONFIG")
  (utilities/get-environment-variable "BLOG_DIRECTORY")
  (utilities/get-environment-variable "BLOG_BUILD_DIRECTORY"))
