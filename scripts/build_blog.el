@@ -257,9 +257,9 @@
      :rss-extension "xml"
      :table-of-contents nil)
     ("blog-public"
-     :base-directory ,(expand-file-name "public" blog-directory)
+     :base-directory ,(expand-file-name "static" blog-directory)
      :exclude ,(regexp-opt '("public"))
-     :base-extension ,(regexp-opt '("jpg" "png" "css" "pdf" "eot" "woff" "woff2" "ttf"))
+     :base-extension ,(regexp-opt '("jpg" "png" "css" "eot" "woff" "woff2" "ttf"))
      :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive t)
@@ -271,8 +271,8 @@
     (setq blog-title (gethash "title" settings-config)
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
-	  blog-extra-files (gethash "extra-files" settings-config)
 	  blog-icon (gethash "icon" settings-config)
+	  blog-needed-files (gethash "needed-files" settings-config)
 	  blog-author-name  (gethash "name" author-config)
 	  blog-author-email (gethash "email" author-config)
 	  blog-author-github (gethash "github" author-config)
@@ -314,10 +314,11 @@
     (blog/setup-custom-templates)
     (org-publish-project "blog" t)))
 
-(defun blog/add-file-to-publishing-directory (file)
-  (let ((destination-file (expand-file-name file blog-publishing-directory)))
+(defun blog/add-file-to-publishing-directory (file-location)
+  (let* ((file (file-name-nondirectory file-location))
+	 (destination-file (expand-file-name file blog-publishing-directory)))
     (message (format "Publishing file %s to %s" file blog-publishing-directory))
-    (copy-file file destination-file t t)))
+    (copy-file file-location destination-file t t)))
 
 (defun blog/add-files-to-publishing-directory (files)
   (require 'seq)
@@ -330,7 +331,7 @@
     (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)    
     (blog/publish-setup blog-directory build-directory config)
     (blog/publish-all)
-    (blog/add-files-to-publishing-directory blog-extra-files)))
+    (blog/add-files-to-publishing-directory blog-needed-files)))
 
 (blog/publish
  (utilities/get-environment-variable "BLOG_CONFIG")

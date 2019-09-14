@@ -3,7 +3,11 @@
 	"title": "TJ Maynes",
 	"description": "Blogging about software design/architecture, infrastructure, and automated testing.",
 	"url": "https://tjmaynes.com",
-	"extra-files": ["favicon.ico", "keybase.txt", "CNAME"],
+	"needed-files": [
+	    "static/favicon.ico",
+	    "static/keybase.txt",
+	    "static/CNAME"
+	],
 	"icon": "/public/images/icon.png",
 	"css": "/public/stylesheets/main.css"
     },
