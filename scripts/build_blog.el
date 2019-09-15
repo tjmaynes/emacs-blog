@@ -232,7 +232,6 @@
           (org-list-to-subtree list '(:icount "" :istart ""))))
 
 (defun blog/org-publish-format-rss-feed-entry (entry style project)
-  (print entry)
   (cond ((not (directory-name-p entry))
          (let* ((file (org-publish--expand-file-name entry project))
                 (title (org-publish-find-title entry project))
@@ -242,12 +241,10 @@
              (insert (format "* [[file:%s][%s]]\n" file title))
              (org-set-property "RSS_PERMALINK" link)
              (org-set-property "PUBDATE" date)
-             ;; to avoid second update to rss.org by org-icalendar-create-uid
              (org-id-get-create)
              (insert-file-contents file)
              (buffer-string))))
         ((eq style 'tree)
-         ;; Return only last subdir.
          (file-name-nondirectory (directory-file-name entry)))
         (t entry)))
 
@@ -379,7 +376,6 @@
 	  blog-author-cv (gethash "cv" author-config)	  
 	  blog-author-avatar (gethash "avatar" author-config)
 	  blog-author-footnote-message (gethash "footnote-message" author-config)
-	  blog-directory blog-directory
 	  blog-publishing-directory (expand-file-name build-directory blog-directory)
 	  blog-copy-files (gethash "copy" files-config)
 	  blog-latex-files (gethash "latex" files-config)
