@@ -344,6 +344,7 @@
 	 (file-directory (utilities/get-relative-parent-directory file-location))
 	 (output-directory (expand-file-name file-directory blog-publishing-directory))
 	 (output-directory (utilities/ensure-directory-exists output-directory))
+	 (output-file (expand-file-name (format "%s.pdf" filename) output-directory))	 
 	 (change-directory-command (concat "cd " file-directory))
 	 (latex-program (executable-find "xelatex"))
 	 (compile-latex-command (concat latex-program " -output-directory=" output-directory " " file))
@@ -353,7 +354,9 @@
 			   compile-latex-command " && "
 			   cleanup-command)))
     (message (format "Compiling LaTeX file %s to %s" file-location output-directory))
-    (shell-command compile-command)))
+    (shell-command compile-command)
+    (if (not (file-exists-p output-file))
+	(error (format "Error: An issue occurred during compilation, %s was not created!" output-file)))))
 
 (defun blog/compile-latex-files (files)
   (require 'seq)
