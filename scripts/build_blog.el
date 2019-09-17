@@ -220,11 +220,20 @@
 	     "\n"))
 
 (defun blog/org-publish-sitemap-format (entry style project)
-  (let ((datetime (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
-	(title (org-publish-find-title entry project))
-	(post-entry (format "posts/%s" entry)))
-    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@"
-	    datetime post-entry title)))
+  (let* ((date (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
+	 (xml-date-time (utilities/org-parse-and-format-date date "%F"))
+	 (display-date-time (utilities/org-parse-and-format-date date "%Y-%m-%d"))
+	 (title (org-publish-find-title entry project))
+	 (description (org-publish-find-description entry project))
+	 (post-entry (format "posts/%s.html" (file-name-sans-extension entry))))
+    (concat "@@html:<span class=\"archive-item\">@@"
+	    (concat
+	     "@@html:<header>@@"
+	     (concat
+	      "@@html:<h1 itemprop=\"name headline\">@@@@html:<a href=\"" post-entry "\">@@" title "@@html:</a>@@@@html:</h1>@@"
+	      "@@html:<p>@@Posted on @@html:<time datetime=\"" xml-date-time "\" itemprop=\"datePublished\">@@" display-date-time "@@html:</time>@@ • " blog-author-name "@@html:</p>@@")
+	     "@@html:</header>@@")
+	    "@@html:</span>@@")))
 
 (defun blog/org-publish-format-rss-feed (title list)
   (concat "#+TITLE: " title "\n"
