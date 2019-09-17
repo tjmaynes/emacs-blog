@@ -44,8 +44,8 @@ fi
 
 if [ -d gh-pages-temp ]; then rm -rf gh-pages-temp; fi
 
-git config user.email ${GIT_EMAIL}
-git config user.name ${GIT_USERNAME}
+git config --global user.email ${GIT_EMAIL}
+git config --global user.name ${GIT_USERNAME}
 
 # Clone Target Branch and remove content
 git clone \
