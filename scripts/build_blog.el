@@ -362,7 +362,7 @@
   (require 'seq)
   (seq-map 'blog/compile-latex-file files))
 
-(defun setup-global-variables (blog-directory build-directory config)
+(defun blog/setup-global-variables (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
 	 (author-config (gethash "author" config))
 	 (files-config (gethash "files" config)))
@@ -388,8 +388,8 @@
 (defun initialize (config-location blog-directory build-directory)
   (let* ((config (utilities/read-json-file config-location))
 	 (publish-config (gethash "publish" config)))
-    (setup-global-variables blog-directory build-directory config)
     (package-manager/setup)
+    (blog/setup-global-variables blog-directory build-directory config)    
     (blog/publish-all)
     (blog/compile-latex-files blog-latex-files)
     (blog/copy-files-to-publishing-directory blog-copy-files)))
