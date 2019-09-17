@@ -7,6 +7,7 @@ PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes
 REGISTRY_PASSWORD           ?= ""
 TAG                         = latest
+TARGET_BRANCH               = gh-pages
 
 check_emacs_version:
 	emacs \
@@ -36,6 +37,7 @@ deploy_blog:
 	$(GIT_USERNAME) \
 	$(GIT_EMAIL) \
 	$(GIT_COMMIT_SHA) \
+	$(TARGET_BRANCH) \
 	$(BLOG_BUILD_DIRECTORY_NAME)
 
 edit_blog: clean publish_blog
