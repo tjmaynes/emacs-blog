@@ -23,7 +23,7 @@ jobs:
             - .git/*
   gh_pages_deploy:
     docker:
-      - image: frolvlad/alpine-bash:latest
+      - image: node:8.10.0
     working_directory: ~/blog
     environment:
       - GIT_USERNAME: tjmaynes-bot
