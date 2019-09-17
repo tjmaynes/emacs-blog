@@ -224,7 +224,6 @@
 	 (xml-date-time (utilities/org-parse-and-format-date date "%F"))
 	 (display-date-time (utilities/org-parse-and-format-date date "%Y-%m-%d"))
 	 (title (org-publish-find-title entry project))
-	 (description (org-publish-find-description entry project))
 	 (post-entry (format "posts/%s.html" (file-name-sans-extension entry))))
     (concat "@@html:<span class=\"archive-item\">@@"
 	    (concat
