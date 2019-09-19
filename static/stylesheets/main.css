@@ -44,8 +44,7 @@ time, mark, audio, video {
 }
 
 body {
-    font: 14px/1.5 "Inconsolata", "Lucida Sans Typewriter", "Lucida Console", Monaco, monospace;
-    font-size: 1.1em;
+    font: 16px/1.5 "Inconsolata", "Lucida Sans Typewriter", "Lucida Console", Monaco, monospace;
 }
 
 h1 { line-height: 1.2; font-size: 1.5em; }
@@ -144,6 +143,7 @@ blockquote {
 
 .post ul {
     list-style-type: circle;
+    padding: 0px;    
 }
 
 .post ol {
