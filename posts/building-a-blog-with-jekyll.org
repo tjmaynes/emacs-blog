@@ -58,13 +58,20 @@ After a few moments, you should see a newly created folder called =_site=. Now, 
 
 ** Editing the Blog
 When your blog was created using =jekyll new my-new-blog=, the following files and folders were created:
-- =_posts= -> folder containing your blog posts.
-- =_config.yml= -> file for configuring project settings and global variables. 
-- =index.markdown= -> your index file which relies on a home layout.
-- =about.markdown= -> another markdown file which we can ignore for now. 
-- =Gemfile= -> file for describing your =rubygems= dependencies.
-- =Gemfile.lock= -> file for version controlling your =rubygems= dependency tree.  
-- =404.html= -> no explanation necessary.
+- =_posts=
+  - folder containing your blog posts.
+- =_config.yml=
+  - file for configuring project settings and global variables. 
+- =index.markdown=
+  - your index file which relies on a home layout.
+- =about.markdown=
+  - another markdown file which we can ignore for now. 
+- =Gemfile=
+  - file for describing your =rubygems= dependencies.
+- =Gemfile.lock=
+  - file for version controlling your =rubygems= dependency tree.  
+- =404.html=
+  - no explanation necessary.
 
 When your blog was generated using =bundle exec jekyll serve=, a =_site= folder was created. Each time your blog is built, this =_site= folder will be regenerated with your latest changes to your blog. A common workflow when making changes to your blog is the ability to "watch" for changes.
 
