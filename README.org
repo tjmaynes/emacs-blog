@@ -29,16 +29,17 @@ BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make publish_blog
 #+end_src
 
-To edit the blog using =nginx= in a =docker= container, run the following command:
+To preview the blog using =nginx= in a =docker= container, run the following command:
 #+begin_src bash
 BLOG_CONFIG=<some-blog-config> \
 BLOG_DIRECTORY=<some-blog-directory> \
 BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
-make edit_blog
+make preview_blog
 #+end_src
 
 To build the =docker= image, run the following command:
 #+begin_src bash
+TAG=<some-build-tag> \
 make build_image
 #+end_src
 
