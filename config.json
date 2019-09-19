@@ -25,7 +25,6 @@
 	"linkedin": "tjmaynes",
 	"twitter": "@tjmaynes",
 	"email": "tjmaynes@gmail.com",
-	"avatar": "/public/images/me/profile.jpg",
-	"footnote-message": "If you happened to catch any missing or incorrect details in the post, please drop me an <a href='mailto:tjmaynes@gmail.com'>email</a>. And as always, thank you for reading and I hope you catch my next blog post soon!"
+	"avatar": "/public/images/me/profile.jpg"
     }
 }

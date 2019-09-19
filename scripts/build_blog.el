@@ -149,7 +149,6 @@
    "<div class=\"post\">\n"
    (blog/get-post-header title date)
    content
-   "<p>" blog-author-footnote-message "</p>\n"
    "</div>\n"))
 
 (defun blog/get-html (head body language)
@@ -378,7 +377,6 @@
 	  blog-author-description (gethash "description" author-config)
 	  blog-author-cv (gethash "cv" author-config)	  
 	  blog-author-avatar (gethash "avatar" author-config)
-	  blog-author-footnote-message (gethash "footnote-message" author-config)
 	  blog-publishing-directory (expand-file-name build-directory blog-directory)
 	  blog-copy-files (gethash "copy" files-config)
 	  blog-latex-files (gethash "latex" files-config)
