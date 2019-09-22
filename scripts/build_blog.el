@@ -330,8 +330,13 @@
 (defun blog/copy-file-to-publishing-directory (file-location)
   (let* ((file (file-name-nondirectory file-location))
 	 (destination-file (expand-file-name file blog-publishing-directory)))
-    (message (format "Publishing file %s to %s" file blog-publishing-directory))
-    (copy-file file-location destination-file t t)))
+    (if (file-accessible-directory-p file)
+	(progn
+	  (message (format "Copying directory %s/ to %s" file blog-publishing-directory))
+	  (copy-directory file-location destination-file t t))
+      (progn
+	(message (format "Copying file %s to %s" file blog-publishing-directory))
+	(copy-file file-location destination-file t t)))))
 
 (defun blog/copy-files-to-publishing-directory (files)
   (require 'seq)

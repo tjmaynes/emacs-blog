@@ -10,7 +10,8 @@
 	"copy": [
 	    "static/favicon.ico",
 	    "static/keybase.txt",
-	    "static/CNAME"
+	    "static/CNAME",
+	    "talks"
 	],
 	"latex": [
 	    "career/cv.tex",
