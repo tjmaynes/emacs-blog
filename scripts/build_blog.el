@@ -62,6 +62,45 @@
 
 ;; Blog
 
+(defun blog/copy-file-to-publishing-directory (file-location)
+  (let* ((file (file-name-nondirectory file-location))
+	 (destination-file (expand-file-name file blog-publishing-directory)))
+    (if (file-accessible-directory-p file)
+	(progn
+	  (message (format "Copying directory %s/ to %s" file blog-publishing-directory))
+	  (copy-directory file-location destination-file t t))
+      (progn
+	(message (format "Copying file %s to %s" file blog-publishing-directory))
+	(copy-file file-location destination-file t t)))))
+
+(defun blog/copy-files-to-publishing-directory (files)
+  (require 'seq)
+  (seq-map 'blog/copy-file-to-publishing-directory files))
+
+(defun blog/compile-latex-file (file-location)
+  (let* ((file (file-name-nondirectory file-location))
+	 (filename (file-name-base file))
+	 (file-directory (utilities/get-relative-parent-directory file-location))
+	 (output-directory (expand-file-name file-directory blog-publishing-directory))
+	 (output-directory (utilities/ensure-directory-exists output-directory))
+	 (output-file (expand-file-name (format "%s.pdf" filename) output-directory))	 
+	 (change-directory-command (concat "cd " file-directory))
+	 (latex-program (executable-find "xelatex"))
+	 (compile-latex-command (concat latex-program " -output-directory=" output-directory " " file))
+	 (cleanup-command (concat "rm -rf " (expand-file-name (format "%s.log" filename) output-directory)))
+	 (compile-command (concat
+			   change-directory-command " && "
+			   compile-latex-command " && "
+			   cleanup-command)))
+    (message (format "Compiling LaTeX file %s to %s" file-location output-directory))
+    (shell-command compile-command)
+    (if (not (file-exists-p output-file))
+	(error (format "Error: An issue occurred during compilation, %s was not created!" output-file)))))
+
+(defun blog/compile-latex-files (files)
+  (require 'seq)
+  (seq-map 'blog/compile-latex-file files))
+
 (defun blog/get-head (title description)
   (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
     (concat
@@ -211,7 +250,6 @@
 	  ((org-publish-org-to 'custom-blog-page-backend filename ".html" plist pub-dir)))))
 
 (defun blog/org-publish-sitemap (_title list)
-  (package-manager/ensure-packages-installed 'seq)
   (require 'seq)
   (mapconcat (lambda (li)
 	       (format "@@html:<li class=\"archive-item\">@@%s@@html:</li>@@" (car li)))
@@ -251,6 +289,21 @@
   (if (equal "rss.org" (file-name-nondirectory filename))
       (org-rss-publish-to-rss plist filename pub-dir)))
 
+(defun blog/org-reveal-get-title-page (title author date)
+  (concat
+   "<section id='sec-title-slide'>"
+   (concat
+    "<h1 class='title>" title "</h1>")
+   (concat
+    "<h2 class='author'>" author "</h2>")
+   (concat
+    "<h3 class='date'>" date "</h3>")
+   "</section>"))
+
+(defun blog/org-reveal-publish-to-html (plist filename pub-dir)
+  (require 'org-re-reveal)
+  (org-publish-org-to 're-reveal filename ".html" plist pub-dir))
+
 (defun blog/get-publish-project-alist ()
   `(("blog-home"
      :base-directory ,(expand-file-name "posts" blog-directory)
@@ -272,7 +325,7 @@
      :base-extension ,(regexp-opt '("jpg" "png"))
      :publishing-directory ,(expand-file-name (format "%s/posts/images" build-directory) blog-directory)
      :publishing-function org-publish-attachment
-     :recursive nil)    
+     :recursive nil)
     ("blog-rss"
      :base-directory ,(expand-file-name "posts" blog-directory)
      :base-extension "org"
@@ -296,7 +349,21 @@
      :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive t)
-    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public"))))
+    ("blog-talks"
+     :base-directory ,(expand-file-name "talks" blog-directory)
+     :base-extension "org"
+     :publishing-directory ,(expand-file-name (format "%s/talks" build-directory) blog-directory)
+     :publishing-function blog/org-reveal-publish-to-html
+     :section-numbers nil
+     :recursive t)
+    ("blog-talks-images"
+     :base-directory ,(expand-file-name "talks/images" blog-directory)
+     :exclude nil
+     :base-extension ,(regexp-opt '("jpg" "png"))
+     :publishing-directory ,(expand-file-name (format "%s/talks/images" build-directory) blog-directory)
+     :publishing-function org-publish-attachment
+     :recursive nil)
+    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public" "blog-talks" "blog-talks-images"))))
 
 (defun blog/setup-custom-templates ()
   (require 'ox)
@@ -308,7 +375,7 @@
 				     :translate-alist '((template . blog/blog-page-template))))
 
 (defun blog/publish-all ()
-  (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize)
+  (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize 'org-re-reveal)
   (require 'org)
   (require 'htmlize)
   (let* ((org-publish-project-alist          (blog/get-publish-project-alist))
@@ -325,46 +392,9 @@
 	 (org-html-htmlize-output-type       'css)
 	 (make-backup-files nil))
     (blog/setup-custom-templates)
-    (org-publish-project "blog" t)))
-
-(defun blog/copy-file-to-publishing-directory (file-location)
-  (let* ((file (file-name-nondirectory file-location))
-	 (destination-file (expand-file-name file blog-publishing-directory)))
-    (if (file-accessible-directory-p file)
-	(progn
-	  (message (format "Copying directory %s/ to %s" file blog-publishing-directory))
-	  (copy-directory file-location destination-file t t))
-      (progn
-	(message (format "Copying file %s to %s" file blog-publishing-directory))
-	(copy-file file-location destination-file t t)))))
-
-(defun blog/copy-files-to-publishing-directory (files)
-  (require 'seq)
-  (seq-map 'blog/copy-file-to-publishing-directory files))
-
-(defun blog/compile-latex-file (file-location)
-  (let* ((file (file-name-nondirectory file-location))
-	 (filename (file-name-base file))
-	 (file-directory (utilities/get-relative-parent-directory file-location))
-	 (output-directory (expand-file-name file-directory blog-publishing-directory))
-	 (output-directory (utilities/ensure-directory-exists output-directory))
-	 (output-file (expand-file-name (format "%s.pdf" filename) output-directory))	 
-	 (change-directory-command (concat "cd " file-directory))
-	 (latex-program (executable-find "xelatex"))
-	 (compile-latex-command (concat latex-program " -output-directory=" output-directory " " file))
-	 (cleanup-command (concat "rm -rf " (expand-file-name (format "%s.log" filename) output-directory)))
-	 (compile-command (concat
-			   change-directory-command " && "
-			   compile-latex-command " && "
-			   cleanup-command)))
-    (message (format "Compiling LaTeX file %s to %s" file-location output-directory))
-    (shell-command compile-command)
-    (if (not (file-exists-p output-file))
-	(error (format "Error: An issue occurred during compilation, %s was not created!" output-file)))))
-
-(defun blog/compile-latex-files (files)
-  (require 'seq)
-  (seq-map 'blog/compile-latex-file files))
+    (org-publish-project "blog" t)
+    (blog/compile-latex-files blog-latex-files)
+    (blog/copy-files-to-publishing-directory blog-copy-files)))
 
 (defun blog/setup-global-variables (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
@@ -392,10 +422,9 @@
   (let* ((config (utilities/read-json-file config-location))
 	 (publish-config (gethash "publish" config)))
     (package-manager/setup)
-    (blog/setup-global-variables blog-directory build-directory config)    
-    (blog/publish-all)
-    (blog/compile-latex-files blog-latex-files)
-    (blog/copy-files-to-publishing-directory blog-copy-files)))
+    (package-manager/ensure-packages-installed 'seq)
+    (blog/setup-global-variables blog-directory build-directory config)
+    (blog/publish-all)))
 
 (initialize
  (utilities/get-environment-variable "BLOG_CONFIG")

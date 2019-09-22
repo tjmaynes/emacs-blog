@@ -2,6 +2,7 @@ BLOG_DIRECTORY              = $(PWD)
 BLOG_BUILD_DIRECTORY_NAME   = build
 BLOG_BUILD_DIRECTORY        = $(PWD)/$(BLOG_BUILD_DIRECTORY_NAME)
 BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
+BLOG_CONFIG                 = $(BLOG_DIRECTORY)/config.json
 IMAGE_NAME                  = blog-builder
 PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes
@@ -16,7 +17,7 @@ check_emacs_version:
 
 build_blog:
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
-	BLOG_CONFIG=$(BLOG_DIRECTORY)/config.json \
+	BLOG_CONFIG=$(BLOG_CONFIG) \
 	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY_NAME) \
 	emacs \
 	--batch \

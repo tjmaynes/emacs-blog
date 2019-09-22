@@ -1,0 +1,38 @@
+#+TITLE: Open Source Licenses and Copyright
+#+AUTHOR: TJ Maynes
+#+EMAIL: tj@tjmaynes.com
+#+DATE: <2015-04-36 Sun>
+#+DESCRIPTION: An html presentation on open source licenses and copyleft/copyright issue
+
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.0.0
+#+REVEAL_THEME: solarized
+#+REVEAL_HLEVEL: 2
+#+REVEAL_TITLE_SLIDE: <section id='sec-title-slide'><h1 class='title'>Open Source Licenses and Copyright</h1><h2 class='author'>TJ Maynes</h2><h3 class='date'>2015-04-26</h3></section>
+#+REVEAL_PLUGINS: nil
+#+OPTIONS: toc:nil
+
+* What is Open Source Software?
+  Software whose source code is available for modification or enhancement by **anyone** - [[http://opensource.com/resources/what-open-source][OpenSource.com]]
+
+* Who uses Open Source Software
+  #+ATTR_REVEAL: :frag (roll-in)
+- [[https://github.com/facebook][Facebook]]
+- [[https://github.com/microsoft][Microsoft]]
+- [[https://github.com/google][Google]]
+- [[https://github.com/twitter][Twitter]]
+- [[https://github.com/youtube][Youtube]]
+- [[https://www.python.org/psf-landing][Python Software Foundation]]
+- [[https://github.com/oracle][Oracle]]
+- [[https://github.com/dropbox][Dropbox]]
+- [[https://github.com/reddit][Reddit]]
+- [[https://github.com/wordpress][Wordpress]]
+- [[https://github.com/mozilla][Mozilla]]
+- and many, many others too!
+
+* What are Copyright Laws?
+  #+ATTR_REVEAL: :frag (roll-in)
+  According to [[http://en.wikipedia.org/wiki/Copyright][Wikipedia]], Copyright is a legal right created by the law of a country that grants the creator of an original work exclusive rights to its use and distribution, usually for a limited time, with the intention of enabling the creator to receive compensation for their intellectual effort.
+* Wikipedia
+  [[file:images/osl-3.png]]
+  #+ATTR_REVEAL: :frag (roll-in)
+  [[http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License][Creative Commons Attribution-ShareAlike 3.0 Unported License]]
