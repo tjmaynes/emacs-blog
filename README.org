@@ -2,7 +2,7 @@
 #+AUTHOR: TJ Maynes <tjmaynes@gmail.com>
 
 #+BEGIN_QUOTE
-Blogging about software design/architecture, infrastructure, and automated testing.
+Personal Blog
 #+END_QUOTE
 
 [[https://circleci.com/gh/tjmaynes/blog/tree/master][file:https://circleci.com/gh/tjmaynes/blog/tree/master.svg?style=svg]]
