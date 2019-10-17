@@ -15,6 +15,11 @@ check_emacs_version:
 	--no-init-file \
 	--version
 
+check_latex_version:
+	xelatex --version
+
+check_versions: check_emacs_version check_latex_version
+
 build_blog:
 	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
 	BLOG_CONFIG=$(BLOG_CONFIG) \
@@ -23,12 +28,7 @@ build_blog:
 	--batch \
 	--no-init-file \
 	--no-site-file \
-	--load $(BLOG_DIRECTORY)/scripts/build_blog.el
-
-check_latex_version:
-	xelatex --version
-
-check_versions: check_emacs_version check_latex_version
+	--load $(BLOG_DIRECTORY)/elisp/build-blog.el
 
 publish_blog: check_versions build_blog
 

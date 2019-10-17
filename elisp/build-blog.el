@@ -1,64 +1,12 @@
-;; --- build_blog.el ---
+;; --- build-blog.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
 
-;; Utilities
+(add-to-list 'load-path (expand-file-name "." "elisp"))
 
-(defun utilities/get-environment-variable (env-name)
-  (let ((value (getenv env-name)))
-    (if (not value) (error (format "Missing environment variable: %s." env-name)))
-    value))
-
-(defun utilities/ensure-directory-exists (directory)
-  (unless (file-directory-p directory)
-    (make-directory directory :parents))
-  directory)
-
-(defun utilities/read-json-file (json-file)
-  (require 'json)
-  (let* ((json-object-type 'hash-table)
-	 (json-array-type 'list)
-	 (json-key-type 'string)
-	 (data (json-read-file json-file)))
-    data))
-
-(defun utilities/org-get-keywords ()
-  (org-element-map (org-element-parse-buffer 'element) 'keyword
-    (lambda (keyword) (cons (org-element-property :key keyword)
-		       (org-element-property :value keyword)))))
-
-(defun utilities/org-get-file-keyword (keyword)
-  (cdr (assoc keyword (utilities/org-get-keywords))))
-
-(defun utilities/org-parse-and-format-date (str format)
-  (let ((time-string (org-time-string-to-time str)))
-    (format-time-string format time-string)))
-
-(defun utilities/get-relative-parent-directory (file)
-  (let* ((directory (file-name-directory (directory-file-name file)))
-	 (directory (substring directory 0 (1- (length directory)))))
-    (file-name-nondirectory directory)))
-
-;; Package Manager
-
-(defvar package-manager/package-manager-refreshed nil)
-
-(defun package-manager/package-manager-refresh-once ()
-  (when (not package-manager/package-manager-refreshed)
-    (setq package-manager/package-manager-refreshed t)
-    (package-refresh-contents)))
-
-(defun package-manager/ensure-packages-installed (&rest packages)
-  (dolist (package packages)
-    (when (not (package-installed-p package))
-      (package-manager/package-manager-refresh-once)
-      (package-install package))))
-
-(defun package-manager/setup ()
-  (setq	package-enable-at-startup nil)
-  (package-initialize)
-  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)  
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+(require 'utilities)
+(require 'package-manager)
+(require 'seq)
 
 ;; Blog
 
@@ -74,7 +22,6 @@
 	(copy-file file-location destination-file t t)))))
 
 (defun blog/copy-files-to-publishing-directory (files)
-  (require 'seq)
   (seq-map 'blog/copy-file-to-publishing-directory files))
 
 (defun blog/compile-latex-file (file-location)
@@ -98,7 +45,6 @@
 	(error (format "Error: An issue occurred during compilation, %s was not created!" output-file)))))
 
 (defun blog/compile-latex-files (files)
-  (require 'seq)
   (seq-map 'blog/compile-latex-file files))
 
 (defun blog/get-head (title description)
@@ -250,7 +196,6 @@
 	  ((org-publish-org-to 'custom-blog-page-backend filename ".html" plist pub-dir)))))
 
 (defun blog/org-publish-sitemap (_title list)
-  (require 'seq)
   (mapconcat (lambda (li)
 	       (format "@@html:<li class=\"archive-item\">@@%s@@html:</li>@@" (car li)))
 	     (seq-filter #'car (cdr list))

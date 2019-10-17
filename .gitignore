@@ -14,4 +14,3 @@ posts/rss.*
 emacs-*
 tmp/
 node_modules/
-package-*
