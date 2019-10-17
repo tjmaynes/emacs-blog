@@ -186,6 +186,29 @@
 			     language
 			     (blog/get-page-body title date content))))
 
+(defvar blog/yt-iframe-format
+  (concat
+   "<div class=\"video-wrapper\">"
+   (concat "<iframe"
+	   " src=\"https://www.youtube.com/embed/%s\""
+	   " frameborder=\"0\""
+	   " allowfullscreen>%s</iframe>")
+   "</div>"))
+
+(defun blog/org-add-link-types ()
+  (org-add-link-type
+   "yt"
+   (lambda (handle)
+     (browse-url
+      (concat "https://www.youtube.com/embed/"
+	      handle)))
+   (lambda (path desc backend)
+     (cl-case backend
+       (html (format blog/yt-iframe-format
+		     path (or desc "")))
+       (latex (format "\href{%s}{%s}"
+		      path (or desc "video")))))))
+
 (defun blog/org-publish-to-html (plist filename pub-dir)
   (let ((parent-directory (utilities/get-relative-parent-directory filename))
 	(posts-dir (expand-file-name "posts" pub-dir)))
@@ -312,6 +335,7 @@
 
 (defun blog/setup-custom-templates ()
   (require 'ox)
+  (blog/org-add-link-types)
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
 				     :translate-alist '((template . blog/blog-index-template)))
   (org-export-define-derived-backend 'custom-blog-post-backend 'html
