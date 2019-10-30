@@ -11,43 +11,6 @@
 
 ;; Blog
 
-(defun blog/copy-file-to-publishing-directory (file-location)
-  (let* ((file (file-name-nondirectory file-location))
-	 (destination-file (expand-file-name file blog-publishing-directory)))
-    (if (file-accessible-directory-p file)
-	(progn
-	  (message (format "Copying directory %s/ to %s" file blog-publishing-directory))
-	  (copy-directory file-location destination-file t t))
-      (progn
-	(message (format "Copying file %s to %s" file blog-publishing-directory))
-	(copy-file file-location destination-file t t)))))
-
-(defun blog/copy-files-to-publishing-directory (files)
-  (seq-map 'blog/copy-file-to-publishing-directory files))
-
-(defun blog/compile-latex-file (file-location)
-  (let* ((file (file-name-nondirectory file-location))
-	 (filename (file-name-base file))
-	 (file-directory (utilities/get-relative-parent-directory file-location))
-	 (output-directory (expand-file-name file-directory blog-publishing-directory))
-	 (output-directory (utilities/ensure-directory-exists output-directory))
-	 (output-file (expand-file-name (format "%s.pdf" filename) output-directory))	 
-	 (change-directory-command (concat "cd " file-directory))
-	 (latex-program (executable-find "xelatex"))
-	 (compile-latex-command (concat latex-program " -output-directory=" output-directory " " file))
-	 (cleanup-command (concat "rm -rf " (expand-file-name (format "%s.log" filename) output-directory)))
-	 (compile-command (concat
-			   change-directory-command " && "
-			   compile-latex-command " && "
-			   cleanup-command)))
-    (message (format "Compiling LaTeX file %s to %s" file-location output-directory))
-    (shell-command compile-command)
-    (if (not (file-exists-p output-file))
-	(error (format "Error: An issue occurred during compilation, %s was not created!" output-file)))))
-
-(defun blog/compile-latex-files (files)
-  (seq-map 'blog/compile-latex-file files))
-
 (defvar blog/yt-iframe-format
   (concat
    "<div class=\"video-wrapper\">"
@@ -224,8 +187,8 @@
 	 (make-backup-files nil))
     (blog/setup-custom-templates)
     (org-publish-project "blog" t)
-    (blog/compile-latex-files blog-latex-files)
-    (blog/copy-files-to-publishing-directory blog-copy-files)))
+    (utilities/compile-latex-files blog-latex-files blog-publishing-directory)
+    (utilities/copy-files-to-publishing-directory blog-copy-files blog-publishing-directory)))
 
 (defun blog/setup-global-variables (blog-directory build-directory config)
   (let* ((settings-config (gethash "settings" config))
