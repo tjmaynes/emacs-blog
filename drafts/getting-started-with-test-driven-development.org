@@ -1,0 +1,9 @@
+#+TITLE: Getting Started with Test-Driven Development
+#+DATE: <2019-10-30 Wed>
+#+DESCRIPTION: In this blog post, I'll be discussing red/green and top-down test-driven development strategies.
+
+According to Kent Beck, "Test-driven development is a  
+
+I’m asked this question quite often while pairing with newcomers to test-driven development. In order to answer this question we’ll first need to understand what unit and integration tests are and how they fit into continuous integration.
+
+Unit tests are a suite of tests that run assertions at the unit level. Let’s expand on that. The lowest level of code written is 
