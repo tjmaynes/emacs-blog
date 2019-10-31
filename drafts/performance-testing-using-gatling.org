@@ -1,0 +1,5 @@
+#+TITLE: Performance Testing using Gatling
+#+DATE: <2019-11-04 Mon>
+#+DESCRIPTION: In this blog post, I'll be discussing and implementing load, stress, and endurance tests using Gatling.
+
+**This blog post assumes basic knowledge of (and requires) Docker**
