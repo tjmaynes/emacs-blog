@@ -1,0 +1,60 @@
+#+TITLE: What is a Monad?
+#+DATE: <2019-10-29 Tue>
+#+DESCRIPTION: This blog post will be discussing what a monad is in a way that doesn't force you to pull your hair out.
+
+While pairing on my latest project, I did some introspection around the functional programming that I've learned so far. On previous projects, we used a combination of =Either= and =Maybe= monads for abstracting external (IO-based) operations. While I knew how and when to use these tools, I didn't understand where their power came from. After doing some research, I came across this analogy that helped me better understand what a monad is.
+
+#+begin_quote
+A monad is an abstract data type that allows programmers to chain complex, nondeterministic operations.
+#+end_quote
+
+Let's break this quote down using Scala and the =Either= monad as our example monad.
+
+The =Either= monad is a monadic data type that allows you to handle either one possible state or another possible state. Below is an example of the =Either= monad in action using Scala.
+
+#+begin_src scala
+val happyPath: Either[Error, String] = Right("Happy Stuff!")
+#+end_src
+
+In our example above, our first line describes a variable of type =Either= whose possible states could be /Error/ or /String/. This is an example of how a monad like an abstract data type. An abstract data type (ADT) is a kind of data type defined by it's behavior from the point of view from a user. Since an ADT is created from the user's point of view, it's internal presentation is hidden. 
+
+Another useful attribute of monads is there ability to /chain complex, nondeterminstic operations/. Let's explore this in the following Scala example.
+
+#+begin_src scala
+val logException = (e: Error) => println(s"Unexpected error occurred: $error");
+
+val countries = List[Either[Error, String]] =
+  List(
+    Right("United States"),
+    Left(new Error("State not found: Rusia")),
+    Right("United Kingdom"),
+    Right("China"),
+    Left(new Error("State not found: Paraguy"))
+  )
+
+val availableCountries = countries
+  .map(_.right.map(_.toUpperCase))
+  .map(_.left.map(logException))
+#+end_src
+
+In our example above, we create a list of countries and then map over the list and when we have "actual" countries (=Right=) we will apply the =toUpperCase= function. If we have any unavailable countries then we will log these exceptions. This ability to chain operations is the =functor= attribute of monads. In category theory, a =functor= is a something has enables /mappable/ behavior, such as mapping over a list of objects.
+
+Since monads allow the chaining of /nondeterministic/ operations, two functions are found on monad types: =return= and =bind=.
+
+#+begin_quote
+Note: Depending on the programming language or library that you are using, the =return= function will typically be represented through the /constructor/ method and =bind= may have a different name such as /flatMap/ or /map/.
+#+end_quote
+
+The =return= function /places/ a value into a monadic context. When we pass our value into the =Right= or =Left= functions, we are effectively wrapping our value inside the =Either= monad container.
+
+The =bind= function /applies/ a function in a monadic context. When we pass a function into the map function from our =Either= monad, we are invoking that function with the value inside our monad container.
+
+** Conclusion
+Below is a list of links that helped me when writing this post:
+
+- [[https://en.wikipedia.org/wiki/Monad_(functional_programming)][Monad wiki]]
+- [[https://www.freecodecamp.org/news/a-survival-guide-to-the-either-monad-in-scala-7293a680006/][A Survival Guide to the Either Monad in Scala]]
+- [[https://jrsinclair.com/articles/2016/marvellously-mysterious-javascript-maybe-monad/][James Sinclair's Maybe Monad post]]
+- [[https://stackoverflow.com/a/19932439][Monads with Java 8 post]]
+
+Please send me an [[mailto:tj@tjmaynes.com][email]] if I've missed anything in this article. Thank you for reading!
