@@ -1,6 +1,15 @@
-(provide 'html)
+(provide 'html-components)
 
-(defun html/get-head (title description)
+(defvar html-components/video-wrapper
+  (concat
+   "<div class=\"video-wrapper\">"
+   (concat "<iframe"
+	   " src=\"https://www.youtube.com/embed/%s\""
+	   " frameborder=\"0\""
+	   " allowfullscreen>%s</iframe>")
+   "</div>"))
+
+(defun html-components/get-head (title description)
   (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
     (concat
      "<head>\n"
@@ -22,7 +31,7 @@
 <link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">\n")
      "</head>\n")))
 
-(defun html/get-header ()
+(defun html-components/get-header ()
   (concat
    "<section class=\"content-header\">\n"
    (concat
@@ -38,7 +47,7 @@
    </nav>\n")
    "</section>\n"))
 
-(defun html/get-footer ()
+(defun html-components/get-footer ()
   (concat
    "<section class=\"content-footer\">\n"
    (concat
@@ -61,18 +70,18 @@
     </nav>")
    "</section>\n"))
 
-(defun html/get-body (content)
+(defun html-components/get-body (content)
   (concat
    "<body>\n"
    (concat
     "<div class=\"content-wrapper\">\n"
-    (html/get-header)
+    (html-components/get-header)
     content
-    (html/get-footer)
+    (html-components/get-footer)
     "</div>\n")
    "</body>\n"))
 
-(defun html/get-post-header (post-title post-date)
+(defun html-components/get-post-header (post-title post-date)
   (let* ((xml-date-time (utilities/org-parse-and-format-date post-date "%F"))
 	 (display-date-time (utilities/org-parse-and-format-date post-date "%Y-%m-%d")))
     (concat
@@ -82,14 +91,14 @@
       "<p>Posted on <time datetime=\"" xml-date-time "\" itemprop=\"datePublished\">" display-date-time "</time> • " blog-author-name "</p>\n")
    "</header>\n")))
 
-(defun html/get-post-page-body (title date content)
+(defun html-components/get-post-page-body (title date content)
   (concat
    "<div class=\"post\">\n"
-   (html/get-post-header title date)
+   (html-components/get-post-header title date)
    content
    "</div>\n"))
 
-(defun html/get-html (head body language)
+(defun html-components/get-html (head body language)
   (concat
    "<!DOCTYPE html>\n"
    (format "<html lang=\"%s\">\n" language)
@@ -97,44 +106,47 @@
    body
    "</html>\n"))
 
-(defun html/get-static-page-body (title date content)
+(defun html-components/get-static-page-body (title date content)
   (concat
    "<div class=\"post\">\n"
    content
    "</div>\n"))
 
-(defun html/base-html-template (title description language content)
-  (html/get-html
-   (html/get-head title description)
-   (html/get-body content)
+(defun html-components/base-html-template (title description language content)
+  (html-components/get-html
+   (html-components/get-head title description)
+   (html-components/get-body content)
    language))
 
-(defun html/index-page-template (content info)
+(defun html-components/index-page-template (content info)
   (let* ((language (plist-get info :language)))
-    (html/base-html-template blog-title
-			     blog-description
-			     language
-			     (concat
-			      "<div class=\"archive\">\n"
-			      content
-			      "</div>\n"))))
+    (html-components/base-html-template
+     blog-title
+     blog-description
+     language
+     (concat
+      "<div class=\"archive\">\n"
+      content
+      "</div>\n"))))
 
-(defun html/post-page-template (content info)
+(defun html-components/post-page-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
 	 (date (utilities/org-get-file-keyword "DATE"))
 	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
 	 (language (plist-get info :language)))
-    (html/base-html-template title
-			     description
-			     language
-			     (html/get-post-page-body title date content))))
+    (html-components/base-html-template
+     title
+     description
+     language
+     (html-components/get-post-page-body title date content))))
 
-(defun html/static-page-template (content info)
+(defun html-components/static-page-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
 	 (date (utilities/org-get-file-keyword "DATE"))
 	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
 	 (language (plist-get info :language)))
-    (html/base-html-template title
-			     description
-			     language
-			     (html/get-static-page-body title date content))))
+    (html-components/base-html-template
+     title
+     description
+     language
+     (html-components/get-static-page-body title date content))))
