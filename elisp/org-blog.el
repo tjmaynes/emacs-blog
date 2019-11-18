@@ -121,7 +121,7 @@
     ("blog-public"
      :base-directory ,(expand-file-name "static" blog-directory)
      :exclude ,(regexp-opt '("public"))
-     :base-extension ,(regexp-opt '("jpg" "png" "css" "eot" "woff" "woff2" "ttf"))
+     :base-extension ,(regexp-opt '("jpg" "png" "js" "css" "eot" "woff" "woff2" "ttf"))
      :publishing-directory ,(expand-file-name (format "%s/public" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive t)

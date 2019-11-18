@@ -28,7 +28,7 @@
 <meta property=\"twitter:image\" content=\"" blog-author-avatar-url "\" />
 <meta property=\"twitter:description\" content=\"" description "\" />
 <meta property=\"twitter:card\" content=\"" description "\" />
-<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">\n")
+<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">")
      "</head>\n")))
 
 (defun html-components/get-header ()
