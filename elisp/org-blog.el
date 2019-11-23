@@ -1,7 +1,156 @@
 (provide 'org-blog)
 
 (require 'seq)
-(require 'html-components)
+
+(defvar org-blog/video-wrapper
+  (concat
+   "<div class=\"video-wrapper\">"
+   (concat "<iframe"
+	   " src=\"https://www.youtube.com/embed/%s\""
+	   " frameborder=\"0\""
+	   " allowfullscreen>%s</iframe>")
+   "</div>"))
+
+(defun org-blog/get-head (title description)
+  (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
+    (concat
+     "<head>\n"
+     (concat
+      "<meta charset=\"utf-8\">
+<title>" title "</title>
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
+<meta name=\"description\" content=\"" description "\" />
+<meta property=\"og:title\" content=\"" title "\" />
+<meta property=\"og:url\" content=\"https://tjmaynes.com/index.html\" />
+<meta property=\"og:description\" content=\"" description "\"/>
+<meta property=\"og:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"og:type\" content=" "hello" " />
+<meta property=\"twitter:title\" content=\"" title "\" />
+<meta property=\"twitter:url\" content=\"https://tjmaynes.com/index.html\" />
+<meta property=\"twitter:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"twitter:description\" content=\"" description "\" />
+<meta property=\"twitter:card\" content=\"" description "\" />
+<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">")
+     "</head>\n")))
+
+(defun org-blog/get-header ()
+  (concat
+   "<section class=\"content-header\">\n"
+   (concat
+    "<nav>
+     <ul>
+       <li><a href=\"/\"><img src=" blog-icon " alt=\"icon\" /></a></li>
+     </ul>
+     <ul>
+       <li><a href=\"/\">Home</a></li>
+       <li><a href=\"" blog-author-cv "\">CV</a></li>
+       <li><a href=\"/rss.xml\">Feed</a></li>
+     </ul>
+   </nav>\n")
+   "</section>\n"))
+
+(defun org-blog/get-footer ()
+  (concat
+   "<section class=\"content-footer\">"
+   (concat
+    "<article class=\"about\">
+     <img src=" blog-author-avatar ">
+     <p>" blog-author-description "</p>
+    </article>
+    <nav class=\"footer-menu\">
+     <ul>
+      <li><p><a href=\"https://github.com/" blog-author-github "\" target=\"_blank\">GitHub</a></p></li>
+      <li><p><a href=\"https://linkedin.com/in/" blog-author-linkedin "\" target=\"_blank\">LinkedIn</a></p></li>
+      <li><p><a href=\"mailto:" blog-author-email "\">Contact</a></p></li>
+     </ul>
+     <ul>
+      <li>
+        <p><a href=\"https://github.com/tjmaynes/blog\">Built using Org-Mode ❤️</a></p>
+      </li>
+     </ul>
+    </nav>")
+   "</section>"))
+
+(defun org-blog/get-body (content)
+  (concat
+   "<body>\n"
+   (concat
+    "<div class=\"content-wrapper\">\n"
+    (org-blog/get-header)
+    content
+    (org-blog/get-footer)
+    "</div>\n")
+   "</body>\n"))
+
+(defun org-blog/get-post-header (post-title post-date)
+  (let* ((xml-date-time (utilities/org-parse-and-format-date post-date "%F"))
+	 (display-date-time (utilities/org-parse-and-format-date post-date "%Y-%m-%d")))
+    (concat
+     "<header>\n"
+     (concat
+      "<h1 itemprop=\"name headline\">" post-title "</h1>\n"
+      "<p>Posted on <time datetime=\"" xml-date-time "\" itemprop=\"datePublished\">" display-date-time "</time> • " blog-author-name "</p>\n")
+   "</header>\n")))
+
+(defun org-blog/get-post-page-body (title date content)
+  (concat
+   "<div class=\"post\">\n"
+   (org-blog/get-post-header title date)
+   content
+   "</div>\n"))
+
+(defun org-blog/get-html (head body language)
+  (concat
+   "<!DOCTYPE html>\n"
+   (format "<html lang=\"%s\">\n" language)
+   head
+   body
+   "</html>\n"))
+
+(defun org-blog/get-static-page-body (title date content)
+  (concat
+   "<div class=\"post\">\n"
+   content
+   "</div>\n"))
+
+(defun org-blog/base-html-template (title description language content)
+  (org-blog/get-html
+   (org-blog/get-head title description)
+   (org-blog/get-body content)
+   language))
+
+(defun org-blog/index-page-template (content info)
+  (let* ((language (plist-get info :language)))
+    (org-blog/base-html-template
+     blog-title
+     blog-description
+     language
+     (concat
+      "<div class=\"archive\">\n"
+      content
+      "</div>\n"))))
+
+(defun org-blog/post-page-template (content info)
+  (let* ((title (utilities/org-get-file-keyword "TITLE"))
+	 (date (utilities/org-get-file-keyword "DATE"))
+	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
+	 (language (plist-get info :language)))
+    (org-blog/base-html-template
+     title
+     description
+     language
+     (org-blog/get-post-page-body title date content))))
+
+(defun org-blog/static-page-template (content info)
+  (let* ((title (utilities/org-get-file-keyword "TITLE"))
+	 (date (utilities/org-get-file-keyword "DATE"))
+	 (description (utilities/org-get-file-keyword "DESCRIPTION"))
+	 (language (plist-get info :language)))
+    (org-blog/base-html-template
+     title
+     description
+     language
+     (org-blog/get-static-page-body title date content))))
 
 (defun org-blog/org-add-link-types ()
   (org-add-link-type
@@ -12,7 +161,7 @@
 	      handle)))
    (lambda (path desc backend)
      (cl-case backend
-       (html (format html-components/video-wrapper
+       (html (format org-blog/video-wrapper
 		     path (or desc "")))
        (latex (format "\href{%s}{%s}"
 		      path (or desc "video")))))))
@@ -144,11 +293,11 @@
 (defun org-blog/setup-custom-templates ()
   (org-blog/org-add-link-types)
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
-				     :translate-alist '((template . html-components/index-page-template)))
+				     :translate-alist '((template . org-blog/index-page-template)))
   (org-export-define-derived-backend 'custom-blog-post-backend 'html
-				     :translate-alist '((template . html-components/post-page-template)))
+				     :translate-alist '((template . org-blog/post-page-template)))
   (org-export-define-derived-backend 'custom-blog-page-backend 'html
-				     :translate-alist '((template . html-components/static-page-template))))
+				     :translate-alist '((template . org-blog/static-page-template))))
 
 (defun org-blog/publish ()
   (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize 'org-re-reveal)
