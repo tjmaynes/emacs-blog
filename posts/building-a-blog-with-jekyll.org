@@ -15,28 +15,28 @@ Jekyll is an open-source static page generator written in [[https://www.ruby-lan
 To see a full set of features Jekyll offers check out the project [[https://jekyllrb.com][home page]].
 
 ** Getting Started with Jekyll
-To get started with Jekyll, you will need [[https://www.ruby-lang.org/en/downloads][Ruby]] installed on your machine. To check if =ruby= is installed on your machine, run the following command in your CLI program:
+To get started with Jekyll, you will need [[https://www.ruby-lang.org/en/downloads][Ruby]] installed on your machine. To check if *ruby* is installed on your machine, run the following command in your CLI program:
 
 #+begin_src bash
 ruby -v
 #+end_src
 
-If =ruby= was not found on your machine, you can find installation notes [[https://www.ruby-lang.org/en/downloads][here]].
+If *ruby* was not found on your machine, you can find installation notes [[https://www.ruby-lang.org/en/downloads][here]].
 
-Next, let's install =jekyll= and =bundler=, a ruby gem for managing ruby project dependencies. Run the following command to install these gems:
+Next, let's install *jekyll* and *bundler*, a ruby gem for managing ruby project dependencies. Run the following command to install these gems:
 
 #+begin_src bash
 gem install bundler jekyll
 #+end_src
 
 ** Generating a Blog
-So far we have setup ruby and installed =jekyll=, next we will generate our blog. To generate the blog, run the following command:
+So far we have setup ruby and installed *jekyll*, next we will generate our blog. To generate the blog, run the following command:
 
 #+begin_src bash
 jekyll new my-first-blog
 #+end_src
 
-You'll see that a new directory called =my-first-blog= has been created and inside the directory contains some markdown and yaml files and a new directory called =_posts=. Jump into the newly created directory, by running the following command:
+You'll see that a new directory called *my-first-blog* has been created and inside the directory contains some markdown and yaml files and a new directory called /_posts/. Jump into the newly created directory, by running the following command:
 
 #+begin_src bash
 cd my-first-blog
@@ -45,35 +45,28 @@ cd my-first-blog
 Next, we'll start up the blogging generation process by running the command:
 
 #+begin_quote
-*Quick Note* - We'll be running =bundle= before each of our =jekyll= commands, which is the "de-facto" `rubygem` dependency manager for the jekyll project. To learn more about =bundler= check out the following [[https://bundler.io/docs.html][link]].
+*Quick Note* - We'll be running *bundle* before each of our *jekyll* commands, which is the "de-facto" *rubygem* dependency manager for the jekyll project. To learn more about *bundler* check out the following [[https://bundler.io/docs.html][link]].
 #+end_quote
 
 #+begin_src bash
 bundle exec jekyll serve
 #+end_src
 
-After a few moments, you should see a newly created folder called =_site=. Now, head over to your browser and type =http://localhost:4000= and press enter. You should be seeing a boilerplate-filled web page such as the one below ↓.
+After a few moments, you should see a newly created folder called /_site/. Now, head over to your browser and type /http://localhost:4000/ and press enter. You should be seeing a boilerplate-filled web page such as the one below ↓.
  
 [[./images/localhost-screenshot.png]]
 
 ** Editing the Blog
-When your blog was created using =jekyll new my-new-blog=, the following files and folders were created:
-- =_posts=
-  - folder containing your blog posts.
-- =_config.yml=
-  - file for configuring project settings and global variables. 
-- =index.markdown=
-  - your index file which relies on a home layout.
-- =about.markdown=
-  - another markdown file which we can ignore for now. 
-- =Gemfile=
-  - file for describing your =rubygems= dependencies.
-- =Gemfile.lock=
-  - file for version controlling your =rubygems= dependency tree.  
-- =404.html=
-  - no explanation necessary.
+When your blog was created with the following files and folders were created:
+- *_posts* - folder containing your blog posts.
+- *_config.yml* - file for configuring project settings and global variables. 
+- *index.markdown* - your index file which relies on a home layout.
+- *about.markdown* - another markdown file which we can ignore for now. 
+- *Gemfile* - file for describing your *rubygems* dependencies.
+- *Gemfile.lock* - file for version controlling your *rubygems* dependency tree.  
+- *404.html* - file containing Not Found content.
 
-When your blog was generated using =bundle exec jekyll serve=, a =_site= folder was created. Each time your blog is built, this =_site= folder will be regenerated with your latest changes to your blog. A common workflow when making changes to your blog is the ability to "watch" for changes.
+When your blog was generated, a *_site* folder was created. Each time your blog is built, this *_site* folder will be regenerated with your latest changes to your blog. A common workflow when making changes to your blog is the ability to "watch" for changes.
 
 Run the following command to watch for changes as your editing your blog:
 
@@ -81,10 +74,10 @@ Run the following command to watch for changes as your editing your blog:
 bundle exec jekyll serve -w
 #+end_src
 
-To see new changes to your blog, just change anything contained in =_posts= folder and your pages (such as =index.markdown= and =about.markdown=). 
+To see new changes to your blog, just change anything contained in *_posts* folder and your pages (such as *index.markdown* and *about.markdown*). 
 
 ** Writing new Blog Posts
-While the =bundle exec jekyll serve -w= command is running in the background, create a new file in =_posts= called =2018-11-24-my-new-blog-post.markdown=. Run the following command to create the new blog post:
+While the *bundle exec jekyll serve -w* command is running in the background, create a new file in *_posts* called *2018-11-24-my-new-blog-post.markdown*. Run the following command to create the new blog post:
 
 #+begin_src bash
 touch _posts/2018-11-24-my-new-blog-post.markdown
@@ -100,13 +93,13 @@ date:   2018-11-24 00:00:00
 ---
 #+end_src
 
-Next, save the file and look at the output of your terminal window running the =jekyll serve -w= command. You should be seeing a newly added blog post called =my-new-blog-post=. Refreshing your browser should show your new blog post, however there is no content to view. That's because we need to write the rest of our blog post!
+Next, save the file and look at the output of your terminal window running the *jekyll serve -w* command. You should be seeing a newly added blog post called *my-new-blog-post*. Refreshing your browser should show your new blog post, however there is no content to view. That's because we need to write the rest of our blog post!
 
 #+begin_quote
-*Quick Note* - Before making any more changes to your new blog post, checkout the =_site/jekyll= folder to see that your new blog post has been generated and placed here. This =_site/jekyll= folder layout can be changed by updating your site configuration file =_config.yml= (permalink).
+*Quick Note* - Before making any more changes to your new blog post, checkout the *_site/jekyll* folder to see that your new blog post has been generated and placed here. This *_site/jekyll* folder layout can be changed by updating your site configuration file *_config.yml* (permalink).
 #+end_quote
 
 To continue writing your blog post, begin by writing beneath the last trip dashes and save. Check out your changes in the browser, edit, save, and repeat! For more information on the Markdown system supported by Jekyll, check out the following [[https://jekyllrb.com/docs/posts][link]].
 
 ** Conclusion
-There is still much to explore in what Jekyll offers. I left out some features worth discussing such as [[https://jekyllrb.com/docs/themes][Theming]] and [[https://jekyllrb.com/docs/configuration/options][Site Configuration]] because Jekyll's [[https://jekyllrb.com/docs][documentation]] is just good enough. I hope you were able to start off blogging "like a hacker" with this short Jekyll tutorial.
+There is still much to explore in what Jekyll offers. I left out some features worth discussing such as [[https://jekyllrb.com/docs/themes][Theming]] and [[https://jekyllrb.com/docs/configuration/options][Site Configuration]] because Jekyll's [[https://jekyllrb.com/docs][documentation]] is just good enough.
