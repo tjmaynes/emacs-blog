@@ -7,6 +7,11 @@
     (if (not value) (error (format "Missing environment variable: %s." env-name)))
     value))
 
+(defun utilities/ensure-program-exists (program)
+  (let ((value (executable-find program)))
+    (if (not value) (error (format "Program not available: %s." program)))
+    value))
+
 (defun utilities/ensure-directory-exists (directory)
   (unless (file-directory-p directory)
     (make-directory directory :parents))

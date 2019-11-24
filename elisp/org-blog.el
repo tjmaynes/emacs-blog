@@ -1,6 +1,7 @@
 (provide 'org-blog)
 
-(require 'seq)
+(require 'utilities)
+(require 'package-manager)
 
 (defvar org-blog/video-wrapper
   (concat
@@ -12,26 +13,26 @@
    "</div>"))
 
 (defun org-blog/get-head (title description)
-  (let ((blog-author-avatar-url (format "%s/%s" blog-url blog-author-avatar)))
-    (concat
-     "<head>\n"
-     (concat
-      "<meta charset=\"utf-8\">
+  (concat
+   "<head>\n"
+   (concat
+    "<meta charset=\"utf-8\">
 <title>" title "</title>
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
 <meta name=\"description\" content=\"" description "\" />
 <meta property=\"og:title\" content=\"" title "\" />
 <meta property=\"og:url\" content=\"https://tjmaynes.com/index.html\" />
 <meta property=\"og:description\" content=\"" description "\"/>
-<meta property=\"og:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"og:image\" content=\"" (format "%s/%s" blog-url blog-author-avatar) "\" />
 <meta property=\"og:type\" content=" "hello" " />
 <meta property=\"twitter:title\" content=\"" title "\" />
 <meta property=\"twitter:url\" content=\"https://tjmaynes.com/index.html\" />
-<meta property=\"twitter:image\" content=\"" blog-author-avatar-url "\" />
+<meta property=\"twitter:image\" content=\"" (format "%s/%s" blog-url blog-author-avatar) "\" />
 <meta property=\"twitter:description\" content=\"" description "\" />
 <meta property=\"twitter:card\" content=\"" description "\" />
-<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">")
-     "</head>\n")))
+<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-css-url "\">
+<link rel=\"stylesheet\" type=\"text/css\" href=\"" blog-syntax-css-url "\">")
+   "</head>\n"))
 
 (defun org-blog/get-header ()
   (concat
@@ -129,6 +130,14 @@
       "<div class=\"archive\">\n"
       content
       "</div>\n"))))
+
+(defun org-blog/post-src-block (code content info)
+  (let ((src-block (org-element-property :value code))
+	(language (or (org-element-property :language code) ""))
+	(pygments (utilities/ensure-program-exists "pygmentize"))
+	(temp-file (format "/tmp/pygmentize-%s.txt" (md5 (current-time-string)))))
+    (with-temp-file temp-file (insert src-block))
+    (shell-command-to-string (format "%s -l \"%s\" -f html %s" pygments language temp-file))))
 
 (defun org-blog/post-page-template (content info)
   (let* ((title (utilities/org-get-file-keyword "TITLE"))
@@ -291,11 +300,11 @@
     ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public" "blog-talks" "blog-talks-images"))))
 
 (defun org-blog/setup-custom-templates ()
-  (org-blog/org-add-link-types)
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
 				     :translate-alist '((template . org-blog/index-page-template)))
   (org-export-define-derived-backend 'custom-blog-post-backend 'html
-				     :translate-alist '((template . org-blog/post-page-template)))
+				     :translate-alist '((src-block . org-blog/post-src-block)
+							(template . org-blog/post-page-template)))
   (org-export-define-derived-backend 'custom-blog-page-backend 'html
 				     :translate-alist '((template . org-blog/static-page-template))))
 
@@ -319,4 +328,5 @@
 	 (org-html-htmlize-output-type       'css)
 	 (make-backup-files nil))
     (org-blog/setup-custom-templates)
+    (org-blog/org-add-link-types)
     (org-publish-project "blog" t)))

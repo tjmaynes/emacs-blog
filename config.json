@@ -4,7 +4,10 @@
 	"description": "Personal Blog",
 	"url": "https://tjmaynes.com",
 	"icon": "/public/images/icon.png",
-	"css": "/public/stylesheets/main.css"
+	"css": {
+	    "main": "/public/stylesheets/main.css",
+	    "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
+	}
     },
     "author": {
 	"name": "TJ Maynes",

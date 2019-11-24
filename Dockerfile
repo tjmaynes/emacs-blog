@@ -4,6 +4,7 @@ MAINTAINER TJ Maynes <tjmaynes@gmail.com>
 RUN apt-get update
 RUN apt-get install -f -y \
 	git \
-	emacs
+	emacs \
+	python-pygments
 
 ENTRYPOINT ["make"]
