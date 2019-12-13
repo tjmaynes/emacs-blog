@@ -28,9 +28,19 @@ build_blog:
 	--batch \
 	--no-init-file \
 	--no-site-file \
-	--load $(BLOG_DIRECTORY)/elisp/build-blog.el
+	--load $(BLOG_DIRECTORY)/scripts/build-blog.el
 
-publish_blog: check_versions build_blog
+copy_static_files:
+	chmod +x ./scripts/copy_static_files.sh
+	./scripts/copy_static_files.sh \
+	$(BLOG_BUILD_DIRECTORY_NAME)
+
+build_latex_files:
+	chmod +x ./scripts/build_latex_files.sh
+	./scripts/build_latex_files.sh \
+	$(BLOG_BUILD_DIRECTORY_NAME)
+
+publish_blog: check_versions build_blog copy_static_files build_latex_files
 
 deploy_blog:
 	chmod +x ./scripts/deploy_blog.sh

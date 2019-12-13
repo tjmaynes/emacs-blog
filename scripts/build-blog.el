@@ -1,7 +1,68 @@
-(provide 'org-blog)
+;; --- build-blog.el ---
+;; Author: TJ Maynes <tjmaynes at gmail dot com>
+;; Website: https://tjmaynes.com/
 
-(require 'utilities)
-(require 'package-manager)
+(add-to-list 'load-path (expand-file-name "." "elisp"))
+
+(require 'json)
+
+(defvar package-manager/package-manager-refreshed nil)
+
+(defun package-manager/package-manager-refresh-once ()
+  (when (not package-manager/package-manager-refreshed)
+    (setq package-manager/package-manager-refreshed t)
+    (package-refresh-contents)))
+
+(defun package-manager/ensure-packages-installed (&rest packages)
+  (dolist (package packages)
+    (when (not (package-installed-p package))
+      (package-manager/package-manager-refresh-once)
+      (package-install package))))
+
+(defun package-manager/setup ()
+  (setq	package-enable-at-startup nil)
+  (package-initialize)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)  
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
+(defun utilities/get-environment-variable (env-name)
+  (let ((value (getenv env-name)))
+    (if (not value) (error (format "Missing environment variable: %s." env-name)))
+    value))
+
+(defun utilities/ensure-program-exists (program)
+  (let ((value (executable-find program)))
+    (if (not value) (error (format "Program not available: %s." program)))
+    value))
+
+(defun utilities/ensure-directory-exists (directory)
+  (unless (file-directory-p directory)
+    (make-directory directory :parents))
+  directory)
+
+(defun utilities/read-json-file (json-file)
+  (let* ((json-object-type 'hash-table)
+	 (json-array-type 'list)
+	 (json-key-type 'string)
+	 (data (json-read-file json-file)))
+    data))
+
+(defun utilities/org-get-keywords ()
+  (org-element-map (org-element-parse-buffer 'element) 'keyword
+    (lambda (keyword) (cons (org-element-property :key keyword)
+		       (org-element-property :value keyword)))))
+
+(defun utilities/org-get-file-keyword (keyword)
+  (cdr (assoc keyword (utilities/org-get-keywords))))
+
+(defun utilities/org-parse-and-format-date (str format)
+  (let ((time-string (org-time-string-to-time str)))
+    (format-time-string format time-string)))
+
+(defun utilities/get-relative-parent-directory (file)
+  (let* ((directory (file-name-directory (directory-file-name file)))
+	 (directory (substring directory 0 (1- (length directory)))))
+    (file-name-nondirectory directory)))
 
 (defvar org-blog/video-wrapper
   (concat
@@ -330,3 +391,36 @@
     (org-blog/setup-custom-templates)
     (org-blog/org-add-link-types)
     (org-publish-project "blog" t)))
+
+(defun setup-global-variables (config blog-publishing-directory)
+  (let* ((settings-config (gethash "settings" config))
+	 (author-config (gethash "author" config))
+	 (css-config (gethash "css" settings-config)))
+    (setq blog-title (gethash "title" settings-config)
+	  blog-description (gethash "description" settings-config)
+	  blog-url (gethash "url" settings-config)
+	  blog-icon (gethash "icon" settings-config)
+	  blog-author-name  (gethash "name" author-config)
+	  blog-author-email (gethash "email" author-config)
+	  blog-author-github (gethash "github" author-config)
+	  blog-author-linkedin (gethash "linkedin" author-config)
+	  blog-author-twitter (gethash "twitter" author-config)	  
+	  blog-author-description (gethash "description" author-config)
+	  blog-author-cv (gethash "cv" author-config)	  
+	  blog-author-avatar (gethash "avatar" author-config)
+	  blog-publishing-directory blog-publishing-directory
+	  blog-css-url (gethash "main" css-config)
+	  blog-syntax-css-url (gethash "syntax-highlighting" css-config)
+	  blog-timestamps-directory (concat blog-directory "timestamps"))))
+
+(defun initialize (config-location blog-directory build-directory)
+  (let* ((config (utilities/read-json-file config-location))
+	 (blog-publishing-directory (expand-file-name build-directory blog-directory)))
+    (package-manager/setup)    
+    (setup-global-variables config blog-publishing-directory)
+    (org-blog/publish)))
+
+(initialize
+ (utilities/get-environment-variable "BLOG_CONFIG")
+ (utilities/get-environment-variable "BLOG_DIRECTORY")
+ (utilities/get-environment-variable "BLOG_BUILD_DIRECTORY"))

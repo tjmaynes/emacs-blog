@@ -1,3 +1,4 @@
+
 {
     "settings": {
 	"title": "TJ Maynes",
@@ -18,16 +19,5 @@
 	"twitter": "@tjmaynes",
 	"email": "tj@tjmaynes.com",
 	"avatar": "/public/images/me/profile.jpg"
-    },    
-    "files": {
-	"copy": [
-	    "static/favicon.ico",
-	    "static/keybase.txt",
-	    "static/CNAME"
-	],
-	"latex": [
-	    "career/cv.tex",
-	    "career/resume.tex"
-	]
     }
 }
