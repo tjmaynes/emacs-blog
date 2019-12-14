@@ -9,11 +9,11 @@ if [ -z $DESTINATION_DIRECTORY ]; then
     exit 1
 fi
 
-FILES=(static/favicon.ico static/keybase.txt static/CNAME)
+FILES=(favicon.ico keybase.txt CNAME)
 
-[ -d $DESTINATION_DIRECTORY/static ] || mkdir -p $DESTINATION_DIRECTORY/static
+[ -d $DESTINATION_DIRECTORY ] || mkdir -p $DESTINATION_DIRECTORY
 
 for file in "${FILES[@]}"; do
-    echo "Copying file $file to directory $DESTINATION_DIRECTORY/static"
-    cp -rf $file $DESTINATION_DIRECTORY/$file
+    echo "Copying file static/$file to directory $DESTINATION_DIRECTORY/$file"
+    cp -rf static/$file $DESTINATION_DIRECTORY/$file
 done
