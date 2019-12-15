@@ -28,7 +28,7 @@ build_blog:
 	--batch \
 	--no-init-file \
 	--no-site-file \
-	--load $(BLOG_DIRECTORY)/scripts/build-blog.el
+	--load $(BLOG_DIRECTORY)/scripts/build_blog.el
 
 copy_static_files:
 	chmod +x ./scripts/copy_static_files.sh

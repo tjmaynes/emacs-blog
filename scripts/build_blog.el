@@ -1,8 +1,6 @@
-;; --- build-blog.el ---
+;; --- build_blog.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
-
-(add-to-list 'load-path (expand-file-name "." "elisp"))
 
 (require 'json)
 
@@ -255,8 +253,7 @@
   (let ((datetime (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
 	(title (org-publish-find-title entry project))
 	(post-entry (format "posts/%s" entry)))
-    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@"
-	    datetime post-entry title)))
+    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@" datetime post-entry title)))
 
 (defun org-blog/org-publish-format-rss-feed (title list)
   (concat "#+TITLE: " title "\n"
@@ -273,7 +270,7 @@
              (insert (format "* [[file:%s][%s]]\n" file title))
              (org-set-property "RSS_PERMALINK" link)
              (org-set-property "PUBDATE" date)
-             (org-id-get-create)
+	     (org-id-get-create)
              (insert-file-contents file)
              (buffer-string))))
         ((eq style 'tree)
@@ -370,11 +367,6 @@
 				     :translate-alist '((template . org-blog/static-page-template))))
 
 (defun org-blog/publish ()
-  (package-manager/ensure-packages-installed 'org 'org-plus-contrib 'htmlize 'org-re-reveal)
-  (require 'ox)
-  (require 'org)
-  (require 'htmlize)
-  (require 'seq)
   (let* ((org-publish-project-alist          (org-blog/get-publish-project-alist))
 	 (org-export-with-section-numbers    nil)
 	 (org-export-with-smart-quotes       t)
@@ -413,10 +405,28 @@
 	  blog-syntax-css-url (gethash "syntax-highlighting" css-config)
 	  blog-timestamps-directory (concat blog-directory "timestamps"))))
 
+(defun install-required-packages ()
+  (package-manager/setup)
+  (package-manager/ensure-packages-installed 'htmlize 'el-get)
+  (el-get-bundle org
+		 :url "https://code.orgmode.org/bzg/org-mode/src/release_9.2.6"
+		 :features org)
+  (el-get-bundle ox-rss
+		 :url "https://code.orgmode.org/bzg/org-mode/raw/release_9.2.6/contrib/lisp/ox-rss.el"
+		 :features ox-rss)
+  (el-get-bundle org-re-reveal
+		 :url "https://gitlab.com/oer/org-re-reveal/raw/2.12.0/org-re-reveal.el"
+		 :features org-re-reveal)
+  (require 'org)
+  (require 'ox-rss)
+  (require 'org-re-reveal)
+  (require 'htmlize)
+  (require 'seq))
+
 (defun initialize (config-location blog-directory build-directory)
   (let* ((config (utilities/read-json-file config-location))
 	 (blog-publishing-directory (expand-file-name build-directory blog-directory)))
-    (package-manager/setup)    
+    (install-required-packages)
     (setup-global-variables config blog-publishing-directory)
     (org-blog/publish)))
 
