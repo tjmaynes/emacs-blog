@@ -236,7 +236,7 @@
 
 (defun org-blog/org-publish-to-html (plist filename pub-dir)
   (let ((parent-directory (utilities/get-relative-parent-directory filename))
-	(posts-dir (expand-file-name "posts" pub-dir)))
+	(pub-dir (expand-file-name parent-directory pub-dir)))
     (cond ((or (equal parent-directory "posts") (equal parent-directory "drafts"))
 	   (if (equal (file-name-base filename) "index")
 	       (org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir)
