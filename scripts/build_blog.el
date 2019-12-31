@@ -334,6 +334,14 @@
      :sitemap-function org-blog/org-publish-format-rss-feed
      :sitemap-format-entry org-blog/org-publish-format-rss-feed-entry
      :table-of-contents nil)
+    ("blog-drafts"
+     :base-directory ,(expand-file-name "drafts" blog-directory)
+     :base-extension "org"
+     :exclude ,(regexp-opt '("index.org"))
+     :publishing-function org-blog/org-publish-to-html
+     :publishing-directory ,(expand-file-name (format "%s/drafts" build-directory) blog-directory)
+     :publishing-directory ,blog-publishing-directory
+     :html-home/up-format nil)
     ("blog-public"
      :base-directory ,(expand-file-name "static" blog-directory)
      :exclude ,(regexp-opt '("public"))
@@ -355,7 +363,7 @@
      :publishing-directory ,(expand-file-name (format "%s/talks/images" build-directory) blog-directory)
      :publishing-function org-publish-attachment
      :recursive nil)
-    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-public" "blog-talks" "blog-talks-images"))))
+    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-drafts" "blog-public" "blog-talks" "blog-talks-images"))))
 
 (defun org-blog/setup-custom-templates ()
   (org-export-define-derived-backend 'custom-blog-index-backend 'html

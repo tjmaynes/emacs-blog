@@ -1,0 +1,80 @@
+#+TITLE: SQL Murder Mystery
+#+DATE: <2019-12-16, Mon>
+#+DESCRIPTION: In this blog post, I'll be discussing a very fun interactive game for learning SQL called 'SQL Murder Mystery'.
+
+I just wanted to take the time to write about how much fun I had working through SMM, or [[][SQL Murder Mystery]. I came across this unique game on Hackernews on Monday morning and roughly 45 minutes later I ended up finishing the game.
+
+*Find Report query*:
+#+begin_src sql
+select * from crime_scene_report
+	where
+		date = 20180115
+		and city = "SQL City"
+		and type = "murder"
+#+end_src
+
+*Results*:
+| date | type | description  | city |
+|---+---+---+---+---|
+| 20180115 | murder | Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave". | SQL City |
+
+*Find Morty Query*:
+
+#+begin_src sql
+select
+	person.id,
+	person.name,
+	person.license_id,
+	interview.transcript
+from person
+	inner join drivers_license on person.license_id=drivers_license.id
+	inner join interview on person.id=interview.person_id
+	where person.address_street_name = "Northwestern Dr"
+	order by person.address_number desc
+	limit 1
+#+end_src
+
+*Annabel query*:
+
+#+begin_src sql
+select
+	person.id,
+	person.name,
+	person.license_id,
+	get_fit_now_member.id as get_fit_now_member_id,
+	interview.transcript
+from person
+	inner join drivers_license on person.license_id=drivers_license.id
+	inner join interview on person.id=interview.person_id
+	inner join get_fit_now_member on person.id=get_fit_now_member.person_id
+	where person.name like "Annabel%" and person.address_street_name = "Franklin Ave"
+#+end_src
+
+*Find Suspect query*:
+
+#+begin_src sql
+select * from get_fit_now_check_in
+	inner join get_fit_now_member on get_fit_now_check_in.membership_id=get_fit_now_member.id
+	inner join person on get_fit_now_member.person_id=person.id
+	inner join drivers_license on drivers_license.id=person.license_id
+	inner join interview on interview.person_id=person.id
+	where
+		get_fit_now_check_in.check_in_date = 20180109
+		and get_fit_now_check_in.membership_id like "%48Z%"
+		and drivers_license.plate_number like "%H42W%"
+	order by get_fit_now_check_in.check_in_time desc
+#+end_src
+
+*Find Real Culprit query*:
+
+#+begin_src sql
+select * from drivers_license
+	inner join person on person.license_id=drivers_license.id
+	inner join facebook_event_checkin on facebook_event_checkin.person_id=person.id
+	where
+		height between 65 and 67
+		and hair_color = "red"
+		and car_make   = "Tesla"
+		and car_model  = "Model S"
+	limit 1
+#+end_src

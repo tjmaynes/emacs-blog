@@ -1,0 +1,8 @@
+#+TITLE: The AsyncResult Type
+#+DATE: <2019-12-20, Fri>
+#+DESCRIPTION: In this blog, we'll be discussing combining Either and Maybe monads in an asynchronous context called the AsyncResult type.
+
+The AsyncResult type is a type that returns either an object T or an exception in an asynchronous context.
+
+Try...Catch
+- You need to look at the implementation of a function in order to understand all the different ways the function can throw. Harder to understand all the different states you can be in.
