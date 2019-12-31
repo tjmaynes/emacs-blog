@@ -5,6 +5,6 @@ RUN apt-get update
 RUN apt-get install -f -y \
 	git \
 	emacs \
-  python3-pygments
+	python3-pygments
 
 ENTRYPOINT ["make"]
