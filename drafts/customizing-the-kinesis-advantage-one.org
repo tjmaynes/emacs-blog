@@ -1,0 +1,10 @@
+#+TITLE: Customizing the Kinesis Advantage 1
+#+DATE: <2020-01-01 Wed>
+#+DESCRIPTION: In this blog post, we'll be discussing some basic keyword instructions and how to remap keys.
+
+* Basic Instruction
+- Prog Backslash
+
+* Remapping Keys
+
+* Flipping Physical Buttons
