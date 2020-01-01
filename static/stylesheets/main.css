@@ -71,7 +71,7 @@ blockquote {
 }
 
 .content-wrapper {
-    max-width: 550px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 14px 12px 20px 12px;
 }
@@ -240,10 +240,3 @@ blockquote {
 }
 
 .content-footer { border-top: 2px solid #586e75; }
-
-@media (min-width: 500px) {
-    .footer-menu ul {
-	flex-flow: row wrap;
-	padding-bottom: 0;
-    }
-}
