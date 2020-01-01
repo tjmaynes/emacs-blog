@@ -1,0 +1,22 @@
+#+TITLE: Railway-oriented Programming using Kotlin/Spring WebFlux and Arrow Fx
+#+DATE: <2019-12-20, Fri>
+#+DESCRIPTION: In this blog, we'll be implementing a functional style of error handling called Railway-oriented programming in a modern Kotlin/Spring backend service.
+
+* Introduction
+In an effort to write more correct software, we'll be implementing a functional style of error handling called Railway-oriented programming in a Kotlin/Spring backend service. To accomplish this effort, we'll be utilizing the Either and Option monads from a functional programming library called Arrow. We'll also be utilizing Kotlin coroutines to build our non-blocking pipelines in our Spring WebFlux application.
+
+* Railway-oriented Programming
+Railway-oriented programming is a style of error handling that utilizes a specific combination of Either and Option monads to form a pipeline of operations.
+
+For more information on this pattern, please take a look at this [[https://fsharpforfunandprofit.com/posts/recipe-part2/][link]] from the F\# community on this subject].
+
+Try...Catch
+- You need to look at the implementation of a function in order to understand all the different ways the function can throw. Harder to understand all the different states you can be in.
+
+* Project setup
+You will need Gradle and an IDE installed. We'll be using IntelliJ for this blog post.
+First, let's create a project from the Spring Initializer website.
+Since we'll be using Arrow's Either and Option monads to construct our "railway." 
+
+The AsyncResult type is a type that returns either an object T or an exception in an asynchronous context.
+
