@@ -301,7 +301,7 @@
      :base-extension "org"
      :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function org-blog/org-publish-to-html
-     :publishing-directory ,blog-publishing-directory
+     :publishing-directory ,(expand-file-name (format "%s/posts" build-directory) blog-directory)
      :html-home/up-format nil
      :auto-sitemap t
      :sitemap-filename "index.org"
