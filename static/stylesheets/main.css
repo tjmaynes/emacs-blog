@@ -176,9 +176,9 @@ blockquote {
 
 .footer-menu ul {
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 
 .footer-menu ul:last-child {
