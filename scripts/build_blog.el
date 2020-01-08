@@ -235,11 +235,14 @@
 		      path (or desc "video")))))))
 
 (defun org-blog/org-publish-to-html (plist filename pub-dir)
-  (let ((parent-directory (utilities/get-relative-parent-directory filename)))
+  (let* ((parent-directory (utilities/get-relative-parent-directory filename))
+	 (posts-directory (if (equal parent-directory "posts")
+			      (expand-file-name (format "%s/posts" build-directory) blog-directory)
+			    pub-dir)))
     (cond ((or (equal parent-directory "posts") (equal parent-directory "drafts"))
 	   (if (equal (file-name-base filename) "index")
 	       (org-publish-org-to 'custom-blog-index-backend filename ".html" plist pub-dir)
-	     (org-publish-org-to 'custom-blog-post-backend filename ".html" plist pub-dir)))
+	     (org-publish-org-to 'custom-blog-post-backend filename ".html" plist posts-directory)))
 	  ((org-publish-org-to 'custom-blog-page-backend filename ".html" plist pub-dir)))))
 
 (defun org-blog/org-publish-sitemap (_title list)
@@ -301,7 +304,7 @@
      :base-extension "org"
      :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function org-blog/org-publish-to-html
-     :publishing-directory ,(expand-file-name (format "%s/posts" build-directory) blog-directory)
+     :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil
      :auto-sitemap t
      :sitemap-filename "index.org"

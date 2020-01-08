@@ -51,7 +51,7 @@ deploy_blog:
 	$(TARGET_BRANCH) \
 	$(BLOG_BUILD_DIRECTORY_NAME)
 
-preview_blog: clean publish_blog
+preview_blog: build_blog
 	chmod +x ./scripts/edit_blog.sh
 	./scripts/edit_blog.sh \
 	$(PORT) \
