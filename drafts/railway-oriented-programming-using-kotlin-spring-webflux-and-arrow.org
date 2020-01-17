@@ -1,4 +1,4 @@
-#+TITLE: Railway-oriented Programming using Kotlin/Spring WebFlux and Arrow Fx
+#+TITLE: Railway-oriented Programming using Kotlin, Spring WebFlux and Arrow
 #+DATE: <2019-12-20, Fri>
 #+DESCRIPTION: In this blog, we'll be implementing a functional style of error handling called Railway-oriented programming in a modern Kotlin/Spring backend service.
 
