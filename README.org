@@ -54,11 +54,3 @@ REGISTRY_PASSWORD=<some-registry-password> \
 TAG=<some-build-tag> \
 make push_image
 #+end_src
-** In Progress
-- A Functional Approach: Error Handling
-- The Extreme Programming Approach
-- Performance Testing using Gatling
-- System Health Monitoring with InfluxDB and Grafana
-- Canary Deployments with Kubernetes and Spinnaker
-- Building a Blog with Org-Publish
-  - I recently replaced my jekyll-based blog with an org-mode based blog. Getting started with this was a little daunting at first, but I was able to find some blog posts. I just wanted to discuss one part of the experience that was difficult to get documentation for.
