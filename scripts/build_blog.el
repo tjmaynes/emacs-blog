@@ -150,7 +150,7 @@
      (concat
       "<h1 itemprop=\"name headline\">" post-title "</h1>\n"
       "<p>Posted on <time datetime=\"" xml-date-time "\" itemprop=\"datePublished\">" display-date-time "</time> • " blog-author-name "</p>\n")
-   "</header>\n")))
+     "</header>\n")))
 
 (defun org-blog/get-post-page-body (title date content)
   (concat
@@ -417,16 +417,19 @@
 
 (defun install-required-packages ()
   (package-manager/setup)
-  (package-manager/ensure-packages-installed 'htmlize 'el-get)
+  (package-manager/ensure-packages-installed 'el-get)
   (el-get-bundle org
-		 :url "https://code.orgmode.org/bzg/org-mode/src/release_9.2.6"
-		 :features org)
+    :url "https://code.orgmode.org/bzg/org-mode/src/release_9.2.6"
+    :features org)
   (el-get-bundle ox-rss
-		 :url "https://code.orgmode.org/bzg/org-mode/raw/release_9.2.6/contrib/lisp/ox-rss.el"
-		 :features ox-rss)
+    :url "https://code.orgmode.org/bzg/org-mode/raw/release_9.2.6/contrib/lisp/ox-rss.el"
+    :features ox-rss)
   (el-get-bundle org-re-reveal
-		 :url "https://gitlab.com/oer/org-re-reveal/raw/2.12.0/org-re-reveal.el"
-		 :features org-re-reveal)
+    :url "https://gitlab.com/oer/org-re-reveal/raw/2.12.0/org-re-reveal.el"
+    :features org-re-reveal)
+  (el-get-bundle htmlize
+    :url "https://raw.githubusercontent.com/emacsmirror/htmlize/master/htmlize.el"
+    :features htmlize)
   (require 'org)
   (require 'ox-rss)
   (require 'org-re-reveal)
