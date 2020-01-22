@@ -1,4 +1,4 @@
-#+TITLE: Refactoring Try...Catch
+#+TITLE: Error Handling Approaches
 #+DATE: <2020-01-15, Wed>
 #+DESCRIPTION: In this blog post, we'll be refactoring a function that isn't quite working the way we are expecting the function to work.
 
@@ -43,20 +43,76 @@ There! That's it! We changed our return type to return an optional thing. This i
 
 But, what happens if we can't find our thing because we were able to connect to our database?
 
-Let's assume our getById function provided by databaseDriver throws an exception. Unfortunately we have not managed what happens when our internal dependency throws an exception. A common pattern for dealing with functions that throw, is to use a Try...catch.
+Let's assume our getById function provided by databaseDriver throws an exception. Unfortunately we have not managed what happens when our internal dependency throws an exception. Let's go through two different approaches to error handling throwable functions.
 
-Let's rewrite our code to utilize the Try...catch pattern.
+A common pattern for dealing with functions that throw, is to utilize the Try...catch pattern. As seen below...
 
 #+begin_src kotlin
 fun <T> getById(id: String): T? =
-  return try {
+  try {
     databaseDriver.getById(id) ?: null
   } catch (e: Exception) {
     null
   }
 #+end_src
 
+This works pretty well for us. We've removed the "invisible"/implicit throwable from the function and are now back to returning a simple optional T value. However, this simplicity has come at a price.
+
+With the above approach we have given the caller of this method a not so "truthy" return value. If an exception occurs, the caller of this method will not know, based on the name of the function, if the item was found or something else has happened (unable to connect to database, table not found, etc).
+
+I think we can do better job giving more information back to the caller of this method. Let's rewrite the function using two callbacks: onSuccess and onFailure.
+
 #+begin_src kotlin
-fun <T> getById(id: String): Either<Exception, Option<T>> =
-  Either.catch { repository.getById(id).toOption() }
+fun <T> getById(id: String, onSuccess: (T?) -> Void, onFailure: (Exception) -> Void) {
+  try {
+    onSuccess(databaseDriver.getById ?: null)
+  } catch (e: Exception) {
+    onFailure(e)
+  }
+}
+#+end_src
+
+The above function says "given an id, we could be in a success or failure state". The function signature tells us (without looking at the implementation code) that our getById method can succeed or fail for different reasons. While this code is functionally more correct, it is harder to use now since we are relying on callbacks.
+
+Let's look at how this is harder to use now. Previously we were able to get our value in one line. As so...
+
+#+begin_src kotlin
+val result: AnObject? = getById("some-id")
+if (result != null) {
+  // do something
+} else {
+  // do something else
+}
+#+end_src
+
+The above style of using our getById function is easier to reason about since it following a conventional style of programming that most developers are used to. But with callbacks, we have to work with our function this way...
+
+#+begin_src kotlin
+getById("some-id", { result ->
+  // do something
+}, { exception ->
+  // do something else
+})
+#+end_src
+
+#+begin_src kotlin
+fun <T> getById(id: String): Either<Exception, T?> =
+  Either.catch { repository.getById(id) ?: null }
+#+end_src
+
+#+begin_src kotlin
+val result: Either<Exception, MyObject?> = getById("some-id")
+
+val data = if (result.isRight()) {
+  // do something
+} else {
+  // do something
+}
+
+val exception = if (result.isLeft()) {
+  // do something else
+} else {
+  // do something else
+}
+
 #+end_src
