@@ -34,8 +34,8 @@ jobs:
       - attach_workspace:
           at: ~/blog
       - run:
-          name: Deploy Blog to gh-pages branch
-          command: make deploy_blog
+          name: Deploy artifact to release branch
+          command: make deploy_artifact
 workflows:
   version: 2
   publish_blog:

@@ -1,29 +1,27 @@
 BLOG_DIRECTORY              = $(PWD)
-BLOG_BUILD_DIRECTORY_NAME   = build
-BLOG_BUILD_DIRECTORY        = $(PWD)/$(BLOG_BUILD_DIRECTORY_NAME)
-BLOG_BUILD_PUBLIC_DIRECTORY = $(BLOG_BUILD_DIRECTORY)/public
+BLOG_SOURCE_DIRECTORY      = $(BLOG_DIRECTORY)/src
 BLOG_CONFIG                 = $(BLOG_DIRECTORY)/config.json
+BLOG_BUILD_DIRECTORY_NAME   = build
+BLOG_BUILD_DIRECTORY        = $(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY_NAME)
 IMAGE_NAME                  = blog-builder
 PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes
 REGISTRY_PASSWORD           ?= ""
 TAG                         = latest
 TARGET_BRANCH               = gh-pages
+REPO                        = git@github.com:tjmaynes/blog.git
 
 check_emacs_version:
 	emacs \
 	--no-init-file \
 	--version
 
-check_latex_version:
-	xelatex --version
-
-check_versions: check_emacs_version check_latex_version
+check_versions: check_emacs_version
 
 build_blog:
-	BLOG_DIRECTORY=$(BLOG_DIRECTORY) \
 	BLOG_CONFIG=$(BLOG_CONFIG) \
-	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY_NAME) \
+	BLOG_SOURCE_DIRECTORY=$(BLOG_SOURCE_DIRECTORY) \
+	BLOG_BUILD_DIRECTORY=$(BLOG_BUILD_DIRECTORY) \
 	emacs \
 	--batch \
 	--no-init-file \
@@ -33,25 +31,27 @@ build_blog:
 copy_static_files:
 	chmod +x ./scripts/copy_static_files.sh
 	./scripts/copy_static_files.sh \
+	$(BLOG_SOURCE_DIRECTORY)/static \
 	$(BLOG_BUILD_DIRECTORY_NAME)
 
-build_latex_files:
-	chmod +x ./scripts/build_latex_files.sh
-	./scripts/build_latex_files.sh \
+get_career_files:
+	chmod +x ./scripts/get_career_files.sh
+	./scripts/get_career_files.sh \
 	$(BLOG_BUILD_DIRECTORY_NAME)
 
-publish_blog: check_versions build_blog copy_static_files build_latex_files
+publish_blog: check_versions build_blog copy_static_files get_career_files
 
-deploy_blog:
-	chmod +x ./scripts/deploy_blog.sh
-	./scripts/deploy_blog.sh \
+deploy_artifact:
+	chmod +x ./scripts/deploy_artifact.sh
+	./scripts/deploy_artifact.sh \
 	$(GIT_USERNAME) \
 	$(GIT_EMAIL) \
 	$(GIT_COMMIT_SHA) \
 	$(TARGET_BRANCH) \
-	$(BLOG_BUILD_DIRECTORY_NAME)
+	$(BLOG_BUILD_DIRECTORY_NAME) \
+	$(REPO)
 
-preview_blog: build_blog
+preview_blog: build_blog copy_static_files
 	chmod +x ./scripts/edit_blog.sh
 	./scripts/edit_blog.sh \
 	$(PORT) \

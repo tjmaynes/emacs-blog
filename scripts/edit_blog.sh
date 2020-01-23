@@ -15,7 +15,7 @@ fi
 
 docker rm -f nginx-blog || true
 docker run --name nginx-blog \
-       --publish ${PORT}:80 \
-       --publish 443:443 \
-       --volume ${VOLUME_DIRECTORY}:/usr/share/nginx/html \
-       nginx:1.15.7
+    --publish ${PORT}:80 \
+    --publish 443:443 \
+    --volume ${VOLUME_DIRECTORY}:/usr/share/nginx/html \
+    nginx:1.15.7

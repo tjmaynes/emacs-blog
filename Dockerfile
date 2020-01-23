@@ -1,10 +1,15 @@
-FROM thomasweise/docker-texlive-full:latest
-MAINTAINER TJ Maynes <tjmaynes@gmail.com>
+FROM ubuntu:19.04
+MAINTAINER TJ Maynes <tj@tjmaynes.com>
 
 RUN apt-get update
 RUN apt-get install -f -y \
-	git \
-	emacs \
-	python3-pygments
+      git \
+      make \
+      emacs-nox \
+      python3-pygments
+
+RUN git --help
+RUN make --help
+RUN pygmentize -V
 
 ENTRYPOINT ["make"]

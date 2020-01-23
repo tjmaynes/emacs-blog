@@ -1,5 +1,5 @@
 #+TITLE: Blog
-#+AUTHOR: TJ Maynes <tjmaynes@gmail.com>
+#+AUTHOR: TJ Maynes <tj@tjmaynes.com>
 
 #+BEGIN_QUOTE
 Personal Blog
@@ -9,8 +9,6 @@ Personal Blog
 
 ** Requirements
 - [[https://www.gnu.org/s/emacs/][Emacs]]
-- [[https://www.overleaf.com/learn/latex/XeLaTeX][Xelatex]]
-- (Optional: [[https://hub.docker.com/][Docker]])
 
 ** Usage
 To build the blog, run the following command:

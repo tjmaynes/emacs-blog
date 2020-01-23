@@ -22,8 +22,8 @@ elif [ -z $VOLUME_DIRECTORY ]; then
 fi
 
 docker run \
-       --rm -it \
-       --workdir /src \
-       --volume ${VOLUME_DIRECTORY}:/src \
-       ${REGISTRY_USERNAME}/${IMAGE_NAME}:${TAG} \
-       publish_blog BLOG_DIRECTORY=/src/
+    --rm -it \
+    --workdir /src \
+    --volume ${VOLUME_DIRECTORY}:/src \
+    ${REGISTRY_USERNAME}/${IMAGE_NAME}:${TAG} \
+    publish_blog BLOG_DIRECTORY=/src/

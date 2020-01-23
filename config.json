@@ -1,22 +1,22 @@
 {
     "settings": {
-	"title": "TJ Maynes",
-	"description": "Personal Blog",
-	"url": "https://tjmaynes.com",
-	"icon": "/public/images/icon.png",
-	"css": {
-	    "main": "/public/stylesheets/main.css",
-	    "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
-	}
+        "title": "TJ Maynes",
+        "description": "Personal Blog",
+        "url": "https://tjmaynes.com",
+	"source-code-url": "https://github.com/tjmaynes/blog",
+        "icon": "/public/images/icon.png",
+        "css": {
+            "main": "/public/stylesheets/main.css",
+            "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
+        }
     },
     "author": {
-	"name": "TJ Maynes",
-	"description": "TJ Maynes is a passionate, hardworking software engineer living in NYC. Currently consulting at Pivotal Labs, working on this blog and staying active. Also, enjoys the smell and taste of coffee.",
-	"cv": "/career/cv.pdf",
-	"github": "tjmaynes",
-	"linkedin": "tjmaynes",
-	"twitter": "@tjmaynes",
-	"email": "tj@tjmaynes.com",
-	"avatar": "/public/images/me/profile.jpg"
+        "name": "TJ Maynes",
+        "description": "TJ Maynes is a passionate, hardworking software engineer living in NYC. Currently consulting at Pivotal Labs, working on this blog and staying active. Also, enjoys the smell and taste of coffee.",
+        "cv": "/career/cv.pdf",
+        "github": "tjmaynes",
+        "linkedin": "tjmaynes",
+        "twitter": "@tjmaynes",
+        "email": "tj@tjmaynes.com"
     }
 }

@@ -1,4 +1,4 @@
-#+TITLE: Error Handling Approaches
+#+TITLE: Error Handling Patterns
 #+DATE: <2020-01-15, Wed>
 #+DESCRIPTION: In this blog post, we'll be refactoring a function that isn't quite working the way we are expecting the function to work.
 
