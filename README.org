@@ -14,7 +14,7 @@ Personal Blog
 To build the blog, run the following command:
 #+begin_src bash
 BLOG_CONFIG=<some-blog-config> \
-BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
 BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make build_blog
 #+end_src
@@ -22,7 +22,7 @@ make build_blog
 To publish the blog, run the following command:
 #+begin_src bash
 BLOG_CONFIG=<some-blog-config> \
-BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
 BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make publish_blog
 #+end_src
@@ -30,7 +30,7 @@ make publish_blog
 To preview the blog using =nginx= in a =docker= container, run the following command:
 #+begin_src bash
 BLOG_CONFIG=<some-blog-config> \
-BLOG_DIRECTORY=<some-blog-directory> \
+BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
 BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make preview_blog
 #+end_src
