@@ -38,7 +38,7 @@ copy_static_files:
 get_career_files:
 	chmod +x ./scripts/get_career_files.sh
 	./scripts/get_career_files.sh \
-	$(BLOG_BUILD_DIRECTORY_NAME)
+	$(BLOG_BUILD_DIRECTORY)
 
 publish_blog: check_versions build_blog copy_static_files get_career_files
 
@@ -49,7 +49,7 @@ deploy_artifact:
 	$(GIT_EMAIL) \
 	$(GIT_COMMIT_SHA) \
 	$(TARGET_BRANCH) \
-	$(BLOG_BUILD_DIRECTORY_NAME) \
+	$(BLOG_BUILD_DIRECTORY) \
 	$(REPO)
 
 preview_blog: build_blog copy_static_files

@@ -9,8 +9,13 @@ if [ -z $DESTINATION_DIRECTORY ]; then
     exit 1
 fi
 
+[ -d $DESTINATION_DIRECTORY ] || mkdir -p $DESTINATION_DIRECTORY
+[ ! -d $DESTINATION_DIRECTORY/career ] || rm -rf $DESTINATION_DIRECTORY/career
+
 git clone \
     --single-branch \
     --branch release \
     https://github.com/tjmaynes/career \
     ${DESTINATION_DIRECTORY}/career
+
+rm -rf ${DESTINATION_DIRECTORY}/career/.git
