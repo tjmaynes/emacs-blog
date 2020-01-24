@@ -418,16 +418,9 @@
 (defun install-required-packages ()
   (package-manager/setup)
   (package-manager/ensure-packages-installed 'el-get)
-  (el-get-bundle org
-    :url "https://code.orgmode.org/bzg/org-mode/src/release_9.2.6"
-    :features org)
-  (el-get-bundle org-re-reveal
-    :url "https://gitlab.com/oer/org-re-reveal/raw/2.12.0/org-re-reveal.el"
-    :features org-re-reveal)
-  (el-get-bundle htmlize
-    :url "https://raw.githubusercontent.com/emacsmirror/htmlize/master/htmlize.el"
-    :features htmlize)
-  (require 'org)
+  (el-get-bundle blog-dependencies
+    :url "https://gist.github.com/e0b13e010f4c34dd71c41a4f50e0e5cd.git"
+    :features ox-rss org-re-reveal htmlize)
   (require 'ox-rss)
   (require 'org-re-reveal)
   (require 'htmlize)
