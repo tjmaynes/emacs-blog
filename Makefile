@@ -1,6 +1,7 @@
 BLOG_DIRECTORY              = $(PWD)
-BLOG_SOURCE_DIRECTORY      = $(BLOG_DIRECTORY)/src
+BLOG_SOURCE_DIRECTORY       = $(BLOG_DIRECTORY)/src
 BLOG_CONFIG                 = $(BLOG_DIRECTORY)/config.json
+BLOG_STATIC_DIRECTORY       = $(BLOG_SOURCE_DIRECTORY)/static
 BLOG_BUILD_DIRECTORY_NAME   = build
 BLOG_BUILD_DIRECTORY        = $(BLOG_DIRECTORY)/$(BLOG_BUILD_DIRECTORY_NAME)
 IMAGE_NAME                  = blog-builder
@@ -31,8 +32,8 @@ build_blog:
 copy_static_files:
 	chmod +x ./scripts/copy_static_files.sh
 	./scripts/copy_static_files.sh \
-	$(BLOG_SOURCE_DIRECTORY)/static \
-	$(BLOG_BUILD_DIRECTORY_NAME)
+	$(BLOG_STATIC_DIRECTORY) \
+	$(BLOG_BUILD_DIRECTORY)
 
 get_career_files:
 	chmod +x ./scripts/get_career_files.sh

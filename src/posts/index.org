@@ -1,3 +1,0 @@
-@@html:<li class="archive-item">@@@@html:<span class="archive-item"><span class="archive-date">@@ 2019-10-29 @@html:</span>@@ | [[file:posts/what-is-a-monad.org][What is a Monad?]] @@html:</span>@@@@html:</li>@@
-@@html:<li class="archive-item">@@@@html:<span class="archive-item"><span class="archive-date">@@ 2015-11-24 @@html:</span>@@ | [[file:posts/building-a-blog-with-jekyll.org][Building a Blog with Jekyll]] @@html:</span>@@@@html:</li>@@
-@@html:<li class="archive-item">@@@@html:<span class="archive-item"><span class="archive-date">@@ 2015-05-09 @@html:</span>@@ | [[file:posts/drawing-shapes-with-nao.org][Drawing Shapes with NAO]] @@html:</span>@@@@html:</li>@@

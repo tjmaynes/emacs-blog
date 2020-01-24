@@ -421,9 +421,6 @@
   (el-get-bundle org
     :url "https://code.orgmode.org/bzg/org-mode/src/release_9.2.6"
     :features org)
-  (el-get-bundle ox-rss
-    :url "https://code.orgmode.org/bzg/org-mode/raw/release_9.2.6/contrib/lisp/ox-rss.el"
-    :features ox-rss)
   (el-get-bundle org-re-reveal
     :url "https://gitlab.com/oer/org-re-reveal/raw/2.12.0/org-re-reveal.el"
     :features org-re-reveal)
