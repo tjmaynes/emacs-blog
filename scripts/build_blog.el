@@ -235,7 +235,7 @@
 (defun org-blog/org-publish-to-html (plist filename pub-dir)
   (let* ((parent-directory (utilities/get-relative-parent-directory filename))
 	 (posts-directory (if (equal parent-directory "posts")
-			      (expand-file-name (format "%s/posts" build-directory) source-directory)
+			      (expand-file-name (format "%s/posts" blog-publishing-directory) blog-source-directory)
 			    pub-dir)))
     (cond ((or (equal parent-directory "posts") (equal parent-directory "drafts"))
 	   (if (equal (file-name-base filename) "index")
@@ -298,11 +298,11 @@
 
 (defun org-blog/get-publish-project-alist ()
   `(("blog-home"
-     :base-directory ,(expand-file-name "posts" source-directory)
+     :base-directory ,(expand-file-name "posts" blog-source-directory)
      :base-extension "org"
      :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function org-blog/org-publish-to-html
-     :publishing-directory ,publishing-directory
+     :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil
      :auto-sitemap t
      :sitemap-filename "index.org"
@@ -312,19 +312,19 @@
      :sitemap-function org-blog/org-publish-sitemap
      :sitemap-format-entry org-blog/org-publish-sitemap-format)
     ("blog-post-images"
-     :base-directory ,(expand-file-name "posts/images" source-directory)
+     :base-directory ,(expand-file-name "posts/images" blog-source-directory)
      :exclude nil
      :base-extension ,(regexp-opt '("jpg" "png"))
-     :publishing-directory ,(expand-file-name (format "%s/posts/images" build-directory) source-directory)
+     :publishing-directory ,(expand-file-name (format "%s/posts/images" blog-publishing-directory) blog-source-directory)
      :publishing-function org-publish-attachment
      :recursive nil)
     ("blog-rss"
-     :base-directory ,(expand-file-name "posts" source-directory)
+     :base-directory ,(expand-file-name "posts" blog-source-directory)
      :base-extension "org"
      :recursive nil
      :exclude ,(regexp-opt '("index.org" "rss.org"))
      :publishing-function org-blog/org-rss-publish-to-rss
-     :publishing-directory ,publishing-directory
+     :publishing-directory ,blog-publishing-directory
      :rss-extension "xml"
      :auto-sitemap t
      :sitemap-filename "rss.org"
@@ -335,35 +335,40 @@
      :sitemap-format-entry org-blog/org-publish-format-rss-feed-entry
      :table-of-contents nil)
     ("blog-drafts"
-     :base-directory ,(expand-file-name "drafts" source-directory)
+     :base-directory ,(expand-file-name "drafts" blog-source-directory)
      :base-extension "org"
      :exclude ,(regexp-opt '("index.org"))
      :publishing-function org-blog/org-publish-to-html
-     :publishing-directory ,(expand-file-name (format "%s/drafts" build-directory) source-directory)
-     :publishing-directory ,publishing-directory
+     :publishing-directory ,(expand-file-name (format "%s/drafts" blog-publishing-directory) blog-source-directory)
+     :publishing-directory ,blog-publishing-directory
      :html-home/up-format nil)
-    ("blog-public"
-     :base-directory ,(expand-file-name "static" source-directory)
-     :exclude ,(regexp-opt '("public"))
-     :base-extension ,(regexp-opt '("jpg" "png" "js" "css" "eot" "woff" "woff2" "ttf"))
-     :publishing-directory ,(expand-file-name (format "%s/public" build-directory) source-directory)
-     :publishing-function org-publish-attachment
-     :recursive t)
     ("blog-talks"
-     :base-directory ,(expand-file-name "talks" source-directory)
+     :base-directory ,(expand-file-name "talks" blog-source-directory)
      :base-extension "org"
-     :publishing-directory ,(expand-file-name (format "%s/talks" build-directory) source-directory)
+     :publishing-directory ,(expand-file-name (format "%s/talks" blog-publishing-directory) blog-source-directory)
      :publishing-function org-blog/org-reveal-publish-to-html
      :section-numbers nil
      :recursive t)
     ("blog-talks-images"
-     :base-directory ,(expand-file-name "talks/images" source-directory)
+     :base-directory ,(expand-file-name "talks/images" blog-source-directory)
      :exclude nil
      :base-extension ,(regexp-opt '("jpg" "png"))
-     :publishing-directory ,(expand-file-name (format "%s/talks/images" build-directory) source-directory)
+     :publishing-directory ,(expand-file-name (format "%s/talks/images" blog-publishing-directory) blog-source-directory)
      :publishing-function org-publish-attachment
      :recursive nil)
-    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-drafts" "blog-public" "blog-talks" "blog-talks-images"))))
+    ("blog-public"
+     :base-directory ,(expand-file-name "public" blog-directory)
+     :base-extension ,(regexp-opt '("jpg" "png" "js" "css" "eot" "woff" "woff2" "ttf"))
+     :publishing-directory ,(expand-file-name (format "%s/public" blog-publishing-directory) blog-directory)
+     :publishing-function org-publish-attachment
+     :recursive t)
+    ("blog-required-files"
+     :base-directory ,blog-directory
+     :include ["CNAME", "keybase.txt", "favicon.ico"]
+     :publishing-directory ,blog-publishing-directory
+     :publishing-function org-publish-attachment
+     :recursive nil)
+    ("blog" :components ("blog-home" "blog-post-images" "blog-rss" "blog-drafts" "blog-talks" "blog-talks-images" "blog-public" "blog-required-files"))))
 
 (defun org-blog/setup-custom-templates ()
   (org-export-define-derived-backend 'custom-blog-index-backend 'html
@@ -392,11 +397,13 @@
     (org-blog/org-add-link-types)
     (org-publish-project "blog" t)))
 
-(defun setup-global-variables (config source-directory publishing-directory)
+(defun setup-global-variables (config blog-directory blog-publishing-directory)
   (let* ((settings-config (gethash "settings" config))
 	 (author-config (gethash "author" config))
 	 (css-config (gethash "css" settings-config)))
-    (setq source-directory source-directory
+    (setq blog-directory blog-directory
+	  blog-publishing-directory blog-publishing-directory
+	  blog-source-directory (expand-file-name "src" blog-directory)
 	  blog-title (gethash "title" settings-config)
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
@@ -410,30 +417,26 @@
 	  blog-author-description (gethash "description" author-config)
 	  blog-author-cv (gethash "cv" author-config)	  
 	  blog-author-avatar (gethash "avatar" author-config)
-	  publishing-directory publishing-directory
 	  blog-css-url (gethash "main" css-config)
 	  blog-syntax-css-url (gethash "syntax-highlighting" css-config)
-	  blog-timestamps-directory (concat source-directory "timestamps"))))
+	  blog-timestamps-directory (concat blog-source-directory "timestamps"))))
 
 (defun install-required-packages ()
   (package-manager/setup)
   (package-manager/ensure-packages-installed 'el-get)
   (el-get-bundle blog-dependencies
-    :url "https://gist.github.com/e0b13e010f4c34dd71c41a4f50e0e5cd.git"
-    :features ox-rss org-re-reveal htmlize)
+    :url "https://gist.github.com/e0b13e010f4c34dd71c41a4f50e0e5cd.git")
   (require 'ox-rss)
   (require 'org-re-reveal)
   (require 'htmlize)
   (require 'seq))
 
-(defun initialize (config-location source-directory build-directory)
-  (let* ((config (utilities/read-json-file config-location))
-	 (publishing-directory (expand-file-name build-directory source-directory)))
+(defun initialize (blog-directory blog-publishing-directory)
+  (let* ((config (utilities/read-json-file (expand-file-name "config.json" blog-directory))))
     (install-required-packages)
-    (setup-global-variables config source-directory publishing-directory)
+    (setup-global-variables config blog-directory blog-publishing-directory)
     (org-blog/publish)))
 
 (initialize
- (utilities/get-environment-variable "BLOG_CONFIG")
- (utilities/get-environment-variable "BLOG_SOURCE_DIRECTORY")
- (utilities/get-environment-variable "BLOG_BUILD_DIRECTORY"))
+ (utilities/get-environment-variable "BLOG_DIRECTORY")
+ (utilities/get-environment-variable "BLOG_PUBLISHING_DIRECTORY"))
