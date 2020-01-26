@@ -1,14 +1,13 @@
 #+TITLE: SQL Murder Mystery
 #+DATE: <2019-12-16, Mon>
-#+DESCRIPTION: In this blog post, I'll be discussing a very fun interactive game for learning SQL called 'SQL Murder Mystery'.
+#+DESCRIPTION: In this blog post, I'll be talking briefly about a fun game I found via Hackernews called SQL Murder Mystery.
 
-I've wanted to get better at my SQL querying skills, but haven't found the time to build an application to learn all the different ways to write SQL queries. Luckily this [[https://news.ycombinator.com/item?id=21799988][post]] on Hackernews showed up and I immediately found myself looking through SQLite docs. The online game, called [[https://mystery.knightlab.com/][SQL Murder Mystery]], utilizies your SQL querying abilities to solve a "whodunnit" murder mystery with only a single clue to start with.
+Normally when learning a new programming language, library, or concept, I'll fire up an editor and write a set of tests to drive out the knowledge that I am seeking. For a while now, I've wanted to learn more SQL but haven't made time to do so. Luckily this [[https://news.ycombinator.com/item?id=21799988][post]] showed up on Hackernews early one morning. The online game, called [[https://mystery.knightlab.com/][SQL Murder Mystery]], utilizes your SQL querying abilities to solve a "whodunnit" murder mystery with only a single clue to start with. To solve these problems you'll need to be decent at making SQLite queries, which I have some pretty basic CRUD knowledge of, so I found myself looking through some docs and blog posts on SQLite querying. I had a lot of fun playing this game and wish more games were developed for developers like this.
 
-I had a blast working through this game! I always felt that being a softare developer feels like being a detective in a crime novel. In the InfoSec industry there is a game called [[https://trailofbits.github.io/ctf/][Capture the Flag]] that requires players to gain entry into a secure computer. I would love to see more games like this that require learning and exploring different programming languages, runtimes, databases, etc.
+Below are the SQLite queries I used to solve the Murder Mystery game. These answers were the best that I could do at the time as I'm sure there are more optimal SQL queries for finding the culprit.
 
 ** Solutions
-
-*Find Report query*:
+*** Find Report query
 #+begin_src sql
 select * from crime_scene_report
 where
@@ -22,8 +21,7 @@ where
 |---+---+---+---+---|
 | 20180115 | murder | Security footage shows that there were 2 witnesses. The first witness lives at the last house on "Northwestern Dr". The second witness, named Annabel, lives somewhere on "Franklin Ave". | SQL City |
 
-*Find Morty Query*:
-
+*** Find Morty Query
 #+begin_src sql
 select
   person.id,
@@ -42,8 +40,7 @@ limit 1
 |---+---+---+---|
 | 14887	| Morty Schapiro | I heard a gunshot and then saw a man run out. He had a "Get Fit Now Gym" bag. The membership number on the bag started with "48Z". Only gold members have those bags. The man got into a car with a plate that included "H42W".           |
 
-*Annabel query*:
-
+*** Annabel query
 #+begin_src sql
 select
   person.id,
@@ -61,8 +58,7 @@ where person.name like "Annabel%" and person.address_street_name = "Franklin Ave
 |---+---+---+---|
 | 16371 | Annabel Miller | I saw the murder happen, and I recognized the killer from my gym when I was working out last week on January the 9th.                   |
 
-*Find Suspect query*:
-
+*** Find Suspect query
 #+begin_src sql
 select 
   person.id,
@@ -85,8 +81,7 @@ order by get_fit_now_check_in.check_in_time desc
 |---+---+---+---|
 | 67318 | Jeremy Bowers	| I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5" (65") or 5'7" (67"). She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017. |
 
-*Find Real Culprit query*:
-
+*** Find Real Culprit query
 #+begin_src sql
 select
   person.id,
