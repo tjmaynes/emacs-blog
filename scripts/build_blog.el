@@ -122,13 +122,12 @@
       <li><p><a href=\"https://linkedin.com/in/" blog-author-linkedin "\" target=\"_blank\">LinkedIn</a></p></li>
       <li><p><a href=\"mailto:" blog-author-email "\">Contact</a></p></li>
      </ul>
-     <ul>
-      <li>
-        <p><a href=" blog-source-code-url ">Built using Org-Mode ❤️</a></p>
-      </li>
-     </ul>
     </nav>")
-   "</section>"))
+   "</section>
+<section class=\"content-footer\">
+  <p>This site is licensed under <a href=" blog-license-url ">Creative Commons Attribution 3.0</a>.</p>
+  <p><a href=" blog-source-code-url ">Built using Org-Publish ❤️</a></p>
+</section>"))
 
 (defun org-blog/get-body (content)
   (concat
@@ -409,6 +408,7 @@
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
 	  blog-source-code-url (gethash "source-code-url" settings-config)
+	  blog-license-url (gethash "license-url" settings-config)
 	  blog-icon (gethash "icon" settings-config)
 	  blog-author-name  (gethash "name" author-config)
 	  blog-author-email (gethash "email" author-config)

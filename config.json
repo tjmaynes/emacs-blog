@@ -4,6 +4,7 @@
         "description": "This blog is best described as a repository of written thought experiments from TJ Maynes.",
         "url": "https://tjmaynes.com",
 	"source-code-url": "https://github.com/tjmaynes/blog",
+	"license-url": "https://creativecommons.org/licenses/by/3.0/legalcode",
         "icon": "/public/images/icon.png",
         "css": {
             "main": "/public/stylesheets/main.css",
