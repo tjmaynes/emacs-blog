@@ -1,7 +1,7 @@
 {
     "settings": {
         "title": "TJ Maynes",
-        "description": "Personal Blog",
+        "description": "This blog is best described as a repository of written thought experiments from TJ Maynes.",
         "url": "https://tjmaynes.com",
 	"source-code-url": "https://github.com/tjmaynes/blog",
         "icon": "/public/images/icon.png",
@@ -12,7 +12,8 @@
     },
     "author": {
         "name": "TJ Maynes",
-        "description": "TJ Maynes is a passionate, hardworking software engineer living in NYC. Currently consulting at Pivotal Labs, working on this blog and staying active. Also, enjoys the smell and taste of coffee.",
+        "description": "TJ Maynes is a passionate, hardworking Software Engineer living in NYC. TJ specializes in product development, agile software methodologies and consulting. TJ utilizes test-driven development, pair programming and pragmatism to build software with people in mind. Also, enjoys writing software in a functional-style and drinking coffee.",
+	"news": "Currently, TJ is consulting at VMWare (formally Pivotal Labs), writing in this blog and spending more time in the Spring ecosystem, Kotlin and Cloud Foundry.",
         "cv": "/career/cv.pdf",
         "github": "tjmaynes",
         "linkedin": "tjmaynes",

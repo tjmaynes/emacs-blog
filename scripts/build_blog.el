@@ -114,6 +114,7 @@
    (concat
     "<article class=\"about\">
      <p>" blog-author-description "</p>
+     <p>" blog-author-news "</p>
     </article>
     <nav class=\"footer-menu\">
      <ul>
@@ -415,6 +416,7 @@
 	  blog-author-linkedin (gethash "linkedin" author-config)
 	  blog-author-twitter (gethash "twitter" author-config)	  
 	  blog-author-description (gethash "description" author-config)
+	  blog-author-news (gethash "news" author-config)
 	  blog-author-cv (gethash "cv" author-config)	  
 	  blog-author-avatar (gethash "avatar" author-config)
 	  blog-css-url (gethash "main" css-config)

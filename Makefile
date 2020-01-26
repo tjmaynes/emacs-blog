@@ -39,7 +39,7 @@ deploy_artifact:
 	$(BLOG_PUBLISHING_DIRECTORY) \
 	$(REPO)
 
-preview_blog: build_blog copy_static_files
+preview_blog: build_blog
 	chmod +x ./scripts/edit_blog.sh
 	./scripts/edit_blog.sh \
 	$(PORT) \
