@@ -1,0 +1,3 @@
+#+TITLE: A Functional Approach: Validation
+#+DATE: <2020-01-26, Sun>
+#+DESCRIPTION: In this blog post, we'll be discussing some strategies for validating an model/entity.
