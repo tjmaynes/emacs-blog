@@ -1,0 +1,3 @@
+#+TITLE: Nullability is a Smell
+#+DATE: <2020-01-27, Mon>
+#+DESCRIPTION: In this blog post, we'll be discussing why nullable values are a code-smell by understanding how they are used and how we can refactor into more concrete types.
