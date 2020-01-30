@@ -97,22 +97,21 @@ getById("some-id", { result ->
 
 #+begin_src kotlin
 fun <T> getById(id: String): Either<Exception, T?> =
+  try {
+    val result = databaseDriver.getById(id)
+    if (result) {
+
+    }
+    Either.Left(
+  } catch (e: Exception) {
+    null
+  }
   Either.catch { repository.getById(id) ?: null }
 #+end_src
 
 #+begin_src kotlin
-val result: Either<Exception, MyObject?> = getById("some-id")
-
-val data = if (result.isRight()) {
-  // do something
-} else {
-  // do something
+when(val result = getById("some-id")) {
+  is Either.Right -> // do something
+  is Either.Left -> // handle error
 }
-
-val exception = if (result.isLeft()) {
-  // do something else
-} else {
-  // do something else
-}
-
 #+end_src

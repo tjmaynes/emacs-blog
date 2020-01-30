@@ -1,6 +1,6 @@
-#+TITLE: Blogging with Org-mode
-#+DATE: <2019-12-16, Mon>
-#+DESCRIPTION: In this blog post, I'll be discussing how to use org-publish to convert blog posts written in org-mode to styled HTML pages.
+#+TITLE: Building a Blog with Org-Publish
+#+DATE: <2020-02-03, Mon>
+#+DESCRIPTION: In this blog post, I'll be the how's and why's of using org-publish to convert blog posts written in org-mode to styled HTML pages.
 
 I recently replaced my jekyll-based blog with an org-mode based blog. Getting started with this was a little daunting at first, but I was able to find some blog posts. I just wanted to discuss one part of the experience that was difficult to get documentation for.
 

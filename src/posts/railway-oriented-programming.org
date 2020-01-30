@@ -1,6 +1,6 @@
-#+TITLE: Railway-oriented Programming using Kotlin, Spring WebFlux and Arrow
+#+TITLE: Railway-oriented Programming
 #+DATE: <2019-12-20, Fri>
-#+DESCRIPTION: In this blog, we'll be implementing a functional style of error handling called Railway-oriented programming in a modern Kotlin/Spring backend service.
+#+DESCRIPTION: In this blog, we'll be implementing a functional style of error handling called Railway-oriented programming using Kotlin and ArrowKt.
 
 * Introduction
 In an effort to write more correct software, we'll be implementing a functional style of error handling called Railway-oriented programming in a Kotlin/Spring backend service. To accomplish this effort, we'll be utilizing the Either and Option monads from a functional programming library called Arrow. We'll also be utilizing Kotlin coroutines to build our non-blocking pipelines in our Spring WebFlux application.
