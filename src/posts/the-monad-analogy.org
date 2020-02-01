@@ -1,0 +1,39 @@
+#+TITLE: The Monad Analogy
+#+DATE: <2019-10-29 Tue>
+#+DESCRIPTION: This blog post will be discussing an analogy I use to depict what a monad is.
+
+I've been using the Either and Option monads on various projects (in different runtimes) over the last couple of years. I like utilizing these monads as a way of handle errors from external systems. However, when it comes time to introducing someone new to these monads, I'm unable to describe what makes a monad a /monad/. However, after doing some research I found an analogy that encapsulates what I believe to be the spirit of what makes a monad a /monad/.
+
+#+begin_quote
+A monad is an abstract data type that allows programmers to chain complex, nondeterministic operations.
+#+end_quote
+
+An abstract data type (ADT) is a kind of data type defined by it's behavior from the point of view from a user. Since an ADT is created from the user's point of view, it's internal presentation is hidden, thus enabling us to focus more on behavior than caring what data is being held (it could be a String, Integer, YourCustomObject, etc).
+
+The ability to chain operations is the /functor/ attribute of monads. In category theory, a /functor/ is a something has enables /mappable/ behavior, such as iterating over a list of objects/strings/etc. To enable the chaining of /nondeterministic/ operations, two functions are found on monadic types: *return* and *bind*.
+
+The *return* function /places/ a value into a monadic context, whereas the *bind* function /applies/ a function in a monadic context.
+
+#+begin_quote
+Note: Depending on the programming language or library that you are using, the *return* function will typically be represented through the /constructor/ method and *bind* may have a different name such as /flatMap/ or /map/.
+#+end_quote
+
+Let's write an example of monads in action using [[https://kotlinlang.org/][Kotlin]] and a functional programming library called [[https://arrow-kt.io/docs/apidocs/arrow-core-data/arrow.core/-option/][Arrow]]. A quick real-world example I can think of is When I'm trying to eat a donut from my favorite donut place in the Upper West Side, [[https://www.dailyprovisionsnyc.com/menus/][Daily Provisions]]. Let's write a function that encapsulates this logic and, for simplicity, we'll choose the Option monad as its return type.
+
+#+begin_src kotlin
+fun getDonut(time: Date): Option<Donut> =
+  if (donutsAreAvailable(time)) {
+    Some(Donut())
+  } else {
+    None
+  }
+#+end_src
+
+The above function could return either my donut or nothing depending on some external factor (time). When we pass a value into the Some function, we are effectively using the /return/ trait of a monadic type. The None function is a type of Option that returns...nothing! Next, do something with...something.
+
+#+begin_src kotlin
+val eatADonut = getDonut(timeBefore11am)
+  .map { donut -> donut.eat() }
+#+end_src
+
+The above variable gets a donut and if a donut is found it will /map/, or /bind/, to a function that eats the donut. If the /getDonut/ returns a None, because I overslept and missed the opportunity to get a donut, then our /map/ method will never get called.
