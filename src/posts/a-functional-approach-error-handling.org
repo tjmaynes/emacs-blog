@@ -95,19 +95,25 @@ getById("some-id", { result ->
 })
 #+end_src
 
+What if we had a type that could represent these types...
+
+** The Either Monad
+The *Either* monad is a monadic data type that allows you to encapsulate a result that returns either one possible outcome or another possible outcome. Since Kotlin does not include an Either monad is it's standard library, we'll need to pull in a functional programming library called [[https://arrow-kt.io/docs/core/][Arrow]] for our example code.
+
 #+begin_src kotlin
-fun <T> getById(id: String): Either<Exception, T?> =
+fun <T> getById(id: String): Either<RepositoryError, T> =
   try {
     val result = databaseDriver.getById(id)
     if (result) {
-
+      Either.Right(result)
     }
-    Either.Left(
+    Either.Left(RepositoryError.NotFound)
   } catch (e: Exception) {
-    null
+    Either.Left(RepositoryError.Unknown(e.localizedMessage))
   }
-  Either.catch { repository.getById(id) ?: null }
 #+end_src
+
+When we /map/, equivalently /bind/, over our list, we gain the ability to safely access the /Right/ results from our country variable. If we have any /Right/ values then we transform/apply the /capitalize/ method to all of our /Right/ values. If we have any /Left/ values then we will log exceptions.
 
 #+begin_src kotlin
 when(val result = getById("some-id")) {
