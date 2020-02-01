@@ -18,7 +18,7 @@ The *return* function /places/ a value into a monadic context, whereas the *bind
 Note: Depending on the programming language or library that you are using, the *return* function will typically be represented through the /constructor/ method and *bind* may have a different name such as /flatMap/ or /map/.
 #+end_quote
 
-Let's write an example of monads in action using [[https://kotlinlang.org/][Kotlin]] and a functional programming library called [[https://arrow-kt.io/docs/apidocs/arrow-core-data/arrow.core/-option/][Arrow]]. A quick real-world example I can think of is When I'm trying to eat a donut from my favorite donut place in the Upper West Side, [[https://www.dailyprovisionsnyc.com/menus/][Daily Provisions]]. Let's write a function that encapsulates this logic and, for simplicity, we'll choose the Option monad as its return type.
+Let's write an example of monads in action using [[https://kotlinlang.org/][Kotlin]] and a functional programming library called [[https://arrow-kt.io/docs/apidocs/arrow-core-data/arrow.core/-option/][Arrow]]. A quick real-world example is when I'm trying to eat a donut from my favorite donut place in the Upper West Side, [[https://www.dailyprovisionsnyc.com/menus/][Daily Provisions]]. Let's write a function that encapsulates the operation of getting a donut from Daily Provisions and, for simplicity, we'll choose the Option monad as its return type.
 
 #+begin_src kotlin
 fun getDonut(time: Date): Option<Donut> =
