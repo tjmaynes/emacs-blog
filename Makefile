@@ -1,5 +1,5 @@
 BLOG_DIRECTORY              = $(PWD)
-BLOG_PUBLISHING_DIRECTORY        = $(BLOG_DIRECTORY)/build
+BLOG_PUBLISHING_DIRECTORY   = $(BLOG_DIRECTORY)/build
 IMAGE_NAME                  = blog-builder
 PORT                        = 4000
 REGISTRY_USERNAME           = tjmaynes

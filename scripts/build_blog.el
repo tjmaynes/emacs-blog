@@ -364,7 +364,7 @@
      :recursive t)
     ("blog-required-files"
      :base-directory ,blog-directory
-     :include ["CNAME", "keybase.txt", "favicon.ico"]
+     :include ["keybase.txt", "favicon.ico"]
      :publishing-directory ,blog-publishing-directory
      :publishing-function org-publish-attachment
      :recursive nil)
