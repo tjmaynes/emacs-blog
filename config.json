@@ -1,24 +1,23 @@
 {
-    "settings": {
-        "title": "TJ Maynes",
-        "description": "This blog is best described as a repository of written thought experiments from TJ Maynes.",
-        "url": "https://tjmaynes.com",
-	"source-code-url": "https://github.com/tjmaynes/blog",
-	"license-url": "https://creativecommons.org/licenses/by/3.0/legalcode",
-        "icon": "/public/images/icon.png",
-        "css": {
-            "main": "/public/stylesheets/main.css",
-            "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
-        }
-    },
-    "author": {
-        "name": "TJ Maynes",
-        "description": "TJ Maynes is a passionate, hardworking Software Engineer living in NYC. TJ specializes in product development, agile software methodologies and consulting. TJ utilizes test-driven development, pair programming and pragmatism to build software with people in mind. Also, enjoys writing software in a functional-style and drinking coffee.",
-	"news": "Currently, TJ is consulting at VMWare (formally Pivotal Labs), writing in this blog and spending more time in the Spring ecosystem, Kotlin and Cloud Foundry.",
-        "cv": "/career/cv.pdf",
-        "github": "tjmaynes",
-        "linkedin": "tjmaynes",
-        "twitter": "@tjmaynes",
-        "email": "tj@tjmaynes.com"
+  "settings": {
+    "title": "TJ Maynes",
+    "description": "Personal blog.",
+    "url": "https://tjmaynes.com",
+    "source-code-url": "https://github.com/tjmaynes/blog",
+    "license-url": "https://creativecommons.org/licenses/by/3.0/legalcode",
+    "icon": "/public/images/icon.png",
+    "css": {
+      "main": "/public/stylesheets/main.css",
+      "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
     }
+  },
+  "author": {
+    "name": "TJ Maynes",
+    "description": "TJ Maynes is a Senior Software Developer @ VMware Pivotal Labs. Interested in XP, software development, consulting and automation. You can find me on <a href='https://twitter.com/tjmaynes'>Twitter</a> and <a href='https://linkedin.com/in/tjmaynes'>LinkedIn</a>. All opinions are my own.",
+    "cv": "/career/cv.pdf",
+    "github": "tjmaynes",
+    "linkedin": "tjmaynes",
+    "twitter": "@tjmaynes",
+    "email": "tj@tjmaynes.com"
+  }
 }

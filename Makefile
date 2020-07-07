@@ -1,5 +1,3 @@
-#!/bin/make
-
 BLOG_DIRECTORY              = $(realpath $(PWD))
 BLOG_PUBLISHING_DIRECTORY   = $(BLOG_DIRECTORY)/build
 CAREER_FILES_REPO           = "https://github.com/tjmaynes/career"
@@ -28,7 +26,7 @@ build_blog:
 	--batch \
 	--no-init-file \
 	--no-site-file \
-	--load $(BLOG_DIRECTORY)/scripts/build_blog.el
+	--load $(BLOG_DIRECTORY)/scripts/generate_blog.el
 
 get_career_files:
 	$(call download_release_from_repo,$(CAREER_FILES_REPO),$(BLOG_PUBLISHING_DIRECTORY)/career)

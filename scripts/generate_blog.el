@@ -1,4 +1,4 @@
-;; --- build_blog.el ---
+;; --- generate_blog.el ---
 ;; Author: TJ Maynes <tjmaynes at gmail dot com>
 ;; Website: https://tjmaynes.com/
 
@@ -94,7 +94,7 @@
 
 (defun org-blog/get-header ()
   (concat
-   "<section class=\"content-header\">\n"
+   "<div class=\"content-header\">\n"
    (concat
     "<nav>
      <ul>
@@ -102,38 +102,25 @@
      </ul>
      <ul>
        <li><a href=\"/\">Home</a></li>
-       <li><a href=\"" blog-author-cv "\">CV</a></li>
+       <li><a href=\"https://github.com/" blog-author-github "\" target=\"_blank\">Code</a></li>
        <li><a href=\"/rss.xml\">Feed</a></li>
      </ul>
    </nav>\n")
-   "</section>\n"))
+   "</div>\n"))
 
 (defun org-blog/get-footer ()
   (concat
-   "<section class=\"content-footer\">"
-   (concat
-    "<article class=\"about\">
+   "<div class=\"content-footer\">
      <p>" blog-author-description "</p>
-     <p>" blog-author-news "</p>
-    </article>
-    <nav class=\"footer-menu\">
-     <ul>
-      <li><p><a href=\"https://github.com/" blog-author-github "\" target=\"_blank\">GitHub</a></p></li>
-      <li><p><a href=\"https://linkedin.com/in/" blog-author-linkedin "\" target=\"_blank\">LinkedIn</a></p></li>
-      <li><p><a href=\"mailto:" blog-author-email "\">Contact</a></p></li>
-     </ul>
-    </nav>")
-   "</section>
-<section class=\"content-footer\">
-  <p>This site is licensed under <a href=" blog-license-url ">Creative Commons Attribution 3.0</a>.</p>
-  <p><a href=" blog-source-code-url ">Built using Org-Publish ❤️</a></p>
-</section>"))
+     <p>This site is licensed under <a href=" blog-license-url ">Creative Commons Attribution 3.0</a>.</p>
+     <p><a href=" blog-source-code-url ">Built using Org-Publish</a> ❤</p>
+    </div>"))
 
 (defun org-blog/get-body (content)
   (concat
    "<body>\n"
    (concat
-    "<div class=\"content-wrapper\">\n"
+    "<section class=\"content-wrapper\">\n"
     (org-blog/get-header)
     content
     (org-blog/get-footer)
@@ -152,10 +139,10 @@
 
 (defun org-blog/get-post-page-body (title date content)
   (concat
-   "<div class=\"post\">\n"
+   "<article class=\"post\">\n"
    (org-blog/get-post-header title date)
    content
-   "</div>\n"))
+   "</article>\n"))
 
 (defun org-blog/get-html (head body language)
   (concat
@@ -167,9 +154,9 @@
 
 (defun org-blog/get-static-page-body (title date content)
   (concat
-   "<div class=\"post\">\n"
+   "<article class=\"post\">\n"
    content
-   "</div>\n"))
+   "</article>\n"))
 
 (defun org-blog/base-html-template (title description language content)
   (org-blog/get-html
@@ -253,7 +240,7 @@
   (let ((datetime (format-time-string "%Y-%m-%d" (org-publish-find-date entry project)))
 	(title (org-publish-find-title entry project))
 	(post-entry (format "posts/%s" entry)))
-    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@" datetime post-entry title)))
+    (format "@@html:<span class=\"archive-content\"><span class=\"archive-date\">@@ %s @@html:</span>@@ | [[file:%s][%s]] @@html:</span>@@" datetime post-entry title)))
 
 (defun org-blog/org-publish-format-rss-feed (title list)
   (concat "#+TITLE: " title "\n"
@@ -403,7 +390,7 @@
 	 (css-config (gethash "css" settings-config)))
     (setq blog-directory blog-directory
 	  blog-publishing-directory blog-publishing-directory
-	  blog-source-directory (expand-file-name "src" blog-directory)
+	  blog-source-directory (expand-file-name "content" blog-directory)
 	  blog-title (gethash "title" settings-config)
 	  blog-description (gethash "description" settings-config)
 	  blog-url (gethash "url" settings-config)
@@ -416,7 +403,6 @@
 	  blog-author-linkedin (gethash "linkedin" author-config)
 	  blog-author-twitter (gethash "twitter" author-config)	  
 	  blog-author-description (gethash "description" author-config)
-	  blog-author-news (gethash "news" author-config)
 	  blog-author-cv (gethash "cv" author-config)	  
 	  blog-author-avatar (gethash "avatar" author-config)
 	  blog-css-url (gethash "main" css-config)

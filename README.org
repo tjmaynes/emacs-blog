@@ -2,36 +2,28 @@
 #+AUTHOR: TJ Maynes <tj@tjmaynes.com>
 
 #+BEGIN_QUOTE
-Personal Blog
+Personal blog
 #+END_QUOTE
 
 [[https://circleci.com/gh/tjmaynes/blog/tree/master][file:https://circleci.com/gh/tjmaynes/blog/tree/master.svg?style=svg]]
 
 ** Requirements
 - [[https://www.gnu.org/s/emacs/][Emacs]]
+- [[https://www.docker.com/products/docker-desktop][Docker]]
 
 ** Usage
 To build the blog, run the following command:
 #+begin_src bash
-BLOG_CONFIG=<some-blog-config> \
-BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
-BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make build_blog
 #+end_src
 
 To publish the blog, run the following command:
 #+begin_src bash
-BLOG_CONFIG=<some-blog-config> \
-BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
-BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make publish_blog
 #+end_src
 
 To preview the blog using =nginx= in a =docker= container, run the following command:
 #+begin_src bash
-BLOG_CONFIG=<some-blog-config> \
-BLOG_SOURCE_DIRECTORY=<some-blog-source-directory> \
-BLOG_BUILD_DIRECTORY=<some-blog-build-directory> \
 make preview_blog
 #+end_src
 
