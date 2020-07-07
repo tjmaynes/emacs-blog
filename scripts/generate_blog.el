@@ -112,8 +112,7 @@
   (concat
    "<div class=\"content-footer\">
      <p>" blog-author-description "</p>
-     <p>This site is licensed under <a href=" blog-license-url ">Creative Commons Attribution 3.0</a>.</p>
-     <p><a href=" blog-source-code-url ">Built using Org-Publish</a> ❤</p>
+     <p><a href=" blog-source-code-url ">Built using Org-Publish</a> ❤️</p>
     </div>"))
 
 (defun org-blog/get-body (content)
