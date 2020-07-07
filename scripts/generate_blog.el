@@ -351,6 +351,7 @@
      :recursive t)
     ("blog-required-files"
      :base-directory ,blog-directory
+     :exclude ,(regexp-opt '("README.org"))
      :include ["favicon.ico" "CNAME"]
      :publishing-directory ,blog-publishing-directory
      :publishing-function org-publish-attachment
