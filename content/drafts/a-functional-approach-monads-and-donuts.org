@@ -1,6 +1,16 @@
-#+TITLE: The Monad Analogy
+#+TITLE: A Functional Approach: Monads n' Donuts
 #+DATE: <2019-10-29 Tue>
 #+DESCRIPTION: This blog post will be discussing an analogy I use to depict what a monad is.
+
+[[file:./images/monads-and-donuts-1.jpg]]
+
+In this blog post, we'll discuss an approach I use to introduce [[https://en.wikipedia.org/wiki/Monad_(functional_programming)][monads]] to newcomers that will include code snippets in [[https://kotlinlang.org][Kotlin]]. *Please feel free to ask questions or state your concerns in the comments section.*
+
+** Background
+
+I've been using the Either and Option monads on various projects for about two and a half years now. While I've enjoyed the safety and control these monads give me when writing software, I've found that I've had a hard time introducing monads to newcomers. Specifically, while I've used them been unable to explain what monads are and have avoid saying the word "monad".
+However I've found that avoiding the "monad" concept is disingenuous and I don't think it's a good long term strategy for convincing team members of it's power. After doing some research (i.e. browsing around the internet and talking to peers) I think I've come up with a decent introduction 
+I enjoy utilizing these monads as a way of handle errors from external systems. However, when it comes time to introduce to explain monads s a monad a monad. However, after doing some research I found an analogy that encapsulates what I believe to be the spirit of what makes a monad a monad.
 
 I've been using the Either and Option monads on various projects (in different runtimes) over the last couple of years. I like utilizing these monads as a way of handle errors from external systems. However, when it comes time to introducing someone new to these monads, I'm unable to describe what makes a monad a /monad/. However, after doing some research I found an analogy that encapsulates what I believe to be the spirit of what makes a monad a /monad/.
 

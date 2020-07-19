@@ -1,23 +1,23 @@
 {
-  "settings": {
-    "title": "TJ Maynes",
-    "description": "Personal blog.",
-    "url": "https://tjmaynes.com",
-    "source-code-url": "https://github.com/tjmaynes/blog",
-    "license-url": "https://creativecommons.org/licenses/by/3.0/legalcode",
-    "icon": "/public/images/icon.png",
-    "css": {
-      "main": "/public/stylesheets/main.css",
-      "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
+    "settings": {
+	"title": "TJ Maynes",
+	"description": "Sr Software Developer / Writer. Interested in personal growth, software development and investing. Currently, consulting VMware Pivotal Labs. All opinions are my own.",
+	"url": "https://tjmaynes.com",
+	"source-code-url": "https://github.com/tjmaynes/blog",
+	"license-url": "https://github.com/tjmaynes/blog/blob/master/LICENSE",
+	"icon": "/public/images/icon.png",
+	"css": {
+	    "main": "/public/stylesheets/main.css",
+	    "syntax-highlighting": "/public/stylesheets/syntax_highlighting.css"
+	}
+    },
+    "author": {
+	"name": "TJ Maynes",
+	"description": "TJ Maynes is a Senior Software Developer living in Brooklyn, New York. Interested in personal growth, software development, and automation. Currently, consulting and pairing at <a href='https://tanzu.vmware.com/labs'>VMware Pivotal Labs</a> (all opinions are my own). You can find me on <a href='https://twitter.com/tjmaynes'>Twitter</a> and <a href='https://linkedin.com/in/tjmaynes'>LinkedIn</a>.",
+	"cv": "/career/cv.pdf",
+	"github": "tjmaynes",
+	"linkedin": "tjmaynes",
+	"twitter": "@tjmaynes",
+	"email": "tj@tjmaynes.com"
     }
-  },
-  "author": {
-    "name": "TJ Maynes",
-    "description": "TJ Maynes is a Senior Software Developer @ VMware Pivotal Labs. Interested in XP, software development, consulting and automation. You can find me on <a href='https://twitter.com/tjmaynes'>Twitter</a> and <a href='https://linkedin.com/in/tjmaynes'>LinkedIn</a>. All opinions are my own.",
-    "cv": "/career/cv.pdf",
-    "github": "tjmaynes",
-    "linkedin": "tjmaynes",
-    "twitter": "@tjmaynes",
-    "email": "tj@tjmaynes.com"
-  }
 }

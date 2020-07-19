@@ -2,7 +2,7 @@
 #+AUTHOR: TJ Maynes <tj@tjmaynes.com>
 
 #+BEGIN_QUOTE
-Personal blog
+Personal blog.
 #+END_QUOTE
 
 [[https://circleci.com/gh/tjmaynes/blog/tree/master][file:https://circleci.com/gh/tjmaynes/blog/tree/master.svg?style=svg]]
